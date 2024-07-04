@@ -1,199 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>10 Squares</title>
-<style>
-    body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        background-color: #f0f0f0;
-        flex-wrap: wrap; /* 正方形がウィンドウに収まるようにラップ */
-    }
-
-    .square {
-        width: 80px;
-        height: 80px;
-        margin: 10px;
-        background-color: dodgerblue;
-        border: 1px solid #999;
-        transition: transform 0.3s ease, z-index 0s ease; /* アニメーションを追加 */
-        cursor: pointer;
-        position: relative; /* 相対位置指定 */
-        z-index: 1; /* デフォルトのz-indexを設定 */
-        display: flex; /* 中央揃えのためのフレックスボックス */
-        justify-content: center; /* 中央揃え */
-        align-items: center; /* 中央揃え */
-        font-size: 16px; /* 文章のフォントサイズ */
-        color: white; /* 文章の色 */
-        text-align: center; /* テキストを中央揃え */
-    }
-
-    .text {
-        list-style: none; /* 箇条書きのマーカーを削除 */
-        padding: 0;
-        margin: 0;
-    }
-
-    /* 異なる色のクラスを設定 */
-    .square:nth-child(2) {
-        background-color: tomato;
-    }
-
-    .square:nth-child(3) {
-        background-color: mediumseagreen;
-    }
-
-    .square:nth-child(4) {
-        background-color: goldenrod;
-    }
-
-    .square:nth-child(5) {
-        background-color: slateblue;
-    }
-
-    .square:nth-child(6) {
-        background-color: teal;
-    }
-
-    .square:nth-child(7) {
-        background-color: salmon;
-    }
-
-    .square:nth-child(8) {
-        background-color: purple;
-    }
-
-    .square:nth-child(9) {
-        background-color: chocolate;
-    }
-
-    .square:nth-child(10) {
-        background-color: darkcyan;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10 Squares</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="bgm_styles.css">
 </head>
 <body>
     <!-- 10個の正方形を表示 -->
-    <div class="square" onclick="toggleSize(this)">
-        <ul class="text">
-            <li>Line 1</li>
-            <li>Line 2</li>
-            <li>Line 3</li>
-            <li>Line 4</li>
-        </ul>
-    </div>
-    <div class="square" onclick="toggleSize(this)">
-        <ul class="text">
-            <li>Line 1</li>
-            <li>Line 2</li>
-            <li>Line 3</li>
-            <li>Line 4</li>
-        </ul>
-    </div>
-    <div class="square" onclick="toggleSize(this)">
-        <ul class="text">
-            <li>Line 1</li>
-            <li>Line 2</li>
-            <li>Line 3</li>
-            <li>Line 4</li>
-        </ul>
-    </div>
-    <div class="square" onclick="toggleSize(this)">
-        <ul class="text">
-            <li>Line 1</li>
-            <li>Line 2</li>
-            <li>Line 3</li>
-            <li>Line 4</li>
-        </ul>
-    </div>
-    <div class="square" onclick="toggleSize(this)">
-        <ul class="text">
-            <li>Line 1</li>
-            <li>Line 2</li>
-            <li>Line 3</li>
-            <li>Line 4</li>
-        </ul>
-    </div>
-    <div class="square" onclick="toggleSize(this)">
-        <ul class="text">
-            <li>Line 1</li>
-            <li>Line 2</li>
-            <li>Line 3</li>
-            <li>Line 4</li>
-        </ul>
-    </div>
-    <div class="square" onclick="toggleSize(this)">
-        <ul class="text">
-            <li>Line 1</li>
-            <li>Line 2</li>
-            <li>Line 3</li>
-            <li>Line 4</li>
-        </ul>
-    </div>
-    <div class="square" onclick="toggleSize(this)">
-        <ul class="text">
-            <li>Line 1</li>
-            <li>Line 2</li>
-            <li>Line 3</li>
-            <li>Line 4</li>
-        </ul>
-    </div>
-    <div class="square" onclick="toggleSize(this)">
-        <ul class="text">
-            <li>Line 1</li>
-            <li>Line 2</li>
-            <li>Line 3</li>
-            <li>Line 4</li>
-        </ul>
-    </div>
-    <div class="square" onclick="toggleSize(this)">
-        <ul class="text">
-            <li>Line 1</li>
-            <li>Line 2</li>
-            <li>Line 3</li>
-            <li>Line 4</li>
-        </ul>
-    </div>
+    <div id="square-container"></div>
+    
+    <!-- script.jsを読み込む -->
+    <script src="script.js"></script>
 
-    <script>
-        function toggleSize(square) {
-            if (square.style.transform === 'scale(4)') {
-                square.style.transform = 'scale(1)';
-                square.style.zIndex = '1'; // 元のz-indexに戻す
-                square.querySelector('.text').style.display = 'none'; // 文章を非表示にする
-            } else {
-                document.querySelectorAll('.square').forEach(function (s) {
-                    s.style.transform = 'scale(1)';
-                    s.style.zIndex = '1'; // 全ての正方形のz-indexを元に戻す
-                    s.querySelector('.text').style.display = 'none'; // 全ての文章を非表示にする
-                });
-                square.style.transform = 'scale(4)';
-                square.style.zIndex = '10'; // 拡大した正方形を最前面に表示
-                square.querySelector('.text').style.display = 'block'; // 文章を表示する
-            }
-        }
+    <!-- BGMを制御するスクリプトを読み込む -->
+    <script src="bgmscript.js"></script>
 
-        // 正方形外をクリックしたらサイズを元に戻す
-        document.addEventListener('click', function (e) {
-            if (!e.target.closest('.square')) {
-                document.querySelectorAll('.square').forEach(function (s) {
-                    s.style.transform = 'scale(1)';
-                    s.style.zIndex = '1'; // 全ての正方形のz-indexを元に戻す
-                    s.querySelector('.text').style.display = 'none'; // 全ての文章を非表示にする
-                });
-            }
-        });
-
-        // 初期状態で全ての文章を非表示にする
-        document.querySelectorAll('.text').forEach(function (text) {
-            text.style.display = 'none';
-        });
-    </script>
+    <div id="bgm-container">
+        <!-- BGMを追加するボタン -->
+        <button onclick="addBGM()">Add BGM</button>
+    </div>
 </body>
 </html>
+
 
