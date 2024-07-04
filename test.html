@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10 Squares</title>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+        flex-wrap: wrap; /* 正方形がウィンドウに収まるようにラップ */
+    }
+
+    .square {
+        width: 80px;
+        height: 80px;
+        margin: 10px;
+        background-color: dodgerblue;
+        border: 1px solid #999;
+        transition: transform 0.3s ease, z-index 0s ease; /* アニメーションを追加 */
+        cursor: pointer;
+        position: relative; /* 相対位置指定 */
+        z-index: 1; /* デフォルトのz-indexを設定 */
+    }
+
+    /* 異なる色のクラスを設定 */
+    .square:nth-child(2) {
+        background-color: tomato;
+    }
+
+    .square:nth-child(3) {
+        background-color: mediumseagreen;
+    }
+
+    .square:nth-child(4) {
+        background-color: goldenrod;
+    }
+
+    .square:nth-child(5) {
+        background-color: slateblue;
+    }
+
+    .square:nth-child(6) {
+        background-color: teal;
+    }
+
+    .square:nth-child(7) {
+        background-color: salmon;
+    }
+
+    .square:nth-child(8) {
+        background-color: purple;
+    }
+
+    .square:nth-child(9) {
+        background-color: chocolate;
+    }
+
+    .square:nth-child(10) {
+        background-color: darkcyan;
+    }
+</style>
+</head>
+<body>
+    <!-- 10個の正方形を表示 -->
+    <div class="square" onclick="toggleSize(this)"></div>
+    <div class="square" onclick="toggleSize(this)"></div>
+    <div class="square" onclick="toggleSize(this)"></div>
+    <div class="square" onclick="toggleSize(this)"></div>
+    <div class="square" onclick="toggleSize(this)"></div>
+    <div class="square" onclick="toggleSize(this)"></div>
+    <div class="square" onclick="toggleSize(this)"></div>
+    <div class="square" onclick="toggleSize(this)"></div>
+    <div class="square" onclick="toggleSize(this)"></div>
+    <div class="square" onclick="toggleSize(this)"></div>
+
+    <script>
+        function toggleSize(square) {
+            if (square.style.transform === 'scale(4)') {
+                square.style.transform = 'scale(1)';
+                square.style.zIndex = '1'; // 元のz-indexに戻す
+            } else {
+                document.querySelectorAll('.square').forEach(function (s) {
+                    s.style.transform = 'scale(1)';
+                    s.style.zIndex = '1'; // 全ての正方形のz-indexを元に戻す
+                });
+                square.style.transform = 'scale(4)';
+                square.style.zIndex = '10'; // 拡大した正方形を最前面に表示
+            }
+        }
+
+        // 正方形外をクリックしたらサイズを元に戻す
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.square')) {
+                document.querySelectorAll('.square').forEach(function (s) {
+                    s.style.transform = 'scale(1)';
+                    s.style.zIndex = '1'; // 全ての正方形のz-indexを元に戻す
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
