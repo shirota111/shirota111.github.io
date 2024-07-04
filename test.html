@@ -25,6 +25,18 @@
         cursor: pointer;
         position: relative; /* 相対位置指定 */
         z-index: 1; /* デフォルトのz-indexを設定 */
+        display: flex; /* 中央揃えのためのフレックスボックス */
+        justify-content: center; /* 中央揃え */
+        align-items: center; /* 中央揃え */
+        font-size: 16px; /* 文章のフォントサイズ */
+        color: white; /* 文章の色 */
+        text-align: center; /* テキストを中央揃え */
+    }
+
+    .text {
+        list-style: none; /* 箇条書きのマーカーを削除 */
+        padding: 0;
+        margin: 0;
     }
 
     /* 異なる色のクラスを設定 */
@@ -67,29 +79,102 @@
 </head>
 <body>
     <!-- 10個の正方形を表示 -->
-    <div class="square" onclick="toggleSize(this)"></div>
-    <div class="square" onclick="toggleSize(this)"></div>
-    <div class="square" onclick="toggleSize(this)"></div>
-    <div class="square" onclick="toggleSize(this)"></div>
-    <div class="square" onclick="toggleSize(this)"></div>
-    <div class="square" onclick="toggleSize(this)"></div>
-    <div class="square" onclick="toggleSize(this)"></div>
-    <div class="square" onclick="toggleSize(this)"></div>
-    <div class="square" onclick="toggleSize(this)"></div>
-    <div class="square" onclick="toggleSize(this)"></div>
+    <div class="square" onclick="toggleSize(this)">
+        <ul class="text">
+            <li>Line 1</li>
+            <li>Line 2</li>
+            <li>Line 3</li>
+            <li>Line 4</li>
+        </ul>
+    </div>
+    <div class="square" onclick="toggleSize(this)">
+        <ul class="text">
+            <li>Line 1</li>
+            <li>Line 2</li>
+            <li>Line 3</li>
+            <li>Line 4</li>
+        </ul>
+    </div>
+    <div class="square" onclick="toggleSize(this)">
+        <ul class="text">
+            <li>Line 1</li>
+            <li>Line 2</li>
+            <li>Line 3</li>
+            <li>Line 4</li>
+        </ul>
+    </div>
+    <div class="square" onclick="toggleSize(this)">
+        <ul class="text">
+            <li>Line 1</li>
+            <li>Line 2</li>
+            <li>Line 3</li>
+            <li>Line 4</li>
+        </ul>
+    </div>
+    <div class="square" onclick="toggleSize(this)">
+        <ul class="text">
+            <li>Line 1</li>
+            <li>Line 2</li>
+            <li>Line 3</li>
+            <li>Line 4</li>
+        </ul>
+    </div>
+    <div class="square" onclick="toggleSize(this)">
+        <ul class="text">
+            <li>Line 1</li>
+            <li>Line 2</li>
+            <li>Line 3</li>
+            <li>Line 4</li>
+        </ul>
+    </div>
+    <div class="square" onclick="toggleSize(this)">
+        <ul class="text">
+            <li>Line 1</li>
+            <li>Line 2</li>
+            <li>Line 3</li>
+            <li>Line 4</li>
+        </ul>
+    </div>
+    <div class="square" onclick="toggleSize(this)">
+        <ul class="text">
+            <li>Line 1</li>
+            <li>Line 2</li>
+            <li>Line 3</li>
+            <li>Line 4</li>
+        </ul>
+    </div>
+    <div class="square" onclick="toggleSize(this)">
+        <ul class="text">
+            <li>Line 1</li>
+            <li>Line 2</li>
+            <li>Line 3</li>
+            <li>Line 4</li>
+        </ul>
+    </div>
+    <div class="square" onclick="toggleSize(this)">
+        <ul class="text">
+            <li>Line 1</li>
+            <li>Line 2</li>
+            <li>Line 3</li>
+            <li>Line 4</li>
+        </ul>
+    </div>
 
     <script>
         function toggleSize(square) {
             if (square.style.transform === 'scale(4)') {
                 square.style.transform = 'scale(1)';
                 square.style.zIndex = '1'; // 元のz-indexに戻す
+                square.querySelector('.text').style.display = 'none'; // 文章を非表示にする
             } else {
                 document.querySelectorAll('.square').forEach(function (s) {
                     s.style.transform = 'scale(1)';
                     s.style.zIndex = '1'; // 全ての正方形のz-indexを元に戻す
+                    s.querySelector('.text').style.display = 'none'; // 全ての文章を非表示にする
                 });
                 square.style.transform = 'scale(4)';
                 square.style.zIndex = '10'; // 拡大した正方形を最前面に表示
+                square.querySelector('.text').style.display = 'block'; // 文章を表示する
             }
         }
 
@@ -99,12 +184,16 @@
                 document.querySelectorAll('.square').forEach(function (s) {
                     s.style.transform = 'scale(1)';
                     s.style.zIndex = '1'; // 全ての正方形のz-indexを元に戻す
+                    s.querySelector('.text').style.display = 'none'; // 全ての文章を非表示にする
                 });
             }
+        });
+
+        // 初期状態で全ての文章を非表示にする
+        document.querySelectorAll('.text').forEach(function (text) {
+            text.style.display = 'none';
         });
     </script>
 </body>
 </html>
-
-
 
