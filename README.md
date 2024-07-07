@@ -45,20 +45,20 @@
 
 ### カスタマイズ
 
-#### Aboutセクション
+#### AboutMe
 
 `/src/App.jsx`ファイル内の`siteProps`変数を更新します。
 
 ```javascript
 const siteProps = {
-  name: "あなたの名前",
-  title: "あなたの肩書",
-  email: "あなたのメールアドレス",
-  gitHub: "GitHubユーザー名",
-  instagram: "Instagramユーザー名",
+  name: "Nocchi",
+  title: "",
+  email: "neko2828yama@gmail.com",
+  gitHub: "shirota111",
+  instagram: "nikomiko25",
   linkedIn: "LinkedInユーザー名",
   medium: "",
-  twitter: "Twitterユーザー名",
+  twitter: "nikothewall",
   youTube: "YouTubeユーザー名",
 };
 ```
