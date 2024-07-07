@@ -3,9 +3,9 @@
 # 練習しているのでまだできてません。
 > 
 * **Who is this for?**1.進捗状況の確認と更新状況の告示
-2.目的および手段
-3.開発状況と環境
-4.まとめ
+* **Who is this for?**2.目的および手段
+* **Who is this for?**3.開発状況と環境
+* **Who is this for?**4.まとめ
 
 
 View these instructions in [Spanish](/translations/es/README.md) or [Portuguese](/translations/pt-BR/README.md)
