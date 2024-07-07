@@ -1,7 +1,14 @@
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=526682619)
 
 # 練習しているのでまだできてません。
-> View these instructions in [Spanish](/translations/es/README.md) or [Portuguese](/translations/pt-BR/README.md)
+> 
+1.進捗状況の確認と更新状況の告示
+2.目的および手段
+3.開発状況と環境
+4.まとめ
+
+
+View these instructions in [Spanish](/translations/es/README.md) or [Portuguese](/translations/pt-BR/README.md)
 
 _Create, customize and deploy your own portfolio website in minutes._ ✨
 
