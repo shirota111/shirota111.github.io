@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-<<<<<<< HEAD
     const bookContainer = document.getElementById('book-container');
     
     const links = [
@@ -15,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { text: 'リンク10', href: 'https://example.com/10' },
     ];
     
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 5; i++) {
         const bookWrap = document.createElement('div');
         bookWrap.className = 'book-wrap';
         
@@ -68,54 +67,13 @@ document.addEventListener('DOMContentLoaded', function() {
         bookContainer.appendChild(bookWrap);
 
         // 各リンクにイベントリスナーを追加
-        bookLink.addEventListener('click', function(event) {
-            event.preventDefault();
-            // ここでリンクごとに異なる動作を実行できます
-            alert(`リンク ${i + 1} がクリックされました。リンク先: ${bookLink.href}`);
-            // 必要に応じてwindow.location.href = bookLink.href;を使用してリダイレクトすることもできます
-        });
-=======
-    const squareContainer = document.getElementById('square-container');
-    const numberOfSquares = 10; // 表示する正方形の数
-
-    // 指定された数の正方形を生成
-    for (let i = 1; i <= numberOfSquares; i++) {
-        const square = createSquare(i); // 正方形を生成する関数を呼び出し
-        squareContainer.appendChild(square); // 正方形をコンテナに追加
-    }
-
-    // 正方形を生成する関数
-    function createSquare(index) {
-        const square = document.createElement('div');
-        square.classList.add('square');
-        square.textContent = `Square ${index}`; // 正方形にテキストを追加
-
-        square.addEventListener('click', function() {
-            toggleSize(square); // クリック時の処理を追加
-        });
-
-        return square;
-    }
-
-    // 正方形のサイズ変更と他の正方形の元に戻す関数
-    function toggleSize(clickedSquare) {
-        // クリックされた正方形を拡大表示する
-        if (clickedSquare.style.transform !== 'scale(5)') {
-            document.querySelectorAll('.square').forEach(function (square) {
-                square.style.transform = 'scale(1)';
-                square.style.zIndex = '1';
-                square.style.color = 'white';
+        // クロージャー内で正確にリンクのインデックスを取得する方法
+        (function(index) {
+            bookLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                alert(`リンク ${index + 1} がクリックされました。リンク先: ${bookLink.href}`);
+                // 必要に応じてリダイレクトなどの処理を追加できます
             });
-
-            clickedSquare.style.transform = 'scale(5)';
-            clickedSquare.style.zIndex = '10';
-            clickedSquare.style.color = 'black';
-        } else {
-            // クリックされた正方形がすでに拡大表示されている場合は元に戻す
-            clickedSquare.style.transform = 'scale(1)';
-            clickedSquare.style.zIndex = '1';
-            clickedSquare.style.color = 'white';
-        }
->>>>>>> 40d005d3b2921c069bdbd9c2591e7ce9f4f9b46b
+        })(i);
     }
 });
