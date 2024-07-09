@@ -1,6 +1,16 @@
 ※開発用
 
 
+動的アセット管理
+リソースの管理:
+
+リソースの読み込みと解放。
+
+キャッシュの管理: 
+エラー処理と例外管理:
+
+パフォーマンスの最適化:
+
 ## 7年前の雑魚PC（グラボ2GBメモリ）でポートフォリオの作成経緯と使用技術
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=526682619)
