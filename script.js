@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { text: 'github', href: 'https://github.com/shirota111' },
         { text: 'CHATGPT', href: 'https://chatgpt.com/g/g-PGPnMa4Ph-ri-ben-yu-rokuin' },
         { text: 'twitter', href: 'https://x.com/nikothewall/status/1808267371725181330' },
-        { text: 'リンク5', href: 'https://example.com/5' },
+        { text: '座標', href: 'http://shirota111.github.io/coordinate/coordinate.html' },
         { text: 'リンク6', href: 'https://example.com/6' },
         { text: 'リンク7', href: 'https://example.com/7' },
         { text: 'リンク8', href: 'https://example.com/8' },
