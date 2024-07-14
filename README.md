@@ -1,4 +1,23 @@
-## ポートフォリオの作成経緯と使用技術
+※開発用
+
+
+動的アセット管理
+リソースの管理:
+
+リソースの読み込みと解放
+
+キャッシュの管理 
+エラー処理と例外管理
+
+パフォーマンスの最適化
+
+遅延読み込み
+リソースの識別
+ストリーミング
+動的アセット管理
+
+
+## 7年前の雑魚PC（グラボ2GBメモリ）でポートフォリオの作成経緯と使用技術
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=526682619)
 
@@ -8,8 +27,6 @@
 * **2.** 目的および手段。得られる効果と手段をまとめます。
 * **3.** 開発状況と環境
 * **4.** まとめ
-
-＃　https://shirota111.github.io/test.html
 
 ## このポートフォリオについて
 
