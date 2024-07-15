@@ -39,13 +39,13 @@ document.addEventListener('DOMContentLoaded', function() {
         bookLink.href = links[i].href;  // 各リンクに個別のURLを設定
         bookLink.textContent = links[i].text;
         bookItem1.appendChild(bookLink);
-        bookItem1.append('←リンクも使えます。');
+        bookItem1.append('←🐇');
 
         const bookItem2 = document.createElement('li');
-        bookItem2.textContent = 'この本はCSSで作成されています。';
+        bookItem2.textContent = '🐓';
 
         const bookItem3 = document.createElement('li');
-        bookItem3.textContent = 'カーソルがホバーしている間は開いたままです。';
+        bookItem3.textContent = '📕';
 
         bookList.appendChild(bookItem1);
         bookList.appendChild(bookItem2);
