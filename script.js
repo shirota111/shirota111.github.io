@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { text: 'リンク9', href: 'https://example.com/9' },
         { text: 'リンク10', href: 'https://example.com/10' },
     ];
+   
     
     for (let i = 0; i < 5; i++) {
         const bookWrap = document.createElement('div');
