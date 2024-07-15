@@ -1,23 +1,17 @@
-※開発用
+# Help
+[Q and A](https://github.com/shirota111/origin/blob/main/HELP/QandA.md)
 
 
-動的アセット管理
-リソースの管理:
-
-リソースの読み込みと解放
-
-キャッシュの管理 
-エラー処理と例外管理
-
-パフォーマンスの最適化
-
-遅延読み込み
-リソースの識別
-ストリーミング
-動的アセット管理
+[目次（マニュアル）](https://github.com/shirota111/origin/blob/main/HELP/manual.md)
 
 
-## 7年前の雑魚PC（グラボ2GBメモリ）でポートフォリオの作成経緯と使用技術
+[Project tree](https://github.com/shirota111/origin/blob/main/HELP/projecttree.md)
+
+
+[用語集](https://github.com/shirota111/origin/blob/main/HELP/用語集.md)
+
+
+## ポートフォリオの作成経緯と使用技術
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=526682619)
 
