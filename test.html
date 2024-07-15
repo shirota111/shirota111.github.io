@@ -1,50 +1,19 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ヴォーパル魂</title>
-    <style>
-        /* デスクトップ用とスマートフォン用の共通スタイル */
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            height: 150vh;
-            margin: 0;
-            font-family: 'Noto Serif JP', serif;
-        }
-
-        /* デスクトップ用の背景 */
-        @media (min-width: 769px) {
-            body {
-                background-image: url('1.10.10_313420711.gif');
-                background-size: cover;
-                background-repeat: no-repeat;
-                background-attachment: fixed;
-            }
-        }
-
-        /* スマートフォン用の背景 */
-        @media (max-width: 768px) {
-            body {
-                background-image: url('1.10.10_313420711.gif');
-                /* 追加のスタイル調整（必要に応じて） */
-            }
-        }
-    </style>
+    <title>10 Squares</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+
+<body style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center; height: 150vh; margin: 0; font-family: 'Noto Serif JP', serif;">
     <h1 style="font-size: 48px; margin: 0; padding-top: 20px;">ヴォーパル魂</h1>
-    
     <!-- 本の複製 -->
     <div id="book-container"></div>
     <!-- script.jsを読み込む -->
     <script src="script.js"></script>
 
-
+    
 </body>
 </html>
