@@ -2,11 +2,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const bookContainer = document.getElementById('book-container');
     
     const links = [
-        { text: 'リンク1', href: 'https://example.com/1' },
-        { text: 'リンク2', href: 'https://example.com/2' },
-        { text: 'リンク3', href: 'https://example.com/3' },
-        { text: 'リンク4', href: 'https://example.com/4' },
-        { text: 'リンク5', href: 'https://example.com/5' },
+        { text: 'To DO LIST', href: 'https://shirota111.github.io/todolist/todo.html' },
+        { text: 'github', href: 'https://github.com/shirota111' },
+        { text: 'CHATGPT', href: 'https://chatgpt.com/g/g-PGPnMa4Ph-ri-ben-yu-rokuin' },
+        { text: 'twitter', href: 'https://x.com/nikothewall/status/1808267371725181330' },
+        { text: '座標', href: 'http://shirota111.github.io/coordinate/coordinate.html' },
         { text: 'リンク6', href: 'https://example.com/6' },
         { text: 'リンク7', href: 'https://example.com/7' },
         { text: 'リンク8', href: 'https://example.com/8' },
