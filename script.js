@@ -71,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // クロージャー内で正確にリンクのインデックスを取得する方法
         (function(index) {
             bookLink.addEventListener('click', function(event) {
-                event.preventDefault();
                 alert(`リンク ${index + 1} がクリックされました。リンク先: ${bookLink.href}`);
                 // 必要に応じてリダイレクトなどの処理を追加できます
             });
