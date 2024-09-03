@@ -135,6 +135,8 @@ function handleDrop(event) {
 // イベントリスナーの追加
 document.querySelectorAll('.square').forEach(square => {
     square.addEventListener('dragstart', handleDragStart);
+
+square.addEventListener('touchstart', handleDragStart);
     square.addEventListener('dragover', handleDragOver);
     square.addEventListener('drop', handleDrop);
 });
