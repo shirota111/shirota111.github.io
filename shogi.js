@@ -130,37 +130,3 @@ function handleDrop(event) {
 
 
 
-function movePieceOnTouch(event) {
-    // スマホ用の駒移動処理
-}
-
-let touchStartIndex;
-let touchEndIndex;
-
-
-function handleTouchStart(event) {
-    const square = event.target.closest('.square');
-    touchStartIndex = square.dataset.index;
-    event.target.addEventListener('touchmove', handleTouchMove);
-}
-
-function handleTouchMove(event) {
-    event.preventDefault();
-    // タッチ移動時の処理
-}
-
-function handleTouchEnd(event) {
-    const newSquare = document.elementFromPoint(event.changedTouches[0].clientX, event.changedTouches[0].clientY).closest('.square');
-    touchEndIndex = newSquare ? newSquare.dataset.index : null;
-
-    if (touchStartIndex && touchEndIndex && touchStartIndex !== touchEndIndex) {
-        // 駒を移動する処理
-        movePieceOnTouch(event);
-    }
-    event.target.removeEventListener('touchmove', handleTouchMove);
-}
-
-document.querySelectorAll('.piece').forEach(piece => {
-    piece.addEventListener('touchstart', handleTouchStart);
-    piece.addEventListener('touchend', handleTouchEnd);
-});
