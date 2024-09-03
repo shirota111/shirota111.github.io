@@ -95,14 +95,6 @@ function convertPosition(position) {
  
  
 
-
-
-
-
-
-////追記
-
-
 // ドラッグ開始イベントの処理
 function handleDragStart(event) {
     const square = event.target.closest('.square');  // 駒の親要素であるマスを取得
@@ -136,51 +128,6 @@ function handleDrop(event) {
     newSquare.appendChild(pieceElement);  // 新しい位置に駒を追加
 }
 
-// タッチ開始イベントの処理 (スマホ用)
-function handleTouchStart(event) {
-    const square = event.target.closest('.square');  // 駒の親要素であるマスを取得
-    event.dataTransfer = { setData: (type, data) => { event.target.dataset.dragIndex = data; } };
-    handleDragStart(event);  // ドラッグ開始の処理を呼び出し
-    event.target.dataset.dragIndex = square.dataset.index;  // ドラッグ開始時にマスのインデックスを保存
-}
 
-// タッチ移動イベントの処理 (スマホ用)
-function handleTouchMove(event) {
-    event.preventDefault();  // タッチ移動時のデフォルト動作を無効化
-}
 
-// タッチ終了イベントの処理 (スマホ用)
-function handleTouchEnd(event) {
-    const newSquare = document.elementFromPoint(event.changedTouches[0].clientX, event.changedTouches[0].clientY).closest('.square');  // タッチ終了位置のマスを取得
-    if (newSquare) {
-        const oldIndex = event.target.dataset.dragIndex;  // ドラッグ元のインデックスを取得
-        const newIndex = newSquare.dataset.index;  // ドロップ先のインデックスを取得
 
-        if (oldIndex === undefined || newIndex === undefined || oldIndex === newIndex) return;  // 無効な操作は無視
-
-        // ドラッグ元とドロップ先のマスを取得
-        const oldSquare = document.querySelector(`.square[data-index='${oldIndex}']`);
-        if (!oldSquare || !newSquare) return;  // マスが見つからない場合は処理を中断
-
-        // ドラッグされた駒を取得
-        const pieceElement = oldSquare.querySelector('.piece');
-        if (!pieceElement) return;  // 駒が見つからない場合は処理を中断
-
-        // 駒を新しい位置に移動
-        oldSquare.removeChild(pieceElement);  // 元の位置から駒を削除
-        newSquare.appendChild(pieceElement);  // 新しい位置に駒を追加
-    }
-}
-
-// イベントリスナーの追加
-document.querySelectorAll('.piece').forEach(piece => {
-    piece.addEventListener('dragstart', handleDragStart);
-    piece.addEventListener('touchstart', handleTouchStart);  // スマホ用のタッチ開始イベント
-    piece.addEventListener('touchmove', handleTouchMove);  // スマホ用のタッチ移動イベント
-    piece.addEventListener('touchend', handleTouchEnd);  // スマホ用のタッチ終了イベント
-});
-
-document.querySelectorAll('.square').forEach(square => {
-    square.addEventListener('dragover', handleDragOver);
-    square.addEventListener('drop', handleDrop);
-});
