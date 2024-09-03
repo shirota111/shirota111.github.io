@@ -27,10 +27,6 @@ for (let i = 0; i < 81; i++) {  // 9x9の将棋盤の81個のマスを生成す�
         square.appendChild(verticalLabel);  // マス目に垂直ラベルを追加
     }
 
-    // 駒移動のためのイベントリスナーを追加
-    square.addEventListener('dragover', handleDragOver);  // 駒がドラッグされたときの処理を追加
-    square.addEventListener('drop', handleDrop);  // 駒がドロップされたときの処理を追加
-
     board.appendChild(square);  // 作成したマス目を将棋盤に追加
 }
 
