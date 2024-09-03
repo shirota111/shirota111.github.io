@@ -132,6 +132,8 @@ function handleDrop(event) {
     newSquare.appendChild(pieceElement);  // 新しい位置に駒を追加
 }
 
+///追記
+
 // イベントリスナーの追加
 document.querySelectorAll('.square').forEach(square => {
     square.addEventListener('dragstart', handleDragStart);
@@ -141,3 +143,78 @@ square.addEventListener('touchstart', handleDragStart);
     square.addEventListener('drop', handleDrop);
 });
 
+// ドラッグ開始イベントの処理 (PC)
+function handleDragStart(event) {
+    const square = event.target.closest('.square');  // 駒の親要素であるマスを取得
+    event.dataTransfer.setData('text/plain', square.dataset.index);  // ドラッグ開始時にマスのインデックスを保存
+}
+
+// ドラッグオーバーイベントの処理 (PC)
+function handleDragOver(event) {
+    event.preventDefault();  // ドラッグオーバー時のデフォルト動作を無効化
+}
+
+// ドロップイベントの処理 (PC)
+function handleDrop(event) {
+    event.preventDefault();  // ドロップ時のデフォルト動作を無効化
+    const oldIndex = event.dataTransfer.getData('text/plain');  // ドラッグ元のインデックスを取得
+    const newSquare = event.target.closest('.square');  // ドロップ先のマスを取得
+    const newIndex = newSquare.dataset.index;  // ドロップ先のインデックスを取得
+
+    if (oldIndex === undefined || newIndex === undefined || oldIndex === newIndex) return;  // 無効な操作は無視
+
+    const oldSquare = document.querySelector(`.square[data-index='${oldIndex}']`);
+    if (!oldSquare || !newSquare) return;  // マスが見つからない場合は処理を中断
+
+    const pieceElement = oldSquare.querySelector('.piece');
+    if (!pieceElement) return;  // 駒が見つからない場合は処理を中断
+
+    oldSquare.removeChild(pieceElement);  // 元の位置から駒を削除
+    newSquare.appendChild(pieceElement);  // 新しい位置に駒を追加
+}
+
+// タッチ開始イベントの処理 (スマホ)
+function handleTouchStart(event) {
+    event.preventDefault();  // デフォルトのタッチ操作を無効化
+    const square = event.target.closest('.square');
+    square.dataset.touchIndex = square.dataset.index;  // タッチ開始時にマスのインデックスを保存
+}
+
+// タッチ移動イベントの処理 (スマホ)
+function handleTouchMove(event) {
+    event.preventDefault();  // デフォルトのタッチ操作を無効化
+    // 必要に応じてタッチ操作を視覚的に表現する処理をここに記述
+}
+
+// タッチ終了イベントの処理 (スマホ)
+function handleTouchEnd(event) {
+    event.preventDefault();  // デフォルトのタッチ操作を無効化
+    const newSquare = event.target.closest('.square');  // タッチ終了時のドロップ先を取得
+    const oldIndex = event.target.dataset.touchIndex;  // タッチ開始時に保存したインデックスを取得
+    const newIndex = newSquare.dataset.index;  // タッチ終了時のインデックスを取得
+
+    if (oldIndex === undefined || newIndex === undefined || oldIndex === newIndex) return;
+
+    const oldSquare = document.querySelector(`.square[data-index='${oldIndex}']`);
+    if (!oldSquare || !newSquare) return;
+
+    const pieceElement = oldSquare.querySelector('.piece');
+    if (!pieceElement) return;
+
+    oldSquare.removeChild(pieceElement);
+    newSquare.appendChild(pieceElement);
+}
+
+// イベントリスナーの追加 (PC)
+document.querySelectorAll('.square').forEach(square => {
+    square.addEventListener('dragstart', handleDragStart);
+    square.addEventListener('dragover', handleDragOver);
+    square.addEventListener('drop', handleDrop);
+});
+
+// イベントリスナーの追加 (スマホ)
+document.querySelectorAll('.square').forEach(square => {
+    square.addEventListener('touchstart', handleTouchStart);
+    square.addEventListener('touchmove', handleTouchMove);
+    square.addEventListener('touchend', handleTouchEnd);
+});
