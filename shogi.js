@@ -190,10 +190,10 @@ function getRangeForPiece(pieceType, index) {
     const range = [];
 
     switch (pieceType) {
-        case 'ITオタ':  // 歩兵の例
+        case '一般人':  // 歩兵の例
             if (row > 0) range.push((row - 1) * 9 + col);  // 前方1マス
             break;
-        case 'おっぱい侍':  // 角の例
+        case '乙π侍':  // 角の例
             for (let i = 1; i < 9; i++) {
                 if (row + i < 9 && col + i < 9) range.push((row + i) * 9 + (col + i));  // 右下
                 if (row - i >= 0 && col + i < 9) range.push((row - i) * 9 + (col + i));  // 右上
@@ -201,7 +201,7 @@ function getRangeForPiece(pieceType, index) {
                 if (row - i >= 0 && col - i >= 0) range.push((row - i) * 9 + (col - i));  // 左上
             }
             break;
-        case 'プロ無能':  // 飛車の例
+        case 'Ama無能':  // 飛車の例
             for (let i = 1; i < 9; i++) {
                 if (row + i < 9) range.push((row + i) * 9 + col);  // 下
                 if (row - i >= 0) range.push((row - i) * 9 + col);  // 上
