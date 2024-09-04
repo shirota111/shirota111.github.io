@@ -39,7 +39,7 @@ const komaData = [
     { piece: '一般人', position: '7A'},
     { piece: '一般人', position: '7B'},
     { piece: '一般人', position: '7C'},
-    { piece: '社長', position: '7D'},
+    { piece: '黒社長', position: '7D'},
     { piece: '社畜', position: '7E'},
     { piece: '一般人', position: '7F'},
     { piece: '一般人', position: '7G'},
@@ -175,6 +175,17 @@ function highlightMoveRange(index) {
         const moveIndex = index - 9;  // 「一般人」は1マス前進（上方向）
         if (moveIndex >= 0) moveIndices.push(moveIndex);
     }
+
+    if (piece.classList.contains('黒社長')) {
+        const moveIndex = index - 9;  // 「黒社長」は1マス前進（上方向）
+        if (moveIndex >= 0) moveIndices.push(moveIndex);
+    }
+
+    if (piece.classList.contains('社畜')) {
+        const moveIndex = index - 9;  // 「一般人」は1マス前進（上方向）
+        if (moveIndex >= 0) moveIndices.push(moveIndex);
+    }
+
 
     
     // 他の駒の移動範囲もここに追加（例：『朕』などの特殊駒の処理）
