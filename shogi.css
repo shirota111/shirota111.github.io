@@ -10,6 +10,7 @@
         border: 2px solid #000;
         background-color: #f0d9b5; /* 将棋盤の背景色 */
         position: relative;
+overflow: hidden; /* スクロールを無効化 */
     }
 
     /* 各マスのスタイル */
