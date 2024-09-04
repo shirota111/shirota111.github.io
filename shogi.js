@@ -129,4 +129,53 @@ function handleDrop(event) {
 }
 
 
+// クリックイベントの処理
+function handleClick(event) {
+    const rect = board.getBoundingClientRect();  // 将棋盤の位置とサイズを取得
+    const x = event.clientX - rect.left;  // クリックされた位置のX座標を計算
+    const y = event.clientY - rect.top;   // クリックされた位置のY座標を計算
 
+    const squareSize = rect.width / 9;  // 1マスのサイズを計算
+    const col = Math.floor(x / squareSize);  // 列番号を計算（0から8）
+    const row = Math.floor(y / squareSize);  // 行番号を計算（0から8）
+
+    const clickedIndex = row * 9 + col;  // インデックスに変換
+
+    highlightMoveRange(clickedIndex);  // 移動範囲をハイライトする関数を呼び出し
+}
+
+// 盤面全体にクリックイベントを設定
+board.addEventListener('click', handleClick);
+
+
+// 移動範囲をハイライトする関数
+function highlightMoveRange(index) {
+    clearHighlights();  // 既存のハイライトをクリア
+
+    const square = board.children[index];  // クリックされたマスを取得
+    const piece = square.querySelector('.piece');  // 駒を取得
+
+    if (!piece) return;  // 駒がない場合は終了
+
+    let moveIndices = [];  // ハイライトするインデックスを格納する配列
+
+    if (piece.classList.contains('一般人')) {
+        const moveIndex = index - 9;  // 「一般人」は1マス前進（上方向）
+        if (moveIndex >= 0) moveIndices.push(moveIndex);
+    }
+
+    // 他の駒の移動範囲もここに追加（例：『朕』などの特殊駒の処理）
+
+    // ハイライトを適用
+    moveIndices.forEach(idx => {
+        const targetSquare = board.children[idx];
+        targetSquare.classList.add('highlight');
+    });
+}
+
+// ハイライトをクリアする関数
+function clearHighlights() {
+    document.querySelectorAll('.highlight').forEach(square => {
+        square.classList.remove('highlight');
+    });
+}
