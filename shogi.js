@@ -27,6 +27,10 @@ for (let i = 0; i < 81; i++) {  // 9x9の将棋盤の81個のマスを生成す�
         square.appendChild(verticalLabel);  // マス目に垂直ラベルを追加
     }
 
+    // 駒移動のためのイベントリスナーを追加
+    square.addEventListener('dragover', handleDragOver);  // 駒がドラッグされたときの処理を追加
+    square.addEventListener('drop', handleDrop);  // 駒がドロップされたときの処理を追加
+
     board.appendChild(square);  // 作成したマス目を将棋盤に追加
 }
 
@@ -128,6 +132,12 @@ function handleDrop(event) {
     newSquare.appendChild(pieceElement);  // 新しい位置に駒を追加
 }
 
+// イベントリスナーの追加
+document.querySelectorAll('.square').forEach(square => {
+    square.addEventListener('dragstart', handleDragStart);
+    square.addEventListener('dragover', handleDragOver);
+    square.addEventListener('drop', handleDrop);
+});
 
 //追記
 
@@ -165,8 +175,6 @@ function highlightMoveRange(index) {
         const moveIndex = index - 9;  // 「一般人」は1マス前進（上方向）
         if (moveIndex >= 0) moveIndices.push(moveIndex);
     }
-
-    // 他の駒の移動範囲もここに追加（例：『朕』などの特殊駒の処理）
 
     
     // 他の駒の移動範囲もここに追加（例：『朕』などの特殊駒の処理）
@@ -371,5 +379,3 @@ function handlePieceClick(event) {
         }
     });
 }
-
-
