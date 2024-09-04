@@ -181,3 +181,72 @@ function clearHighlights() {
         square.classList.remove('highlight');
     });
 }
+
+//個別駒の移動範囲定義
+
+function getRangeForPiece(pieceType, index) {
+    const row = Math.floor(index / 9);
+    const col = index % 9;
+    const range = [];
+
+    switch (pieceType) {
+        case 'ITオタ':  // 歩兵の例
+            if (row > 0) range.push((row - 1) * 9 + col);  // 前方1マス
+            break;
+        case 'おっぱい侍':  // 角の例
+            for (let i = 1; i < 9; i++) {
+                if (row + i < 9 && col + i < 9) range.push((row + i) * 9 + (col + i));  // 右下
+                if (row - i >= 0 && col + i < 9) range.push((row - i) * 9 + (col + i));  // 右上
+                if (row + i < 9 && col - i >= 0) range.push((row + i) * 9 + (col - i));  // 左下
+                if (row - i >= 0 && col - i >= 0) range.push((row - i) * 9 + (col - i));  // 左上
+            }
+            break;
+        case 'プロ無能':  // 飛車の例
+            for (let i = 1; i < 9; i++) {
+                if (row + i < 9) range.push((row + i) * 9 + col);  // 下
+                if (row - i >= 0) range.push((row - i) * 9 + col);  // 上
+                if (col + i < 9) range.push(row * 9 + (col + i));  // 右
+                if (col - i >= 0) range.push(row * 9 + (col - i));  // 左
+            }
+            break;
+        case '朕':  // 王将の例
+            for (let dr = -1; dr <= 1; dr++) {
+                for (let dc = -1; dc <= 1; dc++) {
+                    const newRow = row + dr;
+                    const newCol = col + dc;
+                    if (newRow >= 0 && newRow < 9 && newCol >= 0 && newCol < 9) {
+                        range.push(newRow * 9 + newCol);
+                    }
+                }
+            }
+            break;
+        // 他の駒も同様に追加
+    }
+    return range;
+}
+
+//個別駒の移動範囲ハイライト定義
+
+// 駒をクリックしたときのイベントリスナー
+function handlePieceClick(event) {
+    const pieceElement = event.target;  // クリックされた駒の要素
+    const square = pieceElement.closest('.square');  // 駒が属するマス
+    const index = parseInt(square.dataset.index);  // マスのインデックス
+
+    // 駒の種類を取得（例: データ属性やクラス名から）
+    const pieceType = pieceElement.dataset.pieceType;
+
+    // 既にハイライトされている範囲をクリア
+    clearHighlight();
+
+    // 駒の種類に応じた範囲を取得してハイライト
+    const range = getRangeForPiece(pieceType, index);
+    range.forEach(i => {
+        const squareToHighlight = document.querySelector(`.square[data-index='${i}']`);
+        if (squareToHighlight) {
+            squareToHighlight.classList.add('highlight');
+        }
+    });
+}
+
+
