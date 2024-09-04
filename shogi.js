@@ -168,6 +168,129 @@ function highlightMoveRange(index) {
 
     // 他の駒の移動範囲もここに追加（例：『朕』などの特殊駒の処理）
 
+    
+    // 他の駒の移動範囲もここに追加（例：『朕』などの特殊駒の処理）
+    if (piece.classList.contains('朕')) {
+        // 朕は全方向に1マス移動可能
+        const possibleMoves = [-1, 1, -9, 9, -10, 10, -8, 8];  // 上下左右および斜めの移動
+        possibleMoves.forEach(offset => {
+            const moveIndex = index + offset;
+            // 有効な範囲かチェック（盤面外を除外）
+            if (moveIndex >= 0 && moveIndex < 81) {  
+                moveIndices.push(moveIndex);
+            }
+        });
+    }
+
+
+// Ama無能(角)の移動範囲を計算
+if (piece.classList.contains('Ama無能')) {
+    // Ama無能(角)は4つの斜め方向に最大9マス移動可能
+    const directions = [
+        { offset: -10, maxSteps: 9 }, // 右上に最大9マス移動
+        { offset: -8, maxSteps: 9 },  // 左上に最大9マス移動
+        { offset: 8, maxSteps: 9 },   // 右下に最大9マス移動
+        { offset: 10, maxSteps: 9 }   // 左下に最大9マス移動
+    ];
+
+    directions.forEach(direction => {
+        let moveIndex = index + direction.offset;
+        let steps = 0;
+
+        while (moveIndex >= 0 && moveIndex < 81 && steps < direction.maxSteps) {
+            moveIndices.push(moveIndex);
+
+            // 行境界を越えるか確認（斜め移動時のみ）
+            if ((direction.offset === -10 || direction.offset === 10 || direction.offset === -8 || direction.offset === 8) &&
+                Math.abs(Math.floor(moveIndex / 9) - Math.floor((moveIndex - direction.offset) / 9)) !== 1) {
+                break;  // 斜め移動が境界を超えた場合は終了
+            }
+
+            moveIndex += direction.offset;
+            steps++;
+        }
+    });
+}
+
+// 乙π侍(飛車)の移動範囲を計算
+if (piece.classList.contains('乙π侍')) {
+    // 乙π侍(飛車)は上下に最大9マス、左右に最大8マス移動可能
+    const directions = [
+        { offset: -9, maxSteps: 9 }, // 上方向に最大9マス
+        { offset: 9, maxSteps: 9 },  // 下方向に最大9マス
+        { offset: -1, maxSteps: 9 }, // 左方向に最大8マス
+        { offset: 1, maxSteps: 9 }   // 右方向に最大8マス
+    ];
+
+    directions.forEach(direction => {
+        let moveIndex = index + direction.offset;
+        let steps = 0;
+
+        while (moveIndex >= 0 && moveIndex < 81 && steps < direction.maxSteps) {
+            moveIndices.push(moveIndex);
+
+            // 行境界を越えるか確認（左右移動時のみ）
+            if ((direction.offset === -1 || direction.offset === 1) &&
+                Math.floor(moveIndex / 9) !== Math.floor((moveIndex - direction.offset) / 9)) {
+                break;  // 横移動が境界を超えた場合は終了
+            }
+
+            moveIndex += direction.offset;
+            steps++;
+        }
+    });
+}
+// 野珍 (香車) の移動範囲を計算
+if (piece.classList.contains('野珍')) {
+    // 香車は縦方向に盤面の端まで移動可能
+    let moveIndex = index - 9;
+    while (moveIndex >= 0) {
+        moveIndices.push(moveIndex);
+        moveIndex -= 9;  // 上方向にさらに移動
+    }
+}
+
+// 狸馬 (桂馬) の移動範囲を計算
+if (piece.classList.contains('狸馬')) {
+    // 桂馬は2マス進み、1マス横にずれる動き
+    const possibleMoves = [-17, -11];  // 2上1右, 2上1左
+    possibleMoves.forEach(offset => {
+        const moveIndex = index + offset;
+        // 有効な範囲かチェック
+        if (moveIndex >= 0 && moveIndex < 81 && 
+            Math.abs(Math.floor(index / 9) - Math.floor(moveIndex / 9)) === 2) {
+            moveIndices.push(moveIndex);
+        }
+    });
+}
+
+// 訓兄 (金) の移動範囲を計算
+if (piece.classList.contains('訓兄')) {
+    // 金は前進、前斜め、左右、後退できる
+    const possibleMoves = [-9, -8, -10, -1, 1, 9];  // 上, 右上, 左上, 左, 右, 下
+    possibleMoves.forEach(offset => {
+        const moveIndex = index + offset;
+        // 有効な範囲かチェック
+        if (moveIndex >= 0 && moveIndex < 81) {
+            moveIndices.push(moveIndex);
+        }
+    });
+}
+
+// 猿短 (銀) の移動範囲を計算
+if (piece.classList.contains('猿短')) {
+    // 銀は前進、前斜め、後ろ斜めに移動可能
+    const possibleMoves = [-9, -8, -10, 8, 10];  // 上, 右上, 左上, 右下, 左下
+    possibleMoves.forEach(offset => {
+        const moveIndex = index + offset;
+        // 有効な範囲かチェック
+        if (moveIndex >= 0 && moveIndex < 81) {
+            moveIndices.push(moveIndex);
+        }
+    });
+}
+
+
     // ハイライトを適用
     moveIndices.forEach(idx => {
         const targetSquare = board.children[idx];
