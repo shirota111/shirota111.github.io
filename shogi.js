@@ -129,6 +129,8 @@ function handleDrop(event) {
 }
 
 
+//追記
+
 // クリックイベントの処理
 function handleClick(event) {
     const rect = board.getBoundingClientRect();  // 将棋盤の位置とサイズを取得
