@@ -72,6 +72,9 @@
     }
 
     /* 移動可能範囲のスタイル */
-    .highlight {
-        background-color: rgba(0, 255, 0, 0.5); /* 半透明の緑色 */
-    }
+    
+
+.square.highlight {
+    background-color: rgba(0, 255, 0, 0.5); /* 半透明の緑色 */
+ ;  // ハイライト色を設定
+}
