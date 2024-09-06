@@ -3,55 +3,99 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coordinate Transformation</title>
+  <title>Coordinate Transformation Visualization</title>
   <style>
-    #output {
+    body {
       font-family: Arial, sans-serif;
-      margin: 20px;
+    }
+    #canvas-container {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      border: 1px solid #000;
+    }
+    .axis {
+      position: absolute;
+      border: 1px solid #000;
+      background: transparent;
+    }
+    .origin {
+      position: absolute;
+      background: red;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
     }
   </style>
 </head>
 <body>
-  <h1>Coordinate Transformation</h1>
-  <div id="output"></div>
-
+  <h1>Coordinate Transformation Visualization</h1>
+  <div id="canvas-container">
+    <div id="origin" class="origin"></div>
+    <div id="x-axis" class="axis"></div>
+    <div id="y-axis" class="axis"></div>
+  </div>
   <script>
-    // ウィンドウサイズ
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
+    const container = document.getElementById('canvas-container');
+    const originDiv = document.getElementById('origin');
+    const xAxisDiv = document.getElementById('x-axis');
+    const yAxisDiv = document.getElementById('y-axis');
+    
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
+    
+    // 原点位置設定
+    const originX = containerWidth / 2;
+    const originY = containerHeight / 2;
 
-    // デカルト座標系の原点とスケール
-    const cartesianOriginX = windowWidth / 2;
-    const cartesianOriginY = windowHeight / 2;
-    const scale = 100; // スケール係数
+    originDiv.style.left = `${originX - 2.5}px`;
+    originDiv.style.top = `${originY - 2.5}px`;
+    
+    // X軸とY軸を描画
+    xAxisDiv.style.left = '0px';
+    xAxisDiv.style.top = `${originY}px`;
+    xAxisDiv.style.width = `${containerWidth}px`;
+    xAxisDiv.style.height = '1px';
 
-    // ウィンドウ座標からデカルト座標に変換
+    yAxisDiv.style.left = `${originX}px`;
+    yAxisDiv.style.top = '0px';
+    yAxisDiv.style.width = '1px';
+    yAxisDiv.style.height = `${containerHeight}px`;
+    
+    // デモ用の座標点
+    const windowCoord = { x: 150, y: 200 };
+    const cartesianCoord = windowToCartesian(windowCoord.x, windowCoord.y);
+    const backToWindowCoord = cartesianToWindow(cartesianCoord.x, cartesianCoord.y);
+
     function windowToCartesian(wx, wy) {
-      const dx = (wx - cartesianOriginX) / scale;
-      const dy = (cartesianOriginY - wy) / scale;
+      const dx = (wx - originX) / 100;
+      const dy = (originY - wy) / 100;
       return { x: dx, y: dy };
     }
 
-    // デカルト座標からウィンドウ座標に変換
     function cartesianToWindow(dx, dy) {
-      const wx = dx * scale + cartesianOriginX;
-      const wy = cartesianOriginY - dy * scale;
+      const wx = dx * 100 + originX;
+      const wy = originY - dy * 100;
       return { x: wx, y: wy };
     }
 
-    // 例として、ウィンドウ座標 (150, 200) をデカルト座標に変換
-    const windowCoord = { x: 150, y: 200 };
-    const cartesianCoord = windowToCartesian(windowCoord.x, windowCoord.y);
+    // 描画デモ用の点
+    function drawPoint(x, y, color) {
+      const point = document.createElement('div');
+      point.style.position = 'absolute';
+      point.style.background = color;
+      point.style.width = '10px';
+      point.style.height = '10px';
+      point.style.borderRadius = '50%';
+      point.style.left = `${x - 5}px`;
+      point.style.top = `${y - 5}px`;
+      container.appendChild(point);
+    }
 
-    // デカルト座標からウィンドウ座標に変換
-    const backToWindowCoord = cartesianToWindow(cartesianCoord.x, cartesianCoord.y);
-
-    // 結果を表示
-    document.getElementById('output').innerHTML = `
-      <p><strong>Original Window Coordinates:</strong> (${windowCoord.x}, ${windowCoord.y})</p>
-      <p><strong>Converted Cartesian Coordinates:</strong> (${cartesianCoord.x.toFixed(2)}, ${cartesianCoord.y.toFixed(2)})</p>
-      <p><strong>Converted Back to Window Coordinates:</strong> (${backToWindowCoord.x.toFixed(2)}, ${backToWindowCoord.y.toFixed(2)})</p>
-    `;
+    drawPoint(originX, originY, 'red'); // 原点
+    drawPoint(windowCoord.x, windowCoord.y, 'blue'); // ウィンドウ座標
+    drawPoint(cartesianCoord.x * 100 + originX, originY - cartesianCoord.y * 100, 'green'); // デカルト座標
+    drawPoint(backToWindowCoord.x, backToWindowCoord.y, 'purple'); // 戻り値
   </script>
 </body>
 </html>
