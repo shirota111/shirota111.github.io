@@ -1,10 +1,19 @@
 const svg = document.getElementById('svgCanvas');
-const centerX = 300;
-const centerY = 300;
-const scale = 100;
+const viewBoxSize = 1000; // SVGのviewBoxサイズ
+const scale = viewBoxSize / 10; // スケールファクター
+
+// キャンバスサイズの取得
+function getCanvasSize() {
+  return { width: svg.clientWidth, height: svg.clientHeight };
+}
 
 // ベクトルを描画する関数
 function drawVector(x, y, color, label) {
+  const { width, height } = getCanvasSize();
+  const centerX = width / 2;
+  const centerY = height / 2;
+
+  // SVG座標系に変換
   const endX = centerX + x * scale;
   const endY = centerY - y * scale;
 
@@ -59,10 +68,11 @@ drawVector(vectorY.x, vectorY.y, 'green', 'y');
 drawVectorSum([vectorX, vectorY]);
 
 // 合成ベクトルを描画するためにベクトル合成の線を描画
-const endX = centerX + vectorX.x * scale;
-const endY = centerY - vectorX.y * scale;
-const sumEndX = centerX + (vectorX.x + vectorY.x) * scale;
-const sumEndY = centerY - (vectorX.y + vectorY.y) * scale;
+const { width, height } = getCanvasSize();
+const endX = width / 2 + vectorX.x * scale;
+const endY = height / 2 - vectorX.y * scale;
+const sumEndX = width / 2 + (vectorX.x + vectorY.x) * scale;
+const sumEndY = height / 2 - (vectorX.y + vectorY.y) * scale;
 
 const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
 line.setAttribute('x1', endX);
