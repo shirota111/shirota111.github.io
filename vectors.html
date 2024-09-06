@@ -1,13 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>3D Car Drawing</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coordinate Transformation</title>
   <style>
-    canvas { border: 1px solid black; display: block; margin: auto; }
+    #output {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
   </style>
 </head>
 <body>
-  <canvas id="carCanvas" width="800" height="600"></canvas>
-  <script src="car.js"></script>
+  <h1>Coordinate Transformation</h1>
+  <div id="output"></div>
+
+  <script>
+    // ウィンドウサイズ
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    // デカルト座標系の原点とスケール
+    const cartesianOriginX = windowWidth / 2;
+    const cartesianOriginY = windowHeight / 2;
+    const scale = 100; // スケール係数
+
+    // ウィンドウ座標からデカルト座標に変換
+    function windowToCartesian(wx, wy) {
+      const dx = (wx - cartesianOriginX) / scale;
+      const dy = (cartesianOriginY - wy) / scale;
+      return { x: dx, y: dy };
+    }
+
+    // デカルト座標からウィンドウ座標に変換
+    function cartesianToWindow(dx, dy) {
+      const wx = dx * scale + cartesianOriginX;
+      const wy = cartesianOriginY - dy * scale;
+      return { x: wx, y: wy };
+    }
+
+    // 例として、ウィンドウ座標 (150, 200) をデカルト座標に変換
+    const windowCoord = { x: 150, y: 200 };
+    const cartesianCoord = windowToCartesian(windowCoord.x, windowCoord.y);
+
+    // デカルト座標からウィンドウ座標に変換
+    const backToWindowCoord = cartesianToWindow(cartesianCoord.x, cartesianCoord.y);
+
+    // 結果を表示
+    document.getElementById('output').innerHTML = `
+      <p><strong>Original Window Coordinates:</strong> (${windowCoord.x}, ${windowCoord.y})</p>
+      <p><strong>Converted Cartesian Coordinates:</strong> (${cartesianCoord.x.toFixed(2)}, ${cartesianCoord.y.toFixed(2)})</p>
+      <p><strong>Converted Back to Window Coordinates:</strong> (${backToWindowCoord.x.toFixed(2)}, ${backToWindowCoord.y.toFixed(2)})</p>
+    `;
+  </script>
 </body>
 </html>
