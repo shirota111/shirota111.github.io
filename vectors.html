@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coordinate Transformation Visualization</title>
+  <title>Triangle Drawing</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -14,88 +14,50 @@
       height: 500px;
       border: 1px solid #000;
     }
-    .axis {
+    .triangle {
       position: absolute;
-      border: 1px solid #000;
-      background: transparent;
-    }
-    .origin {
-      position: absolute;
-      background: red;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
+      width: 0;
+      height: 0;
+      border-style: solid;
     }
   </style>
 </head>
 <body>
-  <h1>Coordinate Transformation Visualization</h1>
-  <div id="canvas-container">
-    <div id="origin" class="origin"></div>
-    <div id="x-axis" class="axis"></div>
-    <div id="y-axis" class="axis"></div>
-  </div>
+  <h1>Triangle Drawing</h1>
+  <div id="canvas-container"></div>
   <script>
     const container = document.getElementById('canvas-container');
-    const originDiv = document.getElementById('origin');
-    const xAxisDiv = document.getElementById('x-axis');
-    const yAxisDiv = document.getElementById('y-axis');
-    
     const containerWidth = container.clientWidth;
     const containerHeight = container.clientHeight;
-    
-    // 原点位置設定
-    const originX = containerWidth / 2;
-    const originY = containerHeight / 2;
 
-    originDiv.style.left = `${originX - 2.5}px`;
-    originDiv.style.top = `${originY - 2.5}px`;
-    
-    // X軸とY軸を描画
-    xAxisDiv.style.left = '0px';
-    xAxisDiv.style.top = `${originY}px`;
-    xAxisDiv.style.width = `${containerWidth}px`;
-    xAxisDiv.style.height = '1px';
+    // 三角形の頂点座標
+    const vertices = [
+      { x: containerWidth / 4, y: containerHeight / 4 }, // 頂点A
+      { x: containerWidth / 2, y: containerHeight / 4 * 3 }, // 頂点B
+      { x: containerWidth / 4 * 3, y: containerHeight / 4 } // 頂点C
+    ];
 
-    yAxisDiv.style.left = `${originX}px`;
-    yAxisDiv.style.top = '0px';
-    yAxisDiv.style.width = '1px';
-    yAxisDiv.style.height = `${containerHeight}px`;
-    
-    // デモ用の座標点
-    const windowCoord = { x: 150, y: 200 };
-    const cartesianCoord = windowToCartesian(windowCoord.x, windowCoord.y);
-    const backToWindowCoord = cartesianToWindow(cartesianCoord.x, cartesianCoord.y);
+    // 三角形を描画するための関数
+    function drawTriangle(vertices) {
+      const [v1, v2, v3] = vertices;
+      
+      // 三角形を描くためにCSSボーダーを使う
+      const triangle = document.createElement('div');
+      triangle.style.position = 'absolute';
+      triangle.style.width = '0';
+      triangle.style.height = '0';
+      triangle.style.borderStyle = 'solid';
+      triangle.style.borderWidth = `${Math.sqrt(Math.pow(v2.x - v1.x, 2) + Math.pow(v2.y - v1.y, 2))}px ${Math.sqrt(Math.pow(v3.x - v2.x, 2) + Math.pow(v3.y - v2.y, 2))}px ${Math.sqrt(Math.pow(v1.x - v3.x, 2) + Math.pow(v1.y - v3.y, 2))}px`;
+      triangle.style.borderColor = `transparent transparent transparent blue`; // 青色の三角形
 
-    function windowToCartesian(wx, wy) {
-      const dx = (wx - originX) / 100;
-      const dy = (originY - wy) / 100;
-      return { x: dx, y: dy };
+      // 三角形の位置を設定
+      triangle.style.top = `${Math.min(v1.y, v2.y, v3.y)}px`;
+      triangle.style.left = `${Math.min(v1.x, v2.x, v3.x)}px`;
+
+      container.appendChild(triangle);
     }
 
-    function cartesianToWindow(dx, dy) {
-      const wx = dx * 100 + originX;
-      const wy = originY - dy * 100;
-      return { x: wx, y: wy };
-    }
-
-    // 描画デモ用の点
-    function drawPoint(x, y, color) {
-      const point = document.createElement('div');
-      point.style.position = 'absolute';
-      point.style.background = color;
-      point.style.width = '10px';
-      point.style.height = '10px';
-      point.style.borderRadius = '50%';
-      point.style.left = `${x - 5}px`;
-      point.style.top = `${y - 5}px`;
-      container.appendChild(point);
-    }
-
-    drawPoint(originX, originY, 'red'); // 原点
-    drawPoint(windowCoord.x, windowCoord.y, 'blue'); // ウィンドウ座標
-    drawPoint(cartesianCoord.x * 100 + originX, originY - cartesianCoord.y * 100, 'green'); // デカルト座標
-    drawPoint(backToWindowCoord.x, backToWindowCoord.y, 'purple'); // 戻り値
+    drawTriangle(vertices);
   </script>
 </body>
 </html>
