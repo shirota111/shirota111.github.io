@@ -1,61 +1,89 @@
-const canvas = document.getElementById('carCanvas');
-const ctx = canvas.getContext('2d');
+const calendar = document.getElementById('calendar');
+const monthSelector = document.getElementById('monthSelector');
+const todoList = document.getElementById('todo-list');
+const todos = {};
 
-// パースペクティブの中心とスケール
-const perspectiveCenter = { x: canvas.width / 2, y: canvas.height / 2 };
-const scale = 100; // 立体感を調整するスケール
+// 月の名前を設定
+const months = ["January", "February", "March", "April", "May", "June", 
+                "July", "August", "September", "October", "November", "December"];
 
-// 車体を描画する関数
-function drawCar() {
-  // 車の前面と背面の座標を定義
-  const front = [
-    { x: -1 * scale, y: 1 * scale, z: 0 },
-    { x: 1 * scale, y: 1 * scale, z: 0 },
-    { x: 1 * scale, y: -1 * scale, z: 0 },
-    { x: -1 * scale, y: -1 * scale, z: 0 }
-  ];
+// 月セレクターを設定
+months.forEach((month, index) => {
+    const option = document.createElement('option');
+    option.value = index;
+    option.text = month;
+    monthSelector.appendChild(option);
+});
 
-  const back = [
-    { x: -0.5 * scale, y: 0.5 * scale, z: -0.5 * scale },
-    { x: 0.5 * scale, y: 0.5 * scale, z: -0.5 * scale },
-    { x: 0.5 * scale, y: -0.5 * scale, z: -0.5 * scale },
-    { x: -0.5 * scale, y: -0.5 * scale, z: -0.5 * scale }
-  ];
+// カレンダー生成
+function generateCalendar(month, year) {
+    calendar.innerHTML = '';
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    let date = 1;
 
-  const allVertices = front.concat(back);
+    // テーブルヘッダー
+    const headerRow = calendar.insertRow();
+    ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].forEach(day => {
+        const th = document.createElement('th');
+        th.innerText = day;
+        headerRow.appendChild(th);
+    });
 
-  // パースペクティブ変換
-  function project(vertex) {
-    const scaleFactor = scale / (scale + vertex.z);
-    return {
-      x: perspectiveCenter.x + vertex.x * scaleFactor,
-      y: perspectiveCenter.y - vertex.y * scaleFactor
-    };
-  }
-
-  // 描画のために線を引く関数
-  function drawLine(p1, p2) {
-    const start = project(p1);
-    const end = project(p2);
-    ctx.beginPath();
-    ctx.moveTo(start.x, start.y);
-    ctx.lineTo(end.x, end.y);
-    ctx.stroke();
-  }
-
-  // 車のエッジを描画
-  for (let i = 0; i < 4; i++) {
-    drawLine(front[i], front[(i + 1) % 4]);
-    drawLine(back[i], back[(i + 1) % 4]);
-    drawLine(front[i], back[i]);
-  }
+    // 日付生成
+    for (let i = 0; i < 6; i++) {
+        const row = calendar.insertRow();
+        for (let j = 0; j < 7; j++) {
+            const cell = row.insertCell();
+            if (i === 0 && j < firstDay || date > daysInMonth) {
+                cell.innerHTML = "";
+            } else {
+                cell.innerHTML = date;
+                cell.addEventListener('click', () => showTasks(date, month, year));
+                date++;
+            }
+        }
+    }
 }
 
-// 車を描画する
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.strokeStyle = 'black';
-  drawCar();
+// ToDo追加
+function addTodo() {
+    const todoInput = document.getElementById('todo-input');
+    const taskDate = document.getElementById('task-date').value;
+    const date = new Date(taskDate);
+    const formattedDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+
+    if (!todos[formattedDate]) todos[formattedDate] = [];
+    todos[formattedDate].push(todoInput.value);
+    todoInput.value = '';
+    displayTodos(formattedDate);
 }
 
-draw();
+// ToDo表示
+function displayTodos(formattedDate) {
+    todoList.innerHTML = '';
+    if (todos[formattedDate]) {
+        todos[formattedDate].forEach(task => {
+            const li = document.createElement('li');
+            li.innerText = task;
+            todoList.appendChild(li);
+        });
+    }
+}
+
+// 日付をクリックしたらその日のタスクを表示
+function showTasks(date, month, year) {
+    const formattedDate = `${year}-${month}-${date}`;
+    displayTodos(formattedDate);
+}
+
+// 初期化
+const currentDate = new Date();
+generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
+monthSelector.value = currentDate.getMonth();
+
+// 月が変わったらカレンダーを更新
+monthSelector.addEventListener('change', (e) => {
+    const selectedMonth = e.target.value;
+    generateCalendar(parseInt(selectedMonth), currentDate.getFullYear());
+});
