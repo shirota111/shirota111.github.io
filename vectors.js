@@ -87,3 +87,39 @@ monthSelector.addEventListener('change', (e) => {
     const selectedMonth = e.target.value;
     generateCalendar(parseInt(selectedMonth), currentDate.getFullYear());
 });
+
+// ログリストの要素を取得
+const logList = document.getElementById('log-list');
+
+// ログを追加する関数
+function addLog(message) {
+    const logItem = document.createElement('li');
+    logItem.innerText = message;
+    logList.appendChild(logItem);
+}
+
+// ToDo追加にログを追加
+function addTodo() {
+    const todoInput = document.getElementById('todo-input');
+    const taskDate = document.getElementById('task-date').value;
+    const date = new Date(taskDate);
+    const formattedDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+
+    if (!todos[formattedDate]) todos[formattedDate] = [];
+    todos[formattedDate].push(todoInput.value);
+    
+    // ToDoリストが更新されたことをログに追加
+    addLog(`Task "${todoInput.value}" added for ${formattedDate}`);
+    
+    todoInput.value = '';
+    displayTodos(formattedDate);
+}
+
+// 日付をクリックした際にログを記録
+function showTasks(date, month, year) {
+    const formattedDate = `${year}-${month}-${date}`;
+    displayTodos(formattedDate);
+    
+    // 日付をクリックしたことをログに追加
+    addLog(`Viewing tasks for ${formattedDate}`);
+}
