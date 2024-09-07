@@ -1,35 +1,70 @@
+/* 全体のリセット */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+/* 背景の設定 */
 body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    height: 200vh;
+    height: 100vh;
     background-color: #f4f4f4;
 }
 
+/* 屋台の全体構造 */
+.yatai {
+    width: 120mm;
+    background-color: #deb887; /* ウッドパネル風の色 */
+    border: 5px solid #8b4513; /* 木枠風の外枠 */
+}
+
+/* 屋根部分 */
+.roof {
+    height: 40mm;
+    background-color: #8b4513; /* 木製屋根 */
+    position: relative;
+}
+
+/* 屋根のストライプ */
+.roof-stripes {
+    background: repeating-linear-gradient(
+        45deg,
+        red,
+        red 10mm,
+        white 10mm,
+        white 20mm
+    );
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* カウンター部分 */
+.counter {
+    padding: 20px;
+    background-color: #fffaf0; /* 明るい木材風の色 */
+}
+
+/* コンテナの設定 */
 .container {
     display: flex;
-    width: 100mm;
-    border: 1px solid #ccc;
-    padding: 10px;
-    background-color: white;
+    flex-direction: column;
+    align-items: center;
 }
 
-.calendar-container, .todo-container {
-    flex: 1;
-    margin-right: 10px;
+/* カレンダーのスタイル */
+.calendar-container, .todo-container, .log-container {
+    width: 100%;
+    margin-bottom: 20px;
 }
 
-.calendar-container {
-    flex: 2;
-}
-
+/* テーブル (カレンダー) */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -49,35 +84,27 @@ td {
     margin-bottom: 10px;
 }
 
-.todo-container {
-    display: flex;
-    flex-direction: column;
-}
-
+/* ToDoリストのスタイル */
 #todo-input, #task-date {
     width: 100%;
     margin-bottom: 10px;
 }
 
-#todo-list {
-    list-style-type: none;
-}
-
-.log-container {
-    flex: 1;
-    margin-top: 20px;
-    border-top: 1px solid #ccc;
-    padding-top: 10px;
-}
-
-#log-list {
+#todo-list, #log-list {
     list-style-type: none;
     padding-left: 0;
 }
 
-#log-list li {
+#todo-list li, #log-list li {
     background-color: #f0f0f0;
     margin-bottom: 5px;
     padding: 5px;
     border-radius: 3px;
+}
+
+/* ログエリア */
+.log-container {
+    border-top: 2px solid #8b4513;
+    padding-top: 10px;
+    background-color: #f9f9f9;
 }
