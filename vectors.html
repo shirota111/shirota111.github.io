@@ -3,35 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendar and ToDo List</title>
+    <title>Calendar and ToDo List - Yatai Style</title>
     <link rel="stylesheet" href="vectors.css">
 </head>
 <body>
-    <div class="container">
-        <div class="calendar-container">
-            <select id="monthSelector"></select>
-            <table id="calendar">
-                <!-- JavaScriptでカレンダーを生成します -->
-            </table>
+    <div class="yatai">
+        <div class="roof">
+            <div class="roof-stripes"></div>
         </div>
+        <div class="counter">
+            <div class="container">
+                <div class="calendar-container">
+                    <select id="monthSelector"></select>
+                    <table id="calendar"></table>
+                </div>
 
-        <div class="todo-container">
-            <h2>ToDo List</h2>
-            <input type="text" id="todo-input" placeholder="Add a new task">
-            <input type="date" id="task-date">
-            <button onclick="addTodo()">Add Task</button>
-            <ul id="todo-list">
-                <!-- JavaScriptでToDo項目を追加 -->
-            </ul>
+                <div class="todo-container">
+                    <h2>ToDo List</h2>
+                    <input type="text" id="todo-input" placeholder="Add a new task">
+                    <input type="date" id="task-date">
+                    <button onclick="addTodo()">Add Task</button>
+                    <ul id="todo-list"></ul>
+                </div>
+
+                <div class="log-container">
+                    <h2>Log</h2>
+                    <ul id="log-list"></ul>
+                </div>
+            </div>
         </div>
     </div>
-
-<div class="log-container">
-    <h2>Log</h2>
-    <ul id="log-list">
-        <!-- JavaScriptでログを追加 -->
-    </ul>
-</div>
 
     <script src="vectors.js"></script>
 </body>
