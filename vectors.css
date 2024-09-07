@@ -62,3 +62,22 @@ td {
 #todo-list {
     list-style-type: none;
 }
+
+.log-container {
+    flex: 1;
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+
+#log-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+#log-list li {
+    background-color: #f0f0f0;
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 3px;
+}
