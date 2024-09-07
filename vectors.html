@@ -1,63 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Triangle Drawing</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-    #canvas-container {
-      position: relative;
-      width: 100%;
-      height: 500px;
-      border: 1px solid #000;
-    }
-    .triangle {
-      position: absolute;
-      width: 0;
-      height: 0;
-      border-style: solid;
-    }
-  </style>
+    <title>カレンダー生成</title>
 </head>
 <body>
-  <h1>Triangle Drawing</h1>
-  <div id="canvas-container"></div>
-  <script>
-    const container = document.getElementById('canvas-container');
-    const containerWidth = container.clientWidth;
-    const containerHeight = container.clientHeight;
+    <h1>カレンダー</h1>
+    <table id="calendar">
+        <!-- JavaScriptでカレンダーを生成 -->
+    </table>
+    <button id="download">Excelにダウンロード</button>
 
-    // 三角形の頂点座標
-    const vertices = [
-      { x: containerWidth / 4, y: containerHeight / 4 }, // 頂点A
-      { x: containerWidth / 2, y: containerHeight / 4 * 3 }, // 頂点B
-      { x: containerWidth / 4 * 3, y: containerHeight / 4 } // 頂点C
-    ];
+    <script>
+        function createCalendar(year, month) {
+            const table = document.getElementById('calendar');
+            table.innerHTML = ''; // カレンダーをクリア
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const firstDay = new Date(year, month, 1).getDay();
+            
+            // ヘッダー行（曜日）
+            const headerRow = table.insertRow();
+            const daysOfWeek = ['日', '月', '火', '水', '木', '金', '土'];
+            for (const day of daysOfWeek) {
+                const cell = headerRow.insertCell();
+                cell.textContent = day;
+            }
 
-    // 三角形を描画するための関数
-    function drawTriangle(vertices) {
-      const [v1, v2, v3] = vertices;
-      
-      // 三角形を描くためにCSSボーダーを使う
-      const triangle = document.createElement('div');
-      triangle.style.position = 'absolute';
-      triangle.style.width = '0';
-      triangle.style.height = '0';
-      triangle.style.borderStyle = 'solid';
-      triangle.style.borderWidth = `${Math.sqrt(Math.pow(v2.x - v1.x, 2) + Math.pow(v2.y - v1.y, 2))}px ${Math.sqrt(Math.pow(v3.x - v2.x, 2) + Math.pow(v3.y - v2.y, 2))}px ${Math.sqrt(Math.pow(v1.x - v3.x, 2) + Math.pow(v1.y - v3.y, 2))}px`;
-      triangle.style.borderColor = `transparent transparent transparent blue`; // 青色の三角形
+            // 日付を埋めていく
+            let row = table.insertRow();
+            for (let i = 0; i < firstDay; i++) {
+                row.insertCell(); // 空白セル
+            }
+            for (let day = 1; day <= daysInMonth; day++) {
+                if (row.cells.length === 7) {
+                    row = table.insertRow(); // 次の行
+                }
+                const cell = row.insertCell();
+                cell.textContent = day;
+            }
+        }
 
-      // 三角形の位置を設定
-      triangle.style.top = `${Math.min(v1.y, v2.y, v3.y)}px`;
-      triangle.style.left = `${Math.min(v1.x, v2.x, v3.x)}px`;
+        // 現在の年月でカレンダー生成
+        const now = new Date();
+        createCalendar(now.getFullYear(), now.getMonth());
 
-      container.appendChild(triangle);
-    }
+        // Excel形式でダウンロードする機能
+        document.getElementById('download').addEventListener('click', function () {
+            const table = document.getElementById('calendar');
+            let data = '';
+            for (let i = 0, row; row = table.rows[i]; i++) {
+                for (let j = 0, cell; cell = row.cells[j]; j++) {
+                    data += (j === 0 ? '' : '\t') + cell.textContent;
+                }
+                data += '\n';
+            }
 
-    drawTriangle(vertices);
-  </script>
+            const blob = new Blob([data], { type: 'application/vnd.ms-excel' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'calendar.xls';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    </script>
 </body>
 </html>
