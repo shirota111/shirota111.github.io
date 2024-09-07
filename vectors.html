@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>5×7のカレンダー</title>
+    <title>スマホ対応カレンダー</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -13,27 +16,61 @@
             border: 1px solid black;
         }
         td {
-            height: 100px;
+            height: 120px; /* スマホでも十分な高さ */
             vertical-align: top;
         }
-        .date, .contact, .event {
-            display: block;
+        .date {
+            font-size: 14px;
             margin-bottom: 5px;
+        }
+        .contact, .event {
+            width: 100%;
+            height: 40px; /* 項目を大きく */
+            font-size: 16px; /* フォントサイズを大きく */
+            margin-bottom: 10px;
+        }
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            td {
+                height: 160px; /* スマホ用にさらに高くする */
+            }
+        }
+        .month-selector {
+            margin-bottom: 20px;
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
     <h1>カレンダー</h1>
+    
+    <!-- 月選択ドロップダウン -->
+    <select id="month" class="month-selector">
+        <option value="0">1月</option>
+        <option value="1">2月</option>
+        <option value="2">3月</option>
+        <option value="3">4月</option>
+        <option value="4">5月</option>
+        <option value="5">6月</option>
+        <option value="6">7月</option>
+        <option value="7">8月</option>
+        <option value="8">9月</option>
+        <option value="9">10月</option>
+        <option value="10">11月</option>
+        <option value="11">12月</option>
+    </select>
+
     <table id="calendar">
         <!-- JavaScriptでカレンダーを生成 -->
     </table>
     <button id="download">Excelにダウンロード</button>
 
     <script>
-        function createCalendar() {
+        function createCalendar(year, month) {
             const table = document.getElementById('calendar');
             table.innerHTML = ''; // カレンダーをクリア
-            const daysInMonth = 31; // 固定で31日と仮定
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const firstDay = new Date(year, month, 1).getDay();
             let dayCounter = 1;
 
             // 5行×7列のカレンダーを作成
@@ -41,7 +78,7 @@
                 const row = table.insertRow();
                 for (let j = 0; j < 7; j++) {
                     const cell = row.insertCell();
-                    if (dayCounter <= daysInMonth) {
+                    if (dayCounter <= daysInMonth && (i > 0 || j >= firstDay)) {
                         // 日付、連絡先、予定を入力するフォーム
                         const dateInput = document.createElement('input');
                         dateInput.type = 'text';
@@ -71,7 +108,15 @@
         }
 
         // 現在の年月でカレンダー生成
-        createCalendar();
+        const now = new Date();
+        let currentMonth = now.getMonth();
+        createCalendar(now.getFullYear(), currentMonth);
+
+        // 月を変更した際にカレンダーを再生成
+        document.getElementById('month').addEventListener('change', function () {
+            currentMonth = parseInt(this.value, 10);
+            createCalendar(now.getFullYear(), currentMonth);
+        });
 
         // Excel形式でダウンロードする機能
         document.getElementById('download').addEventListener('click', function () {
@@ -80,9 +125,9 @@
             
             for (let i = 0, row; row = table.rows[i]; i++) {
                 for (let j = 0, cell; cell = row.cells[j]; j++) {
-                    const date = cell.querySelector('.date').placeholder.split(': ')[1];
-                    const contact = cell.querySelector('.contact').value || '';
-                    const event = cell.querySelector('.event').value || '';
+                    const date = cell.querySelector('.date') ? cell.querySelector('.date').placeholder.split(': ')[1] : '';
+                    const contact = cell.querySelector('.contact') ? cell.querySelector('.contact').value : '';
+                    const event = cell.querySelector('.event') ? cell.querySelector('.event').value : '';
                     data += `${date}\t${contact}\t${event}\n`;
                 }
             }
