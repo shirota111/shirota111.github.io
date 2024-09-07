@@ -69,6 +69,19 @@ table, th, td {
     height: 40px;
 }
 
+table {
+  transform: rotate(-90deg);
+  transform-origin: top left;
+  border-collapse: collapse;
+  width: 200px;
+}
+
+th, td {
+  transform: rotate(90deg); /* 各セルのテキストも正しい向きにする */
+  padding: 10px;
+  border: 1px solid black;
+}
+
 input[type="text"] {
     width: 100%;
     padding: 8px;
