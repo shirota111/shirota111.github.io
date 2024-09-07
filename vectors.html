@@ -1,7 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-    <title>カレンダー生成</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5×7のカレンダー</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        td {
+            height: 100px;
+            vertical-align: top;
+        }
+        .date, .contact, .event {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
 </head>
 <body>
     <h1>カレンダー</h1>
@@ -11,49 +30,64 @@
     <button id="download">Excelにダウンロード</button>
 
     <script>
-        function createCalendar(year, month) {
+        function createCalendar() {
             const table = document.getElementById('calendar');
             table.innerHTML = ''; // カレンダーをクリア
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const firstDay = new Date(year, month, 1).getDay();
-            
-            // ヘッダー行（曜日）
-            const headerRow = table.insertRow();
-            const daysOfWeek = ['日', '月', '火', '水', '木', '金', '土'];
-            for (const day of daysOfWeek) {
-                const cell = headerRow.insertCell();
-                cell.textContent = day;
-            }
+            const daysInMonth = 31; // 固定で31日と仮定
+            let dayCounter = 1;
 
-            // 日付を埋めていく
-            let row = table.insertRow();
-            for (let i = 0; i < firstDay; i++) {
-                row.insertCell(); // 空白セル
-            }
-            for (let day = 1; day <= daysInMonth; day++) {
-                if (row.cells.length === 7) {
-                    row = table.insertRow(); // 次の行
+            // 5行×7列のカレンダーを作成
+            for (let i = 0; i < 5; i++) {
+                const row = table.insertRow();
+                for (let j = 0; j < 7; j++) {
+                    const cell = row.insertCell();
+                    if (dayCounter <= daysInMonth) {
+                        // 日付、連絡先、予定を入力するフォーム
+                        const dateInput = document.createElement('input');
+                        dateInput.type = 'text';
+                        dateInput.placeholder = `日付: ${dayCounter}`;
+                        dateInput.className = 'date';
+                        dateInput.disabled = true;
+
+                        const contactInput = document.createElement('input');
+                        contactInput.type = 'text';
+                        contactInput.placeholder = '連絡先';
+                        contactInput.className = 'contact';
+
+                        const eventInput = document.createElement('input');
+                        eventInput.type = 'text';
+                        eventInput.placeholder = '予定';
+                        eventInput.className = 'event';
+
+                        // 日付、連絡先、予定をセルに追加
+                        cell.appendChild(dateInput);
+                        cell.appendChild(contactInput);
+                        cell.appendChild(eventInput);
+                        
+                        dayCounter++;
+                    }
                 }
-                const cell = row.insertCell();
-                cell.textContent = day;
             }
         }
 
         // 現在の年月でカレンダー生成
-        const now = new Date();
-        createCalendar(now.getFullYear(), now.getMonth());
+        createCalendar();
 
         // Excel形式でダウンロードする機能
         document.getElementById('download').addEventListener('click', function () {
             const table = document.getElementById('calendar');
-            let data = '';
+            let data = '日付\t連絡先\t予定\n'; // Excel用データのヘッダー
+            
             for (let i = 0, row; row = table.rows[i]; i++) {
                 for (let j = 0, cell; cell = row.cells[j]; j++) {
-                    data += (j === 0 ? '' : '\t') + cell.textContent;
+                    const date = cell.querySelector('.date').placeholder.split(': ')[1];
+                    const contact = cell.querySelector('.contact').value || '';
+                    const event = cell.querySelector('.event').value || '';
+                    data += `${date}\t${contact}\t${event}\n`;
                 }
-                data += '\n';
             }
 
+            // Excelファイルとしてダウンロード
             const blob = new Blob([data], { type: 'application/vnd.ms-excel' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
