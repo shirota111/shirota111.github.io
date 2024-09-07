@@ -1,1 +1,64 @@
-あ
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.container {
+    display: flex;
+    width: 100mm;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: white;
+}
+
+.calendar-container, .todo-container {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.calendar-container {
+    flex: 2;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+td {
+    height: 30px;
+    text-align: center;
+}
+
+#monthSelector {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.todo-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#todo-input, #task-date {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#todo-list {
+    list-style-type: none;
+}
