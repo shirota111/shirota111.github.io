@@ -4,7 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendar, ToDo, Log, and Grid with Coordinates</title>
-    <link rel="stylesheet" href="vectors.css">
+    <style>
+        /* グリッド背景用のCSS */
+        #grid-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(90deg, #e0e0e0 1px, transparent 1px), 
+                              linear-gradient(#e0e0e0 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+        }
+
+        /* ウィンドウ座標の表示位置 */
+        .window-coordinates {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border: 1px solid #ddd;
+            z-index: 1;
+        }
+
+        /* カレンダーとToDoリスト、ログのコンテナ */
+        .calendar-container, .todo-container, .log-container {
+            width: 300px;
+            padding: 20px;
+            margin: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        input, button {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
     <div id="grid-background"></div>
@@ -32,6 +83,80 @@
         <ul id="log-list"></ul>
     </div>
 
-    <script src="vectors.js"></script>
+    <script>
+        // ウィンドウ座標の表示
+        document.addEventListener('mousemove', function(event) {
+            document.getElementById('coord-x').textContent = event.clientX;
+            document.getElementById('coord-y').textContent = event.clientY;
+        });
+
+        // カレンダー生成用関数
+        function generateCalendar(month, year) {
+            const calendar = document.getElementById('calendar');
+            calendar.innerHTML = '';
+            const firstDay = new Date(year, month).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            let row = document.createElement('tr');
+            for (let i = 0; i < firstDay; i++) {
+                row.appendChild(document.createElement('td'));
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                if ((firstDay + day - 1) % 7 === 0 && day !== 1) {
+                    calendar.appendChild(row);
+                    row = document.createElement('tr');
+                }
+                const cell = document.createElement('td');
+                cell.textContent = day;
+                row.appendChild(cell);
+            }
+            calendar.appendChild(row);
+        }
+
+        // 月選択用のドロップダウン作成
+        const monthSelector = document.getElementById('monthSelector');
+        for (let i = 0; i < 12; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = new Date(0, i).toLocaleString('ja-JP', { month: 'long' });
+            monthSelector.appendChild(option);
+        }
+
+        monthSelector.addEventListener('change', function() {
+            const selectedMonth = parseInt(this.value);
+            const currentYear = new Date().getFullYear();
+            generateCalendar(selectedMonth, currentYear);
+        });
+
+        // 初期表示
+        const currentMonth = new Date().getMonth();
+        monthSelector.value = currentMonth;
+        generateCalendar(currentMonth, new Date().getFullYear());
+
+        // ToDoリスト追加機能
+        function addTodo() {
+            const todoInput = document.getElementById('todo-input');
+            const task = todoInput.value;
+            if (task === '') return;
+
+            const todoList = document.getElementById('todo-list');
+            const listItem = document.createElement('li');
+            listItem.textContent = task;
+            todoList.appendChild(listItem);
+
+            addToLog('Task added: ' + task);
+
+            todoInput.value = '';
+        }
+
+        // ログ表示機能
+        function addToLog(message) {
+            const logList = document.getElementById('log-list');
+            const logItem = document.createElement('li');
+            logItem.textContent = new Date().toLocaleString() + ': ' + message;
+            logList.appendChild(logItem);
+        }
+    </script>
 </body>
 </html>
