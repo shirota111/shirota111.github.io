@@ -1,125 +1,57 @@
-const calendar = document.getElementById('calendar');
-const monthSelector = document.getElementById('monthSelector');
-const todoList = document.getElementById('todo-list');
-const todos = {};
-
-// 月の名前を設定
-const months = ["January", "February", "March", "April", "May", "June", 
-                "July", "August", "September", "October", "November", "December"];
-
-// 月セレクターを設定
-months.forEach((month, index) => {
-    const option = document.createElement('option');
-    option.value = index;
-    option.text = month;
-    monthSelector.appendChild(option);
+// 座標表示機能
+document.addEventListener("mousemove", function(event) {
+    document.getElementById('coord-x').textContent = event.clientX;
+    document.getElementById('coord-y').textContent = event.clientY;
 });
 
-// カレンダー生成
-function generateCalendar(month, year) {
-    calendar.innerHTML = '';
-    const firstDay = new Date(year, month, 1).getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    let date = 1;
+// カレンダー初期化
+function initCalendar() {
+    const calendar = document.getElementById('calendar');
+    calendar.innerHTML = ''; // カレンダーをリセット
 
-    // テーブルヘッダー
-    const headerRow = calendar.insertRow();
-    ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].forEach(day => {
-        const th = document.createElement('th');
-        th.innerText = day;
-        headerRow.appendChild(th);
+    // 7x6グリッド作成 (日曜日〜土曜日)
+    const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    let row = document.createElement('tr');
+    daysOfWeek.forEach(day => {
+        let th = document.createElement('th');
+        th.textContent = day;
+        row.appendChild(th);
     });
+    calendar.appendChild(row);
 
-    // 日付生成
+    // 仮のカレンダーデータ (日数)
     for (let i = 0; i < 6; i++) {
-        const row = calendar.insertRow();
+        row = document.createElement('tr');
         for (let j = 0; j < 7; j++) {
-            const cell = row.insertCell();
-            if (i === 0 && j < firstDay || date > daysInMonth) {
-                cell.innerHTML = "";
-            } else {
-                cell.innerHTML = date;
-                cell.addEventListener('click', () => showTasks(date, month, year));
-                date++;
-            }
+            let td = document.createElement('td');
+            td.textContent = i * 7 + j + 1;
+            row.appendChild(td);
         }
+        calendar.appendChild(row);
     }
 }
 
-// ToDo追加
+initCalendar();
+
+// ToDoリスト機能
 function addTodo() {
     const todoInput = document.getElementById('todo-input');
-    const taskDate = document.getElementById('task-date').value;
-    const date = new Date(taskDate);
-    const formattedDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+    const todoList = document.getElementById('todo-list');
+    const logList = document.getElementById('log-list');
 
-    if (!todos[formattedDate]) todos[formattedDate] = [];
-    todos[formattedDate].push(todoInput.value);
-    todoInput.value = '';
-    displayTodos(formattedDate);
-}
+    const task = todoInput.value;
+    if (task === '') return; // 空の場合は何もしない
 
-// ToDo表示
-function displayTodos(formattedDate) {
-    todoList.innerHTML = '';
-    if (todos[formattedDate]) {
-        todos[formattedDate].forEach(task => {
-            const li = document.createElement('li');
-            li.innerText = task;
-            todoList.appendChild(li);
-        });
-    }
-}
+    // ToDoアイテムを追加
+    const li = document.createElement('li');
+    li.textContent = task;
+    todoList.appendChild(li);
 
-// 日付をクリックしたらその日のタスクを表示
-function showTasks(date, month, year) {
-    const formattedDate = `${year}-${month}-${date}`;
-    displayTodos(formattedDate);
-}
-
-// 初期化
-const currentDate = new Date();
-generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
-monthSelector.value = currentDate.getMonth();
-
-// 月が変わったらカレンダーを更新
-monthSelector.addEventListener('change', (e) => {
-    const selectedMonth = e.target.value;
-    generateCalendar(parseInt(selectedMonth), currentDate.getFullYear());
-});
-
-// ログリストの要素を取得
-const logList = document.getElementById('log-list');
-
-// ログを追加する関数
-function addLog(message) {
+    // ログに追加
     const logItem = document.createElement('li');
-    logItem.innerText = message;
+    logItem.textContent = `Added ToDo: ${task}`;
     logList.appendChild(logItem);
-}
 
-// ToDo追加にログを追加
-function addTodo() {
-    const todoInput = document.getElementById('todo-input');
-    const taskDate = document.getElementById('task-date').value;
-    const date = new Date(taskDate);
-    const formattedDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
-
-    if (!todos[formattedDate]) todos[formattedDate] = [];
-    todos[formattedDate].push(todoInput.value);
-    
-    // ToDoリストが更新されたことをログに追加
-    addLog(`Task "${todoInput.value}" added for ${formattedDate}`);
-    
+    // 入力をクリア
     todoInput.value = '';
-    displayTodos(formattedDate);
-}
-
-// 日付をクリックした際にログを記録
-function showTasks(date, month, year) {
-    const formattedDate = `${year}-${month}-${date}`;
-    displayTodos(formattedDate);
-    
-    // 日付をクリックしたことをログに追加
-    addLog(`Viewing tasks for ${formattedDate}`);
 }
