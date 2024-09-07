@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>カレンダー生成</title>
+</head>
+<body>
+    <h1>カレンダー</h1>
+    <table id="calendar">
+        <!-- JavaScriptでカレンダーを生成 -->
+    </table>
+    <button id="download">Excelにダウンロード</button>
+
+    <script>
+        function createCalendar(year, month) {
+            const table = document.getElementById('calendar');
+            table.innerHTML = ''; // カレンダーをクリア
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const firstDay = new Date(year, month, 1).getDay();
+            
+            // ヘッダー行（曜日）
+            const headerRow = table.insertRow();
+            const daysOfWeek = ['日', '月', '火', '水', '木', '金', '土'];
+            for (const day of daysOfWeek) {
+                const cell = headerRow.insertCell();
+                cell.textContent = day;
+            }
+
+            // 日付を埋めていく
+            let row = table.insertRow();
+            for (let i = 0; i < firstDay; i++) {
+                row.insertCell(); // 空白セル
+            }
+            for (let day = 1; day <= daysInMonth; day++) {
+                if (row.cells.length === 7) {
+                    row = table.insertRow(); // 次の行
+                }
+                const cell = row.insertCell();
+                cell.textContent = day;
+            }
+        }
+
+        // 現在の年月でカレンダー生成
+        const now = new Date();
+        createCalendar(now.getFullYear(), now.getMonth());
+
+        // Excel形式でダウンロードする機能
+        document.getElementById('download').addEventListener('click', function () {
+            const table = document.getElementById('calendar');
+            let data = '';
+            for (let i = 0, row; row = table.rows[i]; i++) {
+                for (let j = 0, cell; cell = row.cells[j]; j++) {
+                    data += (j === 0 ? '' : '\t') + cell.textContent;
+                }
+                data += '\n';
+            }
+
+            const blob = new Blob([data], { type: 'application/vnd.ms-excel' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'calendar.xls';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    </script>
+</body>
+</html>
