@@ -1,110 +1,104 @@
-/* 全体のリセット */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-/* 背景の設定 */
 body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    height: 100vh;
+    padding: 20px;
     background-color: #f4f4f4;
-}
-
-/* 屋台の全体構造 */
-.yatai {
-    width: 120mm;
-    background-color: #deb887; /* ウッドパネル風の色 */
-    border: 5px solid #8b4513; /* 木枠風の外枠 */
-}
-
-/* 屋根部分 */
-.roof {
-    height: 40mm;
-    background-color: #8b4513; /* 木製屋根 */
+    height: 100vh;
     position: relative;
+    overflow: hidden;
 }
 
-/* 屋根のストライプ */
-.roof-stripes {
-    background: repeating-linear-gradient(
-        45deg,
-        red,
-        red 10mm,
-        white 10mm,
-        white 20mm
-    );
-    height: 100%;
-    width: 100%;
+/* 方眼紙背景 */
+#grid-background {
     position: absolute;
     top: 0;
     left: 0;
-}
-
-/* カウンター部分 */
-.counter {
-    padding: 20px;
-    background-color: #fffaf0; /* 明るい木材風の色 */
-}
-
-/* コンテナの設定 */
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* カレンダーのスタイル */
-.calendar-container, .todo-container, .log-container {
     width: 100%;
-    margin-bottom: 20px;
+    height: 100%;
+    background-image: 
+        linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px), 
+        linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px);
+    background-size: 20px 20px; /* 方眼のサイズ */
+    z-index: 0;
 }
 
-/* テーブル (カレンダー) */
+/* ウィンドウ座標表示 */
+.window-coordinates {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 2; /* 方眼紙より上に表示 */
+}
+
+.calendar-container, .todo-container, .log-container {
+    width: 30%;
+    margin: 0 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
+    margin-bottom: 10px;
 }
 
 table, th, td {
     border: 1px solid #ccc;
-}
-
-td {
-    height: 30px;
     text-align: center;
+    height: 40px;
 }
 
-#monthSelector {
+input[type="text"] {
     width: 100%;
+    padding: 8px;
     margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-/* ToDoリストのスタイル */
-#todo-input, #task-date {
+button {
     width: 100%;
-    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-#todo-list, #log-list {
+button:hover {
+    background-color: #45a049;
+}
+
+ul {
     list-style-type: none;
     padding-left: 0;
 }
 
-#todo-list li, #log-list li {
-    background-color: #f0f0f0;
-    margin-bottom: 5px;
-    padding: 5px;
-    border-radius: 3px;
-}
-
-/* ログエリア */
-.log-container {
-    border-top: 2px solid #8b4513;
-    padding-top: 10px;
+ul li {
     background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
 }
