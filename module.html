@@ -5,9 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modular Calendar with ToDo and Event Listeners</title>
     <link rel="stylesheet" href="module1.css">
+
+<style>
+        /* プルダウンメニューのスタイリング */
+        #monthSelector {
+            margin: 20px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
 <body>
     <h1>Calendar Module</h1>
+
+<h1>月のプルダウンメニュー</h1>
+    <label for="monthSelector">月を選択:</label>
+    <select id="monthSelector">
+        <option value="0">1月</option>
+        <option value="1">2月</option>
+        <option value="2">3月</option>
+        <option value="3">4月</option>
+        <option value="4">5月</option>
+        <option value="5">6月</option>
+        <option value="6">7月</option>
+        <option value="7">8月</option>
+        <option value="8">9月</option>
+        <option value="9">10月</option>
+        <option value="10">11月</option>
+        <option value="11">12月</option>
+    </select>
     
     <div id="calendar"></div>
 
@@ -19,6 +48,8 @@
     <script src="module1.js"></script>
     <script src="module2.js"></script>
   <script src="module3.js"></script>
+
+
 
 </body>
 </html>
