@@ -3,7 +3,7 @@
 // カレンダーの初期化関数
 function initCalendar() {
     const calendar = document.getElementById('calendar');
-    
+
     // シンプルなカレンダーの構築
     for (let day = 1; day <= 30; day++) {
         const dayElement = document.createElement('div');
@@ -12,7 +12,6 @@ function initCalendar() {
         
         // クリックイベントリスナーを追加
         dayElement.addEventListener('click', () => {
-            alert(`You clicked day ${day}`);
             // module2.js にイベント情報を渡す
             handleEventInModule2(day);
         });
