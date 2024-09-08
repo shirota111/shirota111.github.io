@@ -1,7 +1,4 @@
-// module1.js
-
-
-// 月のプルダウンを生成する関数
+// 月のプルダウンメニューを作成する関数
 function createMonthDropdown() {
     const monthSelector = document.getElementById('monthSelector');
     const months = [
@@ -22,30 +19,44 @@ function createMonthDropdown() {
     monthSelector.value = currentMonth;
 }
 
-// カレンダーを生成する関数 (例として簡単なもの)
+// カレンダーを生成する関数
 function generateCalendar(month) {
     const calendar = document.getElementById('calendar');
     calendar.innerHTML = ''; // 既存のカレンダーをクリア
 
-    // 簡単なカレンダーの生成 (月の日数に基づいて生成)
-    const daysInMonth = new Date(2024, month + 1, 0).getDate(); // 月の日数を取得
+    // 月の日数を取得
+    const year = new Date().getFullYear(); // 現在の年
+    const daysInMonth = new Date(year, month + 1, 0).getDate(); // 月の日数を取得
 
+    // カレンダーの日付を生成
     for (let day = 1; day <= daysInMonth; day++) {
-        const cell = document.createElement('div');
-        cell.classList.add('calendar-day');
-        cell.textContent = day;
-        calendar.appendChild(cell);
+        const dayElement = document.createElement('div');
+        dayElement.className = 'calendar-day';
+        dayElement.innerText = day;
+        
+        // クリックイベントリスナーを追加
+        dayElement.addEventListener('click', () => {
+            alert(`You clicked day ${day}`);
+            // module2.js にイベント情報を渡す
+            handleEventInModule2(day);
+        });
+
+        calendar.appendChild(dayElement);
     }
 }
 
-// プルダウン変更時にカレンダーを更新
+// 月のプルダウン変更時にカレンダーを更新
 document.getElementById('monthSelector').addEventListener('change', function() {
     const selectedMonth = parseInt(this.value);
     generateCalendar(selectedMonth);
 });
 
-// 初期化
-window.onload = function() {
+// 初期化関数
+function initCalendar() {
     createMonthDropdown(); // 月のプルダウンを生成
-    generateCalendar(new Date().getMonth()); // 初期カレンダー表示
-};
+    const currentMonth = new Date().getMonth(); // 現在の月を取得
+    generateCalendar(currentMonth); // 初期カレンダーの表示
+}
+
+// 初期化関数の呼び出し
+initCalendar();
