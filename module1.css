@@ -1,25 +1,58 @@
-
-
-/* module1.css */
-
-#calendar {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
-    margin: 20px 0;
+/* プルダウンメニューのスタイリング */
+#monthSelector {
+    margin-bottom: 20px; /* プルダウンとカレンダーの間にスペースを追加 */
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
 }
 
+/* カレンダー全体のスタイリング */
+#calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7列のグリッド */
+    gap: 5px; /* 日付要素間の隙間 */
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+/* カレンダーの日付要素のスタイリング */
 .calendar-day {
-    width: 50px;
-    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: lightblue;
-    border: 1px solid #ccc;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
     cursor: pointer;
 }
 
 .calendar-day:hover {
-    background-color: lightcoral;
+    background-color: #e0e0e0;
+}
+
+/* 全体レイアウトの調整 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f4f4f4;
+}
+
+.calendar-container {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    width: 100%;
+    max-width: 600px;
 }
