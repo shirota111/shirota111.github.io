@@ -76,6 +76,29 @@
             <span>IPP</span><span>O</span><span>N GRAND PRIX</span>
         </div>
     </div>
+<script>
+        const subjects = [
+            "○○の新しい使い方を教えてください",
+            "○○ってどんな感じ？",
+            "新しく開発された○○、どんな特徴がある？",
+            "○○がついに○○を始めた！何をする？",
+            "これが○○の流行っている遊びだ！"
+        ];
+
+        const words = [
+            "冷蔵庫", "スリッパ", "スマホ", "ペン", "おばあちゃん", 
+            "ロボット", "バナナ", "スーパーマン", "電車", "時計"
+        ];
+
+        function generateOdai() {
+            const randomSubject = subjects[Math.floor(Math.random() * subjects.length)];
+            const randomWord1 = words[Math.floor(Math.random() * words.length)];
+            const randomWord2 = words[Math.floor(Math.random() * words.length)];
+            
+            const odai = randomSubject.replace(/○○/g, () => randomWord1 === randomWord2 ? randomWord1 : randomWord2);
+            document.getElementById("odai").innerText = odai;
+        }
+    </script>
 
 </body>
 </html>
