@@ -3,160 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendar, ToDo, Log, and Grid with Coordinates</title>
+    <title>IPPONグランプリ風お題</title>
     <style>
-        /* グリッド背景用のCSS */
-        #grid-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: linear-gradient(90deg, #e0e0e0 1px, transparent 1px), 
-                              linear-gradient(#e0e0e0 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1;
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
-        /* ウィンドウ座標の表示位置 */
-        .window-coordinates {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 10px;
-            border: 1px solid #ddd;
-            z-index: 1;
-        }
-
-        /* カレンダーとToDoリスト、ログのコンテナ */
-        .calendar-container, .todo-container, .log-container {
-            width: 300px;
-            padding: 20px;
-            margin: 10px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            display: inline-block;
-            vertical-align: top;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
+        .container {
+            background-color: #ffd700;
+            width: 80%;
+            max-width: 600px;
             text-align: center;
+            padding: 40px 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
         }
 
-        input, button {
-            margin-bottom: 10px;
+        .question {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            background-color: black;
+            color: #ffd700;
+            font-size: 24px;
+            padding: 10px;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .footer span {
+            font-weight: bold;
+        }
+
+        /* 特定の「O」に円を追加 */
+        .footer span:nth-child(2) {
+            color: #ffd700;
+            display: inline-block;
+            position: relative;
+        }
+
+        .footer span:nth-child(2)::before {
+            content: '';
+            width: 1.2em;
+            height: 1.2em;
+            border: 2px solid #ffd700;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
         }
     </style>
 </head>
 <body>
-    <div id="grid-background"></div>
 
-    <div class="window-coordinates">
-        <p>X: <span id="coord-x">0</span></p>
-        <p>Y: <span id="coord-y">0</span></p>
+    <div class="container">
+        <div class="question">
+            このエンジニア育ちは良いな<br>
+            なぜわかった？
+        </div>
+        <div class="footer">
+            <span>IPP</span><span>O</span><span>N GRAND PRIX</span>
+        </div>
     </div>
 
-    <div class="calendar-container">
-        <h2>Calendar</h2>
-        <select id="monthSelector"></select>
-        <table id="calendar"></table>
-    </div>
-
-    <div class="todo-container">
-        <h2>ToDo List</h2>
-        <input type="text" id="todo-input" placeholder="Add a new task">
-        <button onclick="addTodo()">Add Task</button>
-        <ul id="todo-list"></ul>
-    </div>
-
-    <div class="log-container">
-        <h2>Log</h2>
-        <ul id="log-list"></ul>
-    </div>
-
-    <script>
-        // ウィンドウ座標の表示
-        document.addEventListener('mousemove', function(event) {
-            document.getElementById('coord-x').textContent = event.clientX;
-            document.getElementById('coord-y').textContent = event.clientY;
-        });
-
-        // カレンダー生成用関数
-        function generateCalendar(month, year) {
-            const calendar = document.getElementById('calendar');
-            calendar.innerHTML = '';
-            const firstDay = new Date(year, month).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-            let row = document.createElement('tr');
-            for (let i = 0; i < firstDay; i++) {
-                row.appendChild(document.createElement('td'));
-            }
-
-            for (let day = 1; day <= daysInMonth; day++) {
-                if ((firstDay + day - 1) % 7 === 0 && day !== 1) {
-                    calendar.appendChild(row);
-                    row = document.createElement('tr');
-                }
-                const cell = document.createElement('td');
-                cell.textContent = day;
-                row.appendChild(cell);
-            }
-            calendar.appendChild(row);
-        }
-
-        // 月選択用のドロップダウン作成
-        const monthSelector = document.getElementById('monthSelector');
-        for (let i = 0; i < 12; i++) {
-            const option = document.createElement('option');
-            option.value = i;
-            option.textContent = new Date(0, i).toLocaleString('ja-JP', { month: 'long' });
-            monthSelector.appendChild(option);
-        }
-
-        monthSelector.addEventListener('change', function() {
-            const selectedMonth = parseInt(this.value);
-            const currentYear = new Date().getFullYear();
-            generateCalendar(selectedMonth, currentYear);
-        });
-
-        // 初期表示
-        const currentMonth = new Date().getMonth();
-        monthSelector.value = currentMonth;
-        generateCalendar(currentMonth, new Date().getFullYear());
-
-        // ToDoリスト追加機能
-        function addTodo() {
-            const todoInput = document.getElementById('todo-input');
-            const task = todoInput.value;
-            if (task === '') return;
-
-            const todoList = document.getElementById('todo-list');
-            const listItem = document.createElement('li');
-            listItem.textContent = task;
-            todoList.appendChild(listItem);
-
-            addToLog('Task added: ' + task);
-
-            todoInput.value = '';
-        }
-
-        // ログ表示機能
-        function addToLog(message) {
-            const logList = document.getElementById('log-list');
-            const logItem = document.createElement('li');
-            logItem.textContent = new Date().toLocaleString() + ': ' + message;
-            logList.appendChild(logItem);
-        }
-    </script>
 </body>
 </html>
