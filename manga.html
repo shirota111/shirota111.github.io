@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>漫画コマと吹き出し生成</title>
+    <title>レイヤー処理画像編集</title>
     <link rel="stylesheet" href="manga.css">
 </head>
 <body>
 
-
-    <h1>漫画コマと吹き出し生成</h1>
-    <div id="comic-container" class="comic-container"></div>
-    <button onclick="generateRandomPanels()">コマと吹き出しを生成</button>
+    <h1>レイヤー処理画像編集</h1>
+    <input type="file" id="upload" accept="image/*" multiple>
+    <button onclick="addLayer()">レイヤー追加</button>
+    <button onclick="clearLayers()">レイヤークリア</button>
+    <br>
+    <canvas id="canvas"></canvas>
 
     <script src="manga.js"></script>
 </body>
