@@ -3,45 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>漫画ジェネレーター</title>
-    <link rel="stylesheet" href="manga.css">
+    <title>漫画コマと吹き出し生成</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <h1>漫画ジェネレーター</h1>
+    <h1>漫画コマと吹き出し生成</h1>
+    <div id="comic-container" class="comic-container"></div>
+    <button onclick="generateRandomPanels()">コマと吹き出しを生成</button>
 
-    <!-- コマ割りのテーブル -->
-    <div class="comic-container">
-        <table class="comic-table">
-            <tr>
-                <td class="comic-cell" id="panel1">
-                    <img src="https://2.bp.blogspot.com/-gClOWl0hzFY/WC9kTdf-ZYI/AAAAAAABK3o/s9YPeyPpPz42hiyw3NNg_tB_q2WvcefsQCLcB/s800/syachiku_kaisha_yuuhan.png" alt="社畜" class="comic-image">
-                    <div class="balloon">これは社畜の生活...</div>
-                </td>
-                <td class="comic-cell" id="panel2">
-                    <img src="https://3.bp.blogspot.com/-EYKH6BeLSdY/W9v8wD93JcI/AAAAAAABQkE/pGfL2AHREbU5QoBy65iEVLOEJ3Z_qOa3QCLcBGAs/s800/migiyari_man.png" alt="右矢印" class="comic-image">
-                    <div class="balloon">次のシーンはこちら！</div>
-                </td>
-            </tr>
-        </table>
-    </div>
-
-    <!-- 吹き出しの入力フィールド -->
-    <div class="input-container">
-        <label for="searchImage">イラスト屋で画像検索:</label>
-        <input type="text" id="searchImage" placeholder="例：社畜">
-        <button onclick="insertImage()">検索して画像を挿入</button>
-    </div>
-
-    <script>
-        function insertImage() {
-            const searchTerm = document.getElementById('searchImage').value;
-            const imgElement = document.querySelector('#panel1 img');
-            // 簡単にイメージ検索のURLを構築 (実際の検索URLとは異なる場合があります)
-            const imageURL = `https://www.irasutoya.com/search?q=${encodeURIComponent(searchTerm)}`;
-            imgElement.src = imageURL;
-        }
-    </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
