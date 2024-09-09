@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9x9 立方体 クォータービュー</title>
+    <style>
+        canvas {
+            background-color: #f0f0f0;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="cubeCanvas" width="600" height="600"></canvas>
+
+    <script>
+        const canvas = document.getElementById('cubeCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const cubeSize = 20; // 立方体のサイズ
+        const gap = 3; // 立方体の間のギャップ
+        const rows = 9;
+        const cols = 9;
+
+        // クォータービューのスケール
+        const offsetX = 250; // キャンバスの中心からのX軸オフセット
+        const offsetY = 150; // キャンバスの中心からのY軸オフセット
+
+        function drawCube(x, y, z) {
+            // クォータービューのXとY座標を計算
+            const isoX = (x - y) * (cubeSize / 2);
+            const isoY = (x + y) * (cubeSize / 4) - (z * cubeSize);
+
+            // 前面
+            ctx.fillStyle = '#888';
+            ctx.beginPath();
+            ctx.moveTo(offsetX + isoX, offsetY + isoY);
+            ctx.lineTo(offsetX + isoX + cubeSize, offsetY + isoY + cubeSize / 2);
+            ctx.lineTo(offsetX + isoX, offsetY + isoY + cubeSize);
+            ctx.lineTo(offsetX + isoX - cubeSize, offsetY + isoY + cubeSize / 2);
+            ctx.closePath();
+            ctx.fill();
+
+            // 上面
+            ctx.fillStyle = '#bbb';
+            ctx.beginPath();
+            ctx.moveTo(offsetX + isoX, offsetY + isoY);
+            ctx.lineTo(offsetX + isoX + cubeSize, offsetY + isoY + cubeSize / 2);
+            ctx.lineTo(offsetX + isoX, offsetY + isoY - cubeSize / 2);
+            ctx.lineTo(offsetX + isoX - cubeSize, offsetY + isoY + cubeSize / 2);
+            ctx.closePath();
+            ctx.fill();
+
+            // 側面
+            ctx.fillStyle = '#555';
+            ctx.beginPath();
+            ctx.moveTo(offsetX + isoX, offsetY + isoY);
+            ctx.lineTo(offsetX + isoX, offsetY + isoY + cubeSize);
+            ctx.lineTo(offsetX + isoX - cubeSize, offsetY + isoY + cubeSize / 2 + cubeSize);
+            ctx.lineTo(offsetX + isoX - cubeSize, offsetY + isoY + cubeSize / 2);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function drawCubes() {
+            for (let z = 0; z < 5; z++) {  // 高さを5層に設定
+                for (let x = 0; x < rows; x++) {
+                    for (let y = 0; y < cols; y++) {
+                        drawCube(x, y, z);
+                    }
+                }
+            }
+        }
+
+        drawCubes();
+    </script>
+</body>
+</html>
