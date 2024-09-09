@@ -1,0 +1,51 @@
+/* 背景色とフォントを設定 */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    text-align: center;
+    padding: 50px;
+}
+
+/* 見出しのスタイル */
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* リンクのスタイル */
+.link-container {
+    display: inline-block;
+    text-align: left;
+}
+
+.styled-link {
+    display: block;
+    margin: 10px 0;
+    padding: 15px 25px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    font-size: 1.2em;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* ホバーしたときのエフェクト */
+.styled-link:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* リンクの間に少しスペースを */
+.link-container a + a {
+    margin-top: 20px;
+}
+
+/* モバイル対応 */
+@media (max-width: 600px) {
+    .styled-link {
+        padding: 10px 15px;
+        font-size: 1em;
+    }
+}
