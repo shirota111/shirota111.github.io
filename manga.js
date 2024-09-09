@@ -2,14 +2,13 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const layers = [];
-let layerIndex = 0;
 
-// 初期キャンバスサイズ
-canvas.width = 800;
-canvas.height = 600;
+// キャンバスサイズを設定
+canvas.width = 400;
+canvas.height = 900;
 
 // レイヤーを追加する関数
-function addLayer() {
+function addLayers() {
     const fileInput = document.getElementById('upload');
     const files = fileInput.files;
 
@@ -18,6 +17,7 @@ function addLayer() {
         return;
     }
 
+    // ファイルごとに処理を行う
     for (const file of files) {
         const reader = new FileReader();
         reader.onload = function(event) {
@@ -33,7 +33,7 @@ function addLayer() {
                     height: img.height
                 };
                 layers.push(layer);
-                drawLayers();
+                drawLayers(); // レイヤーを描画
             };
         };
         reader.readAsDataURL(file);
