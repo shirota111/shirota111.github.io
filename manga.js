@@ -1,51 +1,56 @@
 // script.js
-function generateRandomPanels() {
-    const container = document.getElementById('comic-container');
-    container.innerHTML = ''; // 既存のコマをクリア
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const layers = [];
+let layerIndex = 0;
 
-    const numberOfPanels = 4; // コマの数を4つに固定
+// 初期キャンバスサイズ
+canvas.width = 800;
+canvas.height = 600;
 
-    // グリッドレイアウトを設定
-    container.style.gridTemplateColumns = `repeat(2, 1fr)`;
-    container.style.gridTemplateRows = `repeat(2, 1fr)`;
+// レイヤーを追加する関数
+function addLayer() {
+    const fileInput = document.getElementById('upload');
+    const files = fileInput.files;
 
-    for (let i = 0; i < numberOfPanels; i++) {
-        const panel = document.createElement('div');
-        panel.className = 'comic-panel';
-
-        // ランダムな画像を挿入（例としてプレースホルダー画像を使用）
-        const img = document.createElement('img');
-        img.src = 'https://via.placeholder.com/400x200'; // プレースホルダー画像
-        img.alt = 'コマ画像';
-        panel.appendChild(img);
-
-        // 吹き出しの追加
-        const bubble = document.createElement('div');
-        bubble.className = 'bubble';
-
-        // 吹き出しの形状をランダムに決定
-        const shape = Math.random() > 0.5 ? 'circle' : 'star';
-        bubble.classList.add(shape);
-
-        // 吹き出し内の文字入力欄と文字サイズ変更用のセレクトボックス
-        const textarea = document.createElement('textarea');
-        textarea.placeholder = 'ここに文字を入力';
-        bubble.appendChild(textarea);
-
-        const fontSizeSelect = document.createElement('select');
-        const fontSizes = [12, 16, 20, 24, 28, 32];
-        fontSizes.forEach(size => {
-            const option = document.createElement('option');
-            option.value = size;
-            option.textContent = `${size}px`;
-            fontSizeSelect.appendChild(option);
-        });
-        fontSizeSelect.addEventListener('change', () => {
-            textarea.style.fontSize = fontSizeSelect.value + 'px';
-        });
-        bubble.appendChild(fontSizeSelect);
-
-        panel.appendChild(bubble);
-        container.appendChild(panel);
+    if (files.length === 0) {
+        alert('画像を選択してください');
+        return;
     }
+
+    for (const file of files) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const img = new Image();
+            img.src = event.target.result;
+            img.onload = function() {
+                // 新しいレイヤーの作成
+                const layer = {
+                    image: img,
+                    x: 0,
+                    y: 0,
+                    width: img.width,
+                    height: img.height
+                };
+                layers.push(layer);
+                drawLayers();
+            };
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+// キャンバスにレイヤーを描画する関数
+function drawLayers() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // キャンバスをクリア
+
+    for (const layer of layers) {
+        ctx.drawImage(layer.image, layer.x, layer.y, layer.width, layer.height);
+    }
+}
+
+// レイヤーをクリアする関数
+function clearLayers() {
+    layers.length = 0; // レイヤーの配列を空にする
+    drawLayers(); // キャンバスを再描画
 }
