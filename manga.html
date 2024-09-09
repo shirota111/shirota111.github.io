@@ -1,20 +1,122 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>レイヤー処理画像編集</title>
-    <link rel="stylesheet" href="manga.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON ToDoリスト</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    #todo-list {
+      margin-top: 20px;
+    }
+    .task-item {
+      margin: 5px 0;
+    }
+    button {
+      margin-left: 10px;
+    }
+  </style>
 </head>
 <body>
 
-    <h1>レイヤー処理画像編集</h1>
-    <input type="file" id="upload" accept="image/*" multiple>
-    <button onclick="addLayers()">レイヤー追加</button>
-    <button onclick="clearLayers()">レイヤークリア</button>
-    <br>
-    <canvas id="canvas"></canvas>
+  <h1>ToDoリスト</h1>
 
-    <script src="manga.js"></script>
+  <input type="text" id="task-input" placeholder="タスクを入力" />
+  <button onclick="addTask()">タスク追加</button>
+
+  <div id="todo-list"></div>
+
+  <script>
+    // ToDoリストをJSON形式で管理
+    let todoList = [];
+
+    // ページが読み込まれたらToDoリストを読み込み表示
+    window.onload = function() {
+      loadTodoListFromJSON();
+      displayTodoList();
+    };
+
+    // タスクを追加する関数
+    function addTask() {
+      const taskInput = document.getElementById('task-input');
+      const task = taskInput.value;
+      if (task) {
+        const newTask = {
+          id: todoList.length + 1,
+          task: task,
+          isCompleted: false
+        };
+        todoList.push(newTask);
+        taskInput.value = '';  // 入力欄をクリア
+        logToCSV("Added", newTask);  // ログをCSV形式で出力
+        saveTodoListToJSON();  // JSONに保存
+        displayTodoList();  // ToDoリストを表示更新
+      }
+    }
+
+    // タスクを完了にする関数
+    function completeTask(id) {
+      const task = todoList.find(t => t.id === id);
+      if (task) {
+        task.isCompleted = true;
+        logToCSV("Completed", task);  // ログをCSV形式で出力
+        saveTodoListToJSON();  // JSONに保存
+        displayTodoList();  // ToDoリストを表示更新
+      }
+    }
+
+    // タスクを削除する関数
+    function deleteTask(id) {
+      todoList = todoList.filter(t => t.id !== id);
+      logToCSV("Deleted", { id: id });  // ログをCSV形式で出力
+      saveTodoListToJSON();  // JSONに保存
+      displayTodoList();  // ToDoリストを表示更新
+    }
+
+    // ToDoリストをJSON形式で保存
+    function saveTodoListToJSON() {
+      const jsonContent = JSON.stringify(todoList);
+      localStorage.setItem('todoList', jsonContent);
+    }
+
+    // ローカルストレージからToDoリストを読み込む関数
+    function loadTodoListFromJSON() {
+      const savedList = localStorage.getItem('todoList');
+      if (savedList) {
+        todoList = JSON.parse(savedList);
+      }
+    }
+
+    // ToDoリストを画面に表示する関数
+    function displayTodoList() {
+      const todoListDiv = document.getElementById('todo-list');
+      todoListDiv.innerHTML = '';  // クリア
+
+      todoList.forEach(task => {
+        const taskDiv = document.createElement('div');
+        taskDiv.classList.add('task-item');
+        taskDiv.innerHTML = `
+          ${task.isCompleted ? `<strike>${task.task}</strike>` : task.task}
+          <button onclick="completeTask(${task.id})">完了</button>
+          <button onclick="deleteTask(${task.id})">削除</button>
+        `;
+        todoListDiv.appendChild(taskDiv);
+      });
+    }
+
+    // CSV形式でコンソールにログ出力する関数
+    function logToCSV(action, task) {
+      const timestamp = new Date().toISOString();
+      const csvLog = `${timestamp},${action},${task.id || ''},${task.task || ''},${task.isCompleted || ''}`;
+      console.log(csvLog);
+    }
+  </script>
+
 </body>
 </html>
