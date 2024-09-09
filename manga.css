@@ -1,78 +1,17 @@
 /* styles.css */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f0f0f0;
     text-align: center;
-    padding: 50px;
+    padding: 20px;
+    background-color: #f0f0f0;
 }
 
 h1 {
-    font-size: 2em;
     margin-bottom: 20px;
-    color: #333;
 }
 
-.comic-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 10px;
-    width: 400px;
-    height: 800px;
-    margin: 0 auto;
-}
-
-.comic-panel {
-    position: relative;
-    background-color: #e0e0e0;
-    border: 2px solid #333;
-    overflow: hidden;
-}
-
-.comic-panel img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.bubble {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
+canvas {
+    border: 1px solid #333;
+    margin-top: 20px;
     background-color: white;
-    border: 2px solid #333;
-    padding: 5px;
-    border-radius: 50%;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    width: 25%;
-    height: 25%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    overflow: hidden;
-}
-
-.bubble.circle {
-    border-radius: 50%;
-}
-
-.bubble.star {
-    clip-path: polygon(
-        50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%
-    );
-}
-
-.bubble textarea {
-    width: 100%;
-    height: 100%;
-    border: none;
-    resize: none;
-    box-sizing: border-box;
-    font-size: 14px;
-    padding: 5px;
-}
-
-.bubble textarea:focus {
-    outline: none;
 }
