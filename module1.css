@@ -21,6 +21,13 @@
     padding: 10px;
 }
 
+#month-year {
+            font-size: 1.5em;
+            font-weight: bold;
+            padding: 10px;
+            border-bottom: 2px solid #000;
+        }
+
 .calendar-day {
     display: flex;
     justify-content: center;
