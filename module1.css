@@ -43,7 +43,3 @@
     transform: scale(0.9); /* クリック時に少し縮小 */
 }
 
-body {
-    background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj4KICA8ZyBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIgZmlsbC1vcGFjaXR5PSIwLjEiIHN0cm9rZS1kYXNoYXJyYXk9IjEwIiBzdHJva2UtY29sb3I9Im5vbmUiIHN0cm9rZS1saW5lLWxpbmVhc3R5bGU9InJvdW5kIChvcykgYXMgY29sdW1uIG1lbnQiIHN0cm9rZS1saW5lLWxpbmVhc3R5bGU9InN0cmFpdCwgc2VsZi1vbiI+CiAgPHBhdGggZD0iTTEwIDExQy03Ljc0MyAxMCA1IDguMzc2IDUgMTAiIHN0cm9rZS1saW5lLWxpbmVhc3R5bGU9InN0cmFpdCwgc2VsZi1vbiIvPjwvcGF0aD4KIDwvZz4KPC9zdmc+');
-    background-size: cover;
-}
