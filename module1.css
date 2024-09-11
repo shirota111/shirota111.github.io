@@ -4,29 +4,41 @@
     align-items: center;
     width: 400px;
     height: 400px;
-    border: 2px solid #000; /* 外枠を強調するためのボーダー */
-    margin: 0 auto; /* コンテナを画面中央に */
+    border: 3px solid #333; /* 太めの黒ボーダーで強調 */
+    margin: 0 auto;
+    background-color: #222; /* 背景をダークカラーに変更 */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7); /* 立体感を追加 */
+    border-radius: 15px; /* 角を丸める */
 }
 
 #calendar {
     display: grid;
-    grid-template-columns: repeat(7, 1fr); /* 7列のカレンダー */
-    grid-auto-rows: 1fr; /* 行の高さを自動で調整 */
+    grid-template-columns: repeat(7, 1fr);
+    grid-auto-rows: 1fr;
     gap: 5px;
     width: 100%;
     height: 100%;
+    padding: 10px;
 }
 
 .calendar-day {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: lightblue;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    font-size: 16px; /* 文字サイズの調整 */
+    background-color: #ff69b4; /* 鮮やかなピンクでポップな印象に */
+    border: 2px solid #000; /* 太い黒の枠線でレトロ感を追加 */
+    color: #fff; /* 白文字でコントラストを強調 */
+    font-family: 'Courier New', monospace; /* レトロなフォント */
+    font-size: 18px; /* 文字サイズを少し大きめに */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* アニメーション */
 }
 
 .calendar-day:hover {
-    background-color: lightcoral;
+    background-color: #ff4500; /* ホバー時にオレンジ色で変化 */
+    transform: scale(1.1); /* ホバー時に少し拡大 */
+}
+
+.calendar-day:active {
+    background-color: #32cd32; /* クリック時にライムグリーン */
+    transform: scale(0.9); /* クリック時に少し縮小 */
 }
