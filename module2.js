@@ -9,8 +9,8 @@ function handleEventInModule2(selectedDay) {
     const contactInput = document.getElementById('todo-contact-input');
 
     // タスクを追加するための確認
-    const task = prompt(`Enter task for day ${selectedDay}`);
-    const contact = prompt(`Enter contact information for task`);
+    const task = prompt(`タスクを追加してね day ${selectedDay}`);
+    const contact = prompt(`タスクに関する連絡先を追加してね`);
 
     if (task && contact) {
         // タスクをToDoリストに追加
