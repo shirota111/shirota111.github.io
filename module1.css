@@ -1,25 +1,30 @@
-
-
-/* module1.css */
-
 #calendar {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
+    display: table;
+    width: 100%;
+    border-collapse: collapse; /* 枠線が重なる部分を除去 */
     margin: 20px 0;
 }
 
 .calendar-day {
+    display: table-cell; /* テーブルのセルのように表示 */
     width: 50px;
     height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
+    vertical-align: middle;
     background-color: lightblue;
     border: 1px solid #ccc;
     cursor: pointer;
+    padding: 10px; /* 余白を追加 */
 }
 
 .calendar-day:hover {
     background-color: lightcoral;
 }
+
+/* 日付全体を中央に配置 */
+#calendar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
