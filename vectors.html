@@ -92,6 +92,20 @@
             margin-top: 20px;
             border-radius: 5px;
         }
+
+        .tweet-button {
+            background-color: #1DA1F2;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
     </style>
 </head>
 <body>
@@ -111,6 +125,7 @@
     </div>
 
     <button class="generate-button" onclick="generateOdai()">お題を生成</button>
+    <a id="tweet-button" class="tweet-button" href="#" target="_blank">Xにそのまま投稿</a>
 
     <script>
         const subjects = [
@@ -133,6 +148,11 @@
 
             const odai = randomSubject.replace(/○○/g, () => randomWord1 === randomWord2 ? randomWord1 : randomWord2);
             document.getElementById("odai").innerText = odai;
+
+            // Xの投稿リンクを生成
+            const tweetText = encodeURIComponent(odai);
+            const tweetUrl = `https://twitter.com/intent/tweet?text=${tweetText}`;
+            document.getElementById("tweet-button").setAttribute("href", tweetUrl);
         }
     </script>
 
