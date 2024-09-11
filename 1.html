@@ -1,51 +1,69 @@
+
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modular Calendar with ToDo and Event Listeners</title>
-     <link rel="stylesheet" href="module1.css">
 
- <link rel="stylesheet" href="linkmenu.css">
+    <!-- 初期CSSファイル -->
+    <link id="stylesheet" rel="stylesheet" href="module1.css">
+    <link rel="stylesheet" href="linkmenu.css">
 
-<style>
-
+    <style>
+        /* スタイル変更用ボタンの基本スタイル */
+        .switch-btn {
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
-    
 
-
-　　　　// Css変数: ここにidを追加する　
+<!-- 月と年の表示 -->
 <div id="month-year"></div>
 <div id="calendar"></div>
- <div id="notification"></div>
+<div id="notification"></div>
 
-    <div>
-        <ul id="todo-list"></ul>
-    </div>
+<!-- Todoリスト表示 -->
+<div>
+    <ul id="todo-list"></ul>
+</div>
 
+<!-- プログラムのスクリプト一覧 -->
+<script src="module1.js"></script>
+<script src="module2.js"></script>
+<script src="module3.js"></script>
+<script src="module4.js"></script>
 
-//　プログラム一覧: ここにプログラムを追加する
-    <script src="module1.js"></script>
-    <script src="module2.js"></script>
-    <script src="module3.js"></script>
-    <script src="module4.js"></script>
+<!-- CSVダウンロードボタン -->
+<button id="download-csv-button">Download CSV</button>
 
+<!-- スタイル切り替えボタン -->
+<div>
+    <button class="switch-btn" onclick="switchStyle('module1.css')">CSS 1に切り替え</button>
+    <button class="switch-btn" onclick="switchStyle('module2.css')">CSS 2に切り替え</button>
+    <button class="switch-btn" onclick="switchStyle('module3.css')">CSS 3に切り替え</button>
+</div>
 
-
-    <button id="download-csv-button">Download CSV</button>
-   
-
-// Css用クラステーブル : ここにクラスを追加する
-
+<!-- クラスによるリンクメニュー -->
 <div class="link-container">
-        <a href="shogi2.html" class="styled-link">将棋</a>
-        <a href="vectors.html" class="styled-link">Ipponグランプリ</a>
-        <a href="test.html" class="styled-link">本棚</a>
-    </div>
+    <a href="shogi2.html" class="styled-link">将棋</a>
+    <a href="vectors.html" class="styled-link">Ipponグランプリ</a>
+    <a href="test.html" class="styled-link">本棚</a>
+</div>
 
-
+<script>
+    // スタイルシートを切り替える関数
+    function switchStyle(cssFile) {
+        document.getElementById('stylesheet').setAttribute('href', cssFile);
+    }
+</script>
 
 </body>
 </html>
+
+
+
