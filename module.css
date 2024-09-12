@@ -1,15 +1,4 @@
-#calendar-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 400px;
-    height: 400px;
-    border: 3px solid #333; /* 太めの黒ボーダーで強調 */
-    margin: 0 auto;
-    background-color: #222; /* 背景をダークカラーに変更 */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7); /* 立体感を追加 */
-    border-radius: 15px; /* 角を丸める */
-}
+
 
 
 
