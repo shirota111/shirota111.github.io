@@ -21,7 +21,7 @@ h1 {
 
 .styled-link {
     display: block;
-position: absolute; top: 50%; right:150%; transform: translate(-50%, -50%);
+
     margin: 10px 0;
     padding: 15px 25px;
     background-color: #4CAF50;
