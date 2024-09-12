@@ -1,4 +1,4 @@
-     /* プルダウンメニューのスタイリング */
+/* プルダウンメニューのスタイリング */
 #monthSelector {
   margin: 20px;
   padding: 10px;
@@ -62,9 +62,4 @@
             transform: rotate(10deg);
         }
 
-        /* スタイル変更用ボタンの基本スタイル */
-        .switch-btn {
-            padding: 10px;
-            margin: 5px;
-            cursor: pointer;
-        }
+        
