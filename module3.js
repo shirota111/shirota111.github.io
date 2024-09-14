@@ -3,7 +3,7 @@
 fetch('module3.html')
   .then(response => response.text())
   .then(data => {
-    document.getElementById('menu-container').innerHTML = data;
+    document.getElementById('module3').innerHTML = data;
 
 // 月のプルダウンメニューのイベントリスナーを設定する関数
 function setupMonthDropdown() {
