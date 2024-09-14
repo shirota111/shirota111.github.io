@@ -1,3 +1,10 @@
+
+// 外部HTMLファイルを読み込み、指定のコンテナに挿入
+fetch('module3.html')
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById('menu-container').innerHTML = data;
+
 // 月のプルダウンメニューのイベントリスナーを設定する関数
 function setupMonthDropdown() {
     const monthSelector = document.getElementById('monthSelector');
