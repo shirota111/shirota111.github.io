@@ -1,5 +1,12 @@
 // module2.js
 
+
+// 外部HTMLファイルを読み込み、指定のコンテナに挿入
+fetch('module2.html')
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById('menu-container').innerHTML = data;
+
 // ToDoリストの初期化
 const todoList = [];
 
