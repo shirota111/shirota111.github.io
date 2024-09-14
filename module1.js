@@ -1,16 +1,5 @@
 // module1.js
 
-// 外部HTMLファイルを読み込み、指定のコンテナに挿入
-fetch('module1.html')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.text();
-  })
-  .then(data => {
-    document.getElementById('module1').innerHTML = data;
-
     // カレンダーの初期化関数
     function initCalendar() {
         const calendar = document.getElementById('calendar');
