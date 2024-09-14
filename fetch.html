@@ -1,53 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sequential Script Loading</title>
+    <title>Modular Calendar with ToDo and Event Listeners</title>
+
+    <!-- 初期CSSファイル -->
+    <link id="stylesheet" rel="stylesheet" href="module1.css">
+    <link rel="stylesheet" href="linkmenu.css">
 </head>
 <body>
-    <div id="hamburgerMenu-container"></div> 
-    <div id="link-container"></div> 
-    <div id="module1"></div> 
-    <div id="module2"></div> 
-    <div id="module3"></div> 
-    <div id="module4"></div>
 
+<!-- 月と年の表示 -->
+<div id="month-year"></div>
+<div id="calendar"></div>
+<div id="notification"></div>
 
-    <script>
-        async function loadScriptsSequentially() {
-            try {
-                // module1.jsの内容を直接記述
-                console.log('module1.js 実行中...');
-                document.getElementById('module1').innerHTML = 'Module 1 Loaded';
+<!-- Todoリスト表示 -->
+<div>
+    <ul id="todo-list"></ul>
+</div>
 
-                // module2.jsの内容を直接記述
-                console.log('module2.js 実行中...');
-                document.getElementById('module2').innerHTML = 'Module 2 Loaded';
+<!-- CSVダウンロードボタン -->
+<button id="download-csv-button">Download CSV</button>
 
-                // module3.jsの内容を直接記述
-                console.log('module3.js 実行中...');
-                document.getElementById('module3').innerHTML = 'Module 3 Loaded';
+<!-- クラスによるリンクメニュー -->
+<div class="link-container">
+    <a href="shogi2.html" class="styled-link">将棋</a>
+    <a href="vectors.html" class="styled-link">Ipponグランプリ</a>
+    <a href="test.html" class="styled-link">本棚</a>
+</div>
 
-                // module4.jsの内容を直接記述
-                console.log('module4.js 実行中...');
-                document.getElementById('module4').innerHTML = 'Module 4 Loaded';
-
-                // hamburgerMenu.jsの内容を直接記述
-                console.log('hamburgerMenu.js 実行中...');
-                document.getElementById('hamburgerMenu-container').innerHTML = 'Hamburger Menu Loaded';
-
-                // linkmenu.jsの内容を直接記述
-                console.log('linkmenu.js 実行中...');
-                document.getElementById('link-container').innerHTML = 'Link Menu Loaded';
-
-            } catch (error) {
-                console.error('スクリプトのロード中にエラーが発生しました: ', error);
+<!-- プログラムのスクリプトをfetchでロード -->
+<script>
+function loadScript(url) {
+    return fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to load ${url}`);
             }
-        }
+            return response.text();
+        })
+        .then(scriptText => {
+            const scriptElement = document.createElement('script');
+            scriptElement.textContent = scriptText;
+            document.body.appendChild(scriptElement);
+        });
+}
 
-        // スクリプトを順次ロード
-        loadScriptsSequentially();
-    </script>
+loadScript('module1.js')
+    .then(() => loadScript('module2.js'))
+    .then(() => loadScript('module3.js'))
+    .then(() => loadScript('module4.js'))
+    .catch(error => console.error(error));
+</script>
+
 </body>
 </html>
