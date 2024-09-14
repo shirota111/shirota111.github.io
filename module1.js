@@ -4,7 +4,7 @@
 fetch('module1.html')
   .then(response => response.text())
   .then(data => {
-    document.getElementById('menu-container').innerHTML = data;
+    document.getElementById('module1').innerHTML = data;
 
 // カレンダーの初期化関数
 function initCalendar() {
