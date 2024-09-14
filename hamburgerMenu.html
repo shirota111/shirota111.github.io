@@ -3,36 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>サブカル風 Hamburger Menu</title>
+    <title>Minimal Hamburger Menu</title>
     <style>
-        /* Google Fonts: サブカル風なフォントの追加 */
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
         /* ハンバーガーメニューボタンのスタイル */
         .hamburgerMenu {
-            width: 40px;
-            height: 40px;
+            width: 24px;
+            height: 24px;
             display: flex;
             flex-direction: column;
             justify-content: space-around;
             cursor: pointer;
             position: fixed;
-            top: 20px;
-            left: 20px;
+            top: 15px;
+            right: 15px;
             z-index: 100;
-            transition: transform 0.3s ease;
-        }
-        .hamburgerMenu:hover {
-            transform: scale(1.1);
         }
         .hamburgerMenu .bar {
             width: 100%;
-            height: 6px;
-            background-color: #ff6f61; /* 鮮やかなピンク系 */
-            transition: background-color 0.3s ease;
-        }
-        .hamburgerMenu:hover .bar {
-            background-color: #8f5fe8; /* 紫系 */
+            height: 3px;
+            background-color: #888; /* 控えめなグレー */
         }
 
         /* メニューが非表示の時のスタイル */
@@ -40,11 +29,11 @@
             position: fixed;
             top: 0;
             right: -100%;
-            width: 250px;
+            width: 180px;
             height: 100%;
-            background-color: #2a2a2a; /* ダークグレー */
-            transition: right 0.5s ease;
-            z-index: 99;
+            background-color: #444; /* ダークグレー */
+            transition: right 0.3s ease;
+            overflow: hidden;
         }
 
         /* メニューが表示されるときのスタイル */
@@ -56,32 +45,29 @@
         .hamburgerMenuNav ul {
             list-style-type: none;
             padding: 0;
-            margin-top: 80px;
+            margin-top: 60px;
             text-align: center;
-            font-family: 'Press Start 2P', cursive; /* レトロゲーム風フォント */
         }
         .hamburgerMenuNav ul li {
-            margin: 30px 0;
+            margin: 15px 0;
         }
         .hamburgerMenuNav ul li a {
-            color: #ff6f61; /* 鮮やかなピンク */
+            color: #ccc; /* 薄いグレー */
             text-decoration: none;
-            font-size: 18px;
+            font-size: 16px;
             transition: color 0.3s ease;
         }
         .hamburgerMenuNav ul li a:hover {
-            color: #8f5fe8; /* 紫色 */
+            color: #fff; /* ホバー時に白くする */
         }
 
         /* ページ全体のレイアウト */
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f0f0f0;
             height: 100vh;
-            color: #333;
-            overflow-x: hidden;
         }
 
         /* サンプルページ内容 */
@@ -89,28 +75,6 @@
             height: 100vh;
             padding: 50px;
             background-color: #fff;
-            transition: background-color 0.3s ease;
-        }
-
-        /* セクションの色をサブカルっぽく */
-        #home {
-            background-color: #ffefd5; /* パステル系 */
-        }
-        #about {
-            background-color: #ffe4e1; /* ピンク系 */
-        }
-        #services {
-            background-color: #fafad2; /* クリーム系 */
-        }
-        #contact {
-            background-color: #d8bfd8; /* パステルパープル */
-        }
-
-        /* サンプルテキストのスタイル */
-        h1, p {
-            font-family: 'Press Start 2P', cursive; /* サブカル風フォント */
-            text-align: center;
-            color: #333;
         }
     </style>
 </head>
