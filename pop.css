@@ -46,7 +46,7 @@ body {
 }
 
 .glitch::before, .glitch::after {
-  content: '"Plucking the beautys butt hair is　wack."';
+  content: 'Plucking the beautys butt hair is　wack.';
   position: absolute;
   left: 0;
   color: #ff69b4;
