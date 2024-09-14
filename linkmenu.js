@@ -3,4 +3,4 @@
 fetch('linkmenu.html')
   .then(response => response.text())
   .then(data => {
-    document.getElementById('linkmenu-container').innerHTML = data;
+    document.getElementById('link-container').innerHTML = data;
