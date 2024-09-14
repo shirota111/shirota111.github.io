@@ -1,5 +1,12 @@
 // module4.js
 
+
+// 外部HTMLファイルを読み込み、指定のコンテナに挿入
+fetch('4.html')
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById('menu-container').innerHTML = data;
+
 // CSV形式でToDoリストをダウンロードする関数
 function downloadTodoListAsCSV() {
     const csvRows = [];
