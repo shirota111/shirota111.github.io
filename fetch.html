@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sequential Script Loading</title>
+</head>
+<body>
+    <div id="hamburgerMenu-container"></div> 
+    <div id="link-container"></div> 
+    <div id="module1"></div> 
+    <div id="module2"></div> 
+    <div id="module3"></div> 
+    <div id="module4"></div>
+
+    <script>
+        async function loadScriptsSequentially() {
+            try {
+                // module1.jsの内容を直接記述
+                console.log('module1.js 実行中...');
+                document.getElementById('module1').innerHTML = 'Module 1 Loaded';
+
+                // module2.jsの内容を直接記述
+                console.log('module2.js 実行中...');
+                document.getElementById('module2').innerHTML = 'Module 2 Loaded';
+
+                // module3.jsの内容を直接記述
+                console.log('module3.js 実行中...');
+                document.getElementById('module3').innerHTML = 'Module 3 Loaded';
+
+                // module4.jsの内容を直接記述
+                console.log('module4.js 実行中...');
+                document.getElementById('module4').innerHTML = 'Module 4 Loaded';
+
+                // hamburgerMenu.jsの内容を直接記述
+                console.log('hamburgerMenu.js 実行中...');
+                document.getElementById('hamburgerMenu-container').innerHTML = 'Hamburger Menu Loaded';
+
+                // linkmenu.jsの内容を直接記述
+                console.log('linkmenu.js 実行中...');
+                document.getElementById('link-container').innerHTML = 'Link Menu Loaded';
+
+            } catch (error) {
+                console.error('スクリプトのロード中にエラーが発生しました: ', error);
+            }
+        }
+
+        // スクリプトを順次ロード
+        loadScriptsSequentially();
+    </script>
+</body>
+</html>
