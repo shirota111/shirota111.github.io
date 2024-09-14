@@ -46,7 +46,9 @@ body {
 }
 
 .glitch::before, .glitch::after {
-  content: 'けつ毛をむしる美女は怖い！';
+  content: '"Plucking the beauty's butt hair is wack."
+
+';
   position: absolute;
   left: 0;
   color: #ff69b4;
