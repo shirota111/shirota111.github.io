@@ -2,7 +2,7 @@
 fetch('hamburgerMenu.html')
   .then(response => response.text())
   .then(data => {
-    document.getElementById('menu-container').innerHTML = data;
+    document.getElementById('hamburgerMenu-container').innerHTML = data;
 
     // メニューが読み込まれた後に、クリックイベントを追加
     const hamburgerMenu = document.querySelector('.hamburgerMenu');
