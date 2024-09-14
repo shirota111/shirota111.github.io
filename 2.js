@@ -17,4 +17,5 @@ loadScript('module1.js')
     .then(() => loadScript('module2.js'))
     .then(() => loadScript('module3.js'))
     .then(() => loadScript('module4.js'))
+　  .then(() => loadScript('.js'))
     .catch(error => console.error(error));
