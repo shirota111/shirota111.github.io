@@ -5,7 +5,7 @@
 fetch('module2.html')
   .then(response => response.text())
   .then(data => {
-    document.getElementById('menu-container').innerHTML = data;
+    document.getElementById('module2').innerHTML = data;
 
 // ToDoリストの初期化
 const todoList = [];
