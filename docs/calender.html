@@ -1,7 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
- 　  <title>カレンダー生成</title>
+    <title>カレンダー生成</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f0f0f0;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        
+        h1 {
+            color: #ff6347; /* トマト色 */
+            font-size: 2em;
+            margin-top: 20px;
+        }
+
+        #calendar {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+            background: #fff;
+            border: 2px solid #ddd;
+        }
+        
+        #calendar th, #calendar td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        #calendar th {
+            background: #ffeb3b; /* 明るい黄色 */
+            color: #333;
+            font-weight: bold;
+        }
+        
+        #calendar td {
+            background: #f9f9f9; /* 軽いグレー */
+        }
+        
+        #calendar tr:nth-child(even) td {
+            background: #f1f1f1; /* 明るい灰色 */
+        }
+        
+        #calendar tr:nth-child(odd) td {
+            background: #fff; /* 白色 */
+        }
+        
+        #download {
+            margin: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background: #ff6347; /* トマト色 */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        #download:hover {
+            background: #ff4500; /* オレンジ色 */
+        }
+    </style>
 </head>
 <body>
     <h1>カレンダー</h1>
@@ -16,7 +79,7 @@
             table.innerHTML = ''; // カレンダーをクリア
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             const firstDay = new Date(year, month, 1).getDay();
-            
+
             // ヘッダー行（曜日）
             const headerRow = table.insertRow();
             const daysOfWeek = ['日', '月', '火', '水', '木', '金', '土'];
