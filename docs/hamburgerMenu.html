@@ -179,14 +179,14 @@
 
 
         // shogi2.html を読み込む
-        fetch('shogi2.html')
+        fetch('/src/shogi2.html')
             .then(response => response.text())
             .then(html => {
                 document.getElementById('services').innerHTML += html;
 
                 // shogi.js を読み込む
                 const script = document.createElement('script');
-                script.src = 'shogi.js';
+                script.src = '/src/shogi.js';
                 document.body.appendChild(script);
             })
             .catch(error => console.error('Error loading shogi2.html:', error));
