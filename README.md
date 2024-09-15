@@ -5,14 +5,23 @@
 ## フォルダ構成
 
 project/
+
 ├── src/
+
 │   ├── 2.js
+
 │   ├── main.js
+
 │   └── ... (その他のモジュールファイル)
+
 ├── assets/
+
 │   ├── styles/
+
 │   │   └── style.css
+
 │   └── images/
+
 │       └── logo.png
 ├── docs/
 │   ├── index.html
