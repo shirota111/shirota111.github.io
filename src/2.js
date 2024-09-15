@@ -13,9 +13,9 @@ function loadScript(url) {
         });
 }
 
-loadScript('module1.js')
-    .then(() => loadScript('module2.js'))
-    .then(() => loadScript('module3.js'))
-    .then(() => loadScript('module4.js'))
-　  .then(() => loadScript('hamburgerMenu.js'))
+loadScript('/src/module1.js')
+    .then(() => loadScript('/src/module2.js'))
+    .then(() => loadScript('/src/module3.js'))
+    .then(() => loadScript('/src/module4.js'))
+　  .then(() => loadScript('/src/hamburgerMenu.js'))
     .catch(error => console.error(error));
