@@ -23,9 +23,9 @@ project/
 
 │  　　 │ 　　  └── style.css
 
-│   　　　　　　　└── images/
+│   　　└── images/
 
-│     　　　　　  └── logo.png
+│     　　　　　　└── logo.png
 
 ├── docs/
 
