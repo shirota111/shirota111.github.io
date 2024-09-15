@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   // エントリーポイントの指定
-  entry: '2.js', // このファイルがアプリケーションの起点です
+  entry: './src/2.js', // このファイルがアプリケーションの起点です
 
   // 出力先の指定
   output: {
