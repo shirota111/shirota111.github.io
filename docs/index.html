@@ -4,7 +4,150 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Subculture Design Example</title>
-  <link rel="stylesheet" href="pop.css">
+  
+
+  <style>
+/* ベーシックリセット */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* サブカルらしい背景 */
+body {
+  background: linear-gradient(135deg, #ff69b4, #00ffff);
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  text-align: center;
+  color: white;
+}
+
+/* ネオン風テキスト */
+.neon-text {
+  font-size: 48px;
+  color: #ff69b4;
+  text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 30px #ff69b4, 0 0 40px #ff69b4;
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 30px #ff69b4, 0 0 40px #ff69b4;
+  }
+  to {
+    text-shadow: 0 0 20px #ff1493, 0 0 30px #ff1493, 0 0 40px #ff1493, 0 0 50px #ff1493;
+  }
+}
+
+/* グリッチテキストエフェクト */
+.glitch {
+  font-size: 24px;
+  color: #00ffff;
+  position: relative;
+}
+
+.glitch::before, .glitch::after {
+  content: 'Plucking the beautys butt hair is　wack.';
+  position: absolute;
+  left: 0;
+  color: #ff69b4;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+  clip: rect(0, 900px, 0, 0);
+}
+
+.glitch::before {
+  animation: glitch-anim-1 2s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+  animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+  0% {
+    clip: rect(0, 900px, 0, 0);
+    transform: translate(0);
+  }
+  20% {
+    clip: rect(10px, 900px, 60px, 0);
+    transform: translate(-5px, -5px);
+  }
+  40% {
+    clip: rect(85px, 900px, 140px, 0);
+    transform: translate(5px, 0);
+  }
+  60% {
+    clip: rect(60px, 900px, 100px, 0);
+    transform: translate(-5px, 5px);
+  }
+  80% {
+    clip: rect(30px, 900px, 90px, 0);
+    transform: translate(5px, -5px);
+  }
+  100% {
+    clip: rect(50px, 900px, 150px, 0);
+    transform: translate(0);
+  }
+}
+
+@keyframes glitch-anim-2 {
+  0% {
+    clip: rect(0, 900px, 0, 0);
+    transform: translate(0);
+  }
+  20% {
+    clip: rect(60px, 900px, 100px, 0);
+    transform: translate(5px, 5px);
+  }
+  40% {
+    clip: rect(90px, 900px, 140px, 0);
+    transform: translate(-5px, 0);
+  }
+  60% {
+    clip: rect(30px, 900px, 60px, 0);
+    transform: translate(5px, -5px);
+  }
+  80% {
+    clip: rect(10px, 900px, 40px, 0);
+    transform: translate(-5px, 5px);
+  }
+  100% {
+    clip: rect(50px, 900px, 150px, 0);
+    transform: translate(0);
+  }
+}
+
+/* ポップなボタン */
+.pop-button {
+  background-color: #ff69b4;
+  border: none;
+  color: white;
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 25px;
+  cursor: pointer;
+  text-shadow: 0 0 5px #ff69b4;
+  transition: all 0.3s ease;
+}
+
+.pop-button:hover {
+  background-color: #ff1493;
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #ff1493;
+}
+
+
+  </style>
 </head>
 <body>
   <div class="container">
