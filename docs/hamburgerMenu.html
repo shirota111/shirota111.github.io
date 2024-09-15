@@ -172,6 +172,23 @@
         // メニューに 'active' クラスを付けて表示/非表示を切り替える
         menuNav.classList.toggle('active');
     });
+
+
+
+        // shogi2.html を読み込む
+        fetch('shogi2.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('services').innerHTML += html;
+
+                // shogi.js を読み込む
+                const script = document.createElement('script');
+                script.src = 'shogi.js';
+                document.body.appendChild(script);
+            })
+            .catch(error => console.error('Error loading shogi.html:', error));
+    </script>
+
 </script>
 
 </body>
