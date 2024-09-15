@@ -24,10 +24,15 @@ project/
 
 │       └── logo.png
 ├── docs/
+
 │   ├── index.html
+
 │   ├── bundle.js
+
 │   ├── pop.html
+
 │   └── ... (その他の公開ファイル)
+
 ├── webpack.config.js
 ├── README.md  ← ここに配置
 └── ... (その他の設定ファイル)
