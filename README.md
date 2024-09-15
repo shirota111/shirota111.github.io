@@ -8,30 +8,30 @@ project/
 
 ├── src/
 
-│   ├── 2.js
+│  　　 ├── 2.js
 
-│   ├── main.js
+│  　　 ├── main.js
 
-│   └── ... (その他のモジュールファイル)
+│  　　 └── ... (その他のモジュールファイル)
 
 ├── assets/
 
-│   ├── styles/
+│  　　 ├── styles/
 
-│   │   └── style.css
+│  　　 │ 　　  └── style.css
 
-│   └── images/
+│   　　　　　　　└── images/
 
-│       └── logo.png
+│     　　　　　  └── logo.png
 ├── docs/
 
-│   ├── index.html
+│  　　 ├── index.html
 
-│   ├── bundle.js
+│   　　├── bundle.js
 
-│   ├── pop.html
+│   　　├── pop.html
 
-│   └── ... (その他の公開ファイル)
+│   　　└── ... (その他の公開ファイル)
 
 ├── webpack.config.js
 
