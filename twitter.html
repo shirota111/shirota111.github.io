@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Twitter Posts Graph</title>
+    <title>Twitter Data Graph</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <canvas id="tweetChart" width="400" height="200"></canvas>
+    <h1>Twitter Posts Graph</h1>
+    <canvas id="tweetChart" width="800" height="400"></canvas>
     <script>
-        const bearerToken = 'AAAAAAAAAAAAAAAAAAAAAAOmvwEAAAAA8rOpAos4IwHfvpuYLlWO0G%2FHhX0%3DktYwVDdEnO1xoSNv7SqpP3WqKdyTsO7P4WZcPbhqstxZLAqBqD';
-        const userId = 'Armored_Kantus_'; // ここに取得したいユーザーIDを入力
+        const bearerToken = 'AAAAAAAAAAAAAAAAAAAAAAOmvwEAAAAA8rOpAos4IwHfvpuYLlWO0G%2FHhX0%3DktYwVDdEnO1xoSNv7SqpP3WqKdyTsO7P4WZcPbhqstxZLAqBq'; // 実際のトークン
+        const userId = 'Armored_Kantus_'; // 取得したいユーザーIDを入力
 
         // Twitter APIからツイートを取得
         const fetchTweets = async () => {
@@ -28,7 +29,7 @@
             return data.data; // Twitter APIからのツイートデータ
         };
 
-        // ツイートデータから文字列をリスト化し、グラフ化
+        // ツイートデータをグラフ化
         const createChart = (tweets) => {
             const tweetTexts = tweets.map(tweet => tweet.text);
             const tweetLengths = tweetTexts.map(text => text.length);
@@ -37,7 +38,7 @@
             new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: tweetTexts,
+                    labels: tweetTexts.map((_, index) => `Tweet ${index + 1}`),
                     datasets: [{
                         label: 'Tweet Length',
                         data: tweetLengths,
@@ -50,7 +51,12 @@
                     responsive: true,
                     scales: {
                         x: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            ticks: {
+                                autoSkip: false,
+                                maxRotation: 90,
+                                minRotation: 45
+                            }
                         },
                         y: {
                             beginAtZero: true
