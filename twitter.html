@@ -15,34 +15,47 @@
 
         // ユーザーIDを取得
         const fetchUserId = async () => {
-            const response = await fetch(`https://api.twitter.com/2/users/by/username/${username}`, {
-                headers: {
-                    'Authorization': `Bearer ${bearerToken}`
+            try {
+                const response = await fetch(`https://api.twitter.com/2/users/by/username/${username}`, {
+                    headers: {
+                        'Authorization': `Bearer ${bearerToken}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user ID');
                 }
-            });
 
-            if (!response.ok) {
-                throw new Error('Failed to fetch user ID');
+                const data = await response.json();
+                console.log('User ID Data:', data); // デバッグ用ログ
+                return data.data.id; // ユーザーID
+            } catch (error) {
+                console.error('Error fetching user ID:', error);
+                return null;
             }
-
-            const data = await response.json();
-            return data.data.id; // ユーザーID
         };
 
         // ツイートを取得
         const fetchTweets = async (userId) => {
-            const response = await fetch(`https://api.twitter.com/2/users/${userId}/tweets`, {
-                headers: {
-                    'Authorization': `Bearer ${bearerToken}`
+            if (!userId) return;
+
+            try {
+                const response = await fetch(`https://api.twitter.com/2/users/${userId}/tweets`, {
+                    headers: {
+                        'Authorization': `Bearer ${bearerToken}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch tweets');
                 }
-            });
 
-            if (!response.ok) {
-                throw new Error('Failed to fetch tweets');
+                const data = await response.json();
+                console.log('Tweets Data:', data); // デバッグ用ログ
+                return data.data; // ツイートデータ
+            } catch (error) {
+                console.error('Error fetching tweets:', error);
             }
-
-            const data = await response.json();
-            return data.data; // ツイートデータ
         };
 
         // ツイートデータをグラフ化
@@ -86,10 +99,14 @@
         const main = async () => {
             try {
                 const userId = await fetchUserId();
-                const tweets = await fetchTweets(userId);
-                createChart(tweets);
+                if (userId) {
+                    const tweets = await fetchTweets(userId);
+                    if (tweets) {
+                        createChart(tweets);
+                    }
+                }
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Error in main function:', error);
             }
         };
 
