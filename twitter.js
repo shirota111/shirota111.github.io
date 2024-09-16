@@ -1,6 +1,7 @@
 const bearerToken = 'AAAAAAAAAAAAAAAAAAAAAAOmvwEAAAAA8rOpAos4IwHfvpuYLlWO0G%2FHhX0%3DktYwVDdEnO1xoSNv7SqpP3WqKdyTsO7P4WZcPbhqstxZLAqBqD';
 const userId = 'YOUR_USER_ID'; // ここに取得したいユーザーIDを入力
 
+
 // Twitter APIからツイートを取得
 const fetchTweets = async () => {
     const response = await fetch(`https://api.twitter.com/2/users/${userId}/tweets`, {
