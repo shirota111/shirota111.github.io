@@ -1,63 +1,20 @@
+const axios = require('axios');
+
+// Bearer Token (セキュリティ上、環境変数から取得するのが推奨されます)
 const bearerToken = 'AAAAAAAAAAAAAAAAAAAAAAOmvwEAAAAA8rOpAos4IwHfvpuYLlWO0G%2FHhX0%3DktYwVDdEnO1xoSNv7SqpP3WqKdyTsO7P4WZcPbhqstxZLAqBqD';
-const userId = 'Armored_Kantus_'; // ここに取得したいユーザーIDを入力
 
-
-// Twitter APIからツイートを取得
-const fetchTweets = async () => {
-    const response = await fetch(`https://api.twitter.com/2/users/${userId}/tweets`, {
-        headers: {
-            'Authorization': `Bearer ${bearerToken}`
-        }
+async function fetchUserData(username) {
+  try {
+    const response = await axios.get(`https://api.twitter.com/2/users/by/username/${username}`, {
+      headers: {
+        'Authorization': `Bearer ${bearerToken}`
+      }
     });
+    console.log(response.data);
+  } catch (error) {
+    console.error('Error fetching user data:', error.response ? error.response.data : error.message);
+  }
+}
 
-    if (!response.ok) {
-        throw new Error('Failed to fetch tweets');
-    }
-
-    const data = await response.json();
-    return data.data; // Twitter APIからのツイートデータ
-};
-
-// ツイートデータから文字列をリスト化し、グラフ化
-const createChart = (tweets) => {
-    const tweetTexts = tweets.map(tweet => tweet.text);
-    const tweetLengths = tweetTexts.map(text => text.length);
-
-    const ctx = document.getElementById('tweetChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: tweetTexts,
-            datasets: [{
-                label: 'Tweet Length',
-                data: tweetLengths,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    beginAtZero: true
-                },
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-};
-
-// メイン処理
-const main = async () => {
-    try {
-        const tweets = await fetchTweets();
-        createChart(tweets);
-    } catch (error) {
-        console.error('Error:', error);
-    }
-};
-
-main();
+// ユーザー名を指定してデータを取得
+fetchUserData('jack');
