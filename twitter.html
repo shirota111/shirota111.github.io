@@ -34,7 +34,11 @@
                         'Authorization': `Bearer ${bearerToken}`
                     }
                 });
-                if (!response.ok) throw new Error('Failed to fetch user ID');
+                if (!response.ok) {
+                    const error = await response.text();
+                    console.error('Error fetching user ID:', error);
+                    throw new Error('Failed to fetch user ID');
+                }
                 const data = await response.json();
                 return data.data.id;
             } catch (error) {
@@ -49,7 +53,11 @@
                         'Authorization': `Bearer ${bearerToken}`
                     }
                 });
-                if (!response.ok) throw new Error('Failed to fetch tweets');
+                if (!response.ok) {
+                    const error = await response.text();
+                    console.error('Error fetching tweets:', error);
+                    throw new Error('Failed to fetch tweets');
+                }
                 const data = await response.json();
                 return data.data;
             } catch (error) {
