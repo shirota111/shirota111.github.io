@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Replicate API Example</title>
+</head>
+<body>
+    <h1>Replicate API with Stable Diffusion 3</h1>
+
+    <p>This page demonstrates the use of Replicate API with Stable Diffusion 3 for generating a graffiti artwork.</p>
+
+    <h2>Generated Output</h2>
+    <div id="output"></div>
+
+    <script>
+        // JavaScript code to use Replicate API
+        async function fetchOutput() {
+            const Replicate = require('replicate');
+            const replicate = new Replicate({
+                auth: 'YOUR_REPLICATE_API_TOKEN'
+            });
+
+            const output = await replicate.run(
+                "stability-ai/stable-diffusion-3",
+                {
+                    input: {
+                        prompt: "a photo of vibrant artistic graffiti on a wall saying 'SD3 medium'"
+                    }
+                }
+            );
+
+            document.getElementById('output').innerHTML = `<img src="${output[0]}" alt="Generated Art">`;
+        }
+
+        fetchOutput();
+    </script>
+
+    <p>Note: Make sure to replace <code>YOUR_REPLICATE_API_TOKEN</code> with your actual API token.</p>
+</body>
+</html>
