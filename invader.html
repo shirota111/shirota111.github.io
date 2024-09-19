@@ -234,16 +234,18 @@
                 if (ikaTop > window.innerHeight) {
                     ika.remove();
                     clearInterval(ikaInterval);
-                    // ゲームオーバー処理（仮）
+                         // ゲームオーバーの条件
+                if (ikaTop > gameOverHeight) {
                     alert("ゲームオーバー！");
-                    location.reload();
+                    location.reload(); // ページをリロードしてゲームをリセット
                 } else {
-                    ika.style.top = ikaTop + 2 + 'px';
+                    ika.style.top = ikaTop + 'px';
                 }
             }, 30);
         }
 
-
+        moveIka();
+    
 
 
         // 弾がインベーダーに当たったか確認
