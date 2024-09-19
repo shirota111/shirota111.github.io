@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSSで描くイカ - 足10本</title>
+    <title>CSSで描くイカと必殺文字</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
             text-align: center;
@@ -66,10 +67,24 @@
         .ika-flip {
             transform: rotateY(180deg);
         }
+
+        /* 習字風フォントの設定 */
+        .shuuji {
+            font-size: 100px;
+            color: #000;
+            font-family: 'Kaisei Decol', serif;
+            margin-top: 50px;
+        }
     </style>
 </head>
 <body>
-    <h1>イカれてんだろ必殺！イカ返し</h1>
+    <h1>イカれてるだろ(# ﾟДﾟ)</h1>
+    
+    <!-- 習字風「必殺」文字 -->
+    <div class="shuuji">必殺</div>
+<h2>イカ返し💢</h2>
+
+    <!-- イカの描画 -->
     <div class="game-container">
         <div class="ika" id="ika">
             <div class="legs">
