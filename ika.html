@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSSで描くイカ</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .game-container {
+            margin-top: 50px;
+        }
+
+        /* イカの胴体 (四角形) */
+        .ika {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            background-color: #ff6347;
+            margin: 0 auto;
+            transition: transform 0.6s ease;
+        }
+
+        /* イカの頭 (三角形) */
+        .ika::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 50px solid #ff6347;
+        }
+
+        /* イカの足 (複数の線) */
+        .ika::after {
+            content: "";
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: block;
+            width: 60px;
+            height: 60px;
+        }
+
+        /* 足を表現する線 */
+        .ika::after::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -40px;
+            width: 2px;
+            height: 80px;
+            background-color: #ff6347;
+            transform: rotate(45deg);
+        }
+
+        /* ひっくり返るアニメーション */
+        .ika-flip {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body>
+    <h1>CSSで描くイカをひっくり返すゲーム</h1>
+    <div class="game-container">
+        <div class="ika" id="ika"></div>
+    </div>
+
+    <script>
+        // イカの要素を取得
+        const ikaElement = document.getElementById('ika');
+
+        // イカをクリックしたらひっくり返る
+        ikaElement.addEventListener('click', function() {
+            ikaElement.classList.toggle('ika-flip');
+        });
+    </script>
+</body>
+</html>
