@@ -1,71 +1,146 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-    <title>カレンダー生成</title>
-    <style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modular Calendar with ToDo and Event Listeners</title>
 
-        
-    </style>
+
+    <!-- 初期CSSファイル -->
+    <link id="stylesheet" rel="stylesheet" href="../assets/styles/module1.css">
+    <link rel="stylesheet" href="../assets/styles/linkmenu.css">
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+}
+
+.hamburger-menu {
+    display: inline-block;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.bar {
+    width: 35px;
+    height: 5px;
+    background-color: #333;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+.menu {
+    display: none;
+    margin-top: 20px;
+}
+
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu ul li {
+    padding: 10px 0;
+}
+
+.menu ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+/* 背景色とフォントを設定 */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    text-align: right;
+    padding: 50px;
+}
+
+/* 見出しのスタイル */
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* リンクのスタイル */
+.link-container {
+    display: inline-block;
+    text-align: left;
+}
+
+.styled-link {
+    display: block;
+
+    margin: 10px 0;
+    padding: 15px 25px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    font-size: 1.2em;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* ホバーしたときのエフェクト */
+.styled-link:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* リンクの間に少しスペースを */
+.link-container a + a {
+    margin-top: 20px;
+}
+
+/* モバイル対応 */
+@media (max-width: 600px) {
+    .styled-link {
+        padding: 10px 15px;
+        font-size: 1em;
+    }
+}
+
+</style>
 </head>
 <body>
-    <h1>カレンダー</h1>
-    <table id="calendar">
-        <!-- JavaScriptでカレンダーを生成 -->
-    </table>
-    <button id="download">Excelにダウンロード</button>
 
-    <script>
-        function createCalendar(year, month) {
-            const table = document.getElementById('calendar');
-            table.innerHTML = ''; // カレンダーをクリア
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const firstDay = new Date(year, month, 1).getDay();
 
-            // ヘッダー行（曜日）
-            const headerRow = table.insertRow();
-            const daysOfWeek = ['日', '月', '火', '水', '木', '金', '土'];
-            for (const day of daysOfWeek) {
-                const cell = headerRow.insertCell();
-                cell.textContent = day;
-            }
+    
+<!-- 月と年の表示 -->
+<div id="month-year"></div>
+<div id="calendar"></div>
+<div id="notification"></div>
 
-            // 日付を埋めていく
-            let row = table.insertRow();
-            for (let i = 0; i < firstDay; i++) {
-                row.insertCell(); // 空白セル
-            }
-            for (let day = 1; day <= daysInMonth; day++) {
-                if (row.cells.length === 7) {
-                    row = table.insertRow(); // 次の行
-                }
-                const cell = row.insertCell();
-                cell.textContent = day;
-            }
-        }
+<!-- Todoリスト表示 -->
+<div>
+    <ul id="todo-list"></ul>
+</div>
 
-        // 現在の年月でカレンダー生成
-        const now = new Date();
-        createCalendar(now.getFullYear(), now.getMonth());
 
-        // Excel形式でダウンロードする機能
-        document.getElementById('download').addEventListener('click', function () {
-            const table = document.getElementById('calendar');
-            let data = '';
-            for (let i = 0, row; row = table.rows[i]; i++) {
-                for (let j = 0, cell; cell = row.cells[j]; j++) {
-                    data += (j === 0 ? '' : '\t') + cell.textContent;
-                }
-                data += '\n';
-            }
 
-            const blob = new Blob([data], { type: 'application/vnd.ms-excel' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'calendar.xls';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        });
-    </script>
+
+<!-- クラスによるリンクメニュー -->
+<div class="link-container">
+    <a href="../docs/shogi2.html" class="styled-link">将棋</a>
+    <a href="../docs/ippon.html" class="styled-link">Ipponグランプリ</a>
+    <a href="../docs/test.html" class="styled-link">本棚</a>
+</div>
+
+
+   
+
+
+<script src="../src/2.js"></script>
+<script>function toggleMenu() {
+    const menu = document.getElementById('menu');
+    if (menu.style.display === 'block') {
+        menu.style.display = 'none';
+    } else {
+        menu.style.display = 'block';
+    }
+}</script>
+
+
 </body>
 </html>
