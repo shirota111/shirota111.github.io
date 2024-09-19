@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>シンプルなインベーダーゲーム</title>
+    <style>
+        body {
+            background-color: black;
+            margin: 0;
+            overflow: hidden;
+            font-family: sans-serif;
+        }
+
+        #game-area {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background-color: black;
+        }
+
+        .spaceship {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            background-color: limegreen;
+            transform: translateX(-50%);
+        }
+
+        .bullet {
+            position: absolute;
+            width: 5px;
+            height: 20px;
+            background-color: red;
+        }
+
+        .invader {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: white;
+        }
+
+        .score {
+            color: white;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-area">
+        <div class="spaceship" id="spaceship"></div>
+        <div class="score" id="score">スコア: 0</div>
+    </div>
+
+    <script>
+        const gameArea = document.getElementById('game-area');
+        const spaceship = document.getElementById('spaceship');
+        let score = 0;
+
+        // 宇宙船の動き
+        let spaceshipX = window.innerWidth / 2;
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+                spaceshipX -= 10;
+            } else if (event.key === 'ArrowRight') {
+                spaceshipX += 10;
+            }
+            spaceshipX = Math.max(0, Math.min(window.innerWidth - 50, spaceshipX));
+            spaceship.style.left = spaceshipX + 'px';
+        });
+
+        // 弾を発射
+        document.addEventListener('keydown', function(event) {
+            if (event.key === ' ') { // スペースキーで弾発射
+                fireBullet();
+            }
+        });
+
+        // 弾の生成
+        function fireBullet() {
+            const bullet = document.createElement('div');
+            bullet.classList.add('bullet');
+            bullet.style.left = (spaceshipX + 22.5) + 'px'; // 宇宙船の中心に合わせる
+            bullet.style.bottom = '70px'; // 宇宙船の上から発射
+
+            gameArea.appendChild(bullet);
+
+            // 弾を上に動かす
+            const bulletInterval = setInterval(() => {
+                const bulletBottom = parseInt(bullet.style.bottom);
+                if (bulletBottom > window.innerHeight) {
+                    bullet.remove();
+                    clearInterval(bulletInterval);
+                } else {
+                    bullet.style.bottom = bulletBottom + 5 + 'px';
+                    checkBulletCollision(bullet);
+                }
+            }, 10);
+        }
+
+        // インベーダーの生成
+        function createInvader() {
+            const invader = document.createElement('div');
+            invader.classList.add('invader');
+            const randomX = Math.random() * (window.innerWidth - 40);
+            invader.style.left = randomX + 'px';
+            invader.style.top = '0px';
+            gameArea.appendChild(invader);
+
+            // インベーダーを下に動かす
+            const invaderInterval = setInterval(() => {
+                const invaderTop = parseInt(invader.style.top);
+                if (invaderTop > window.innerHeight) {
+                    invader.remove();
+                    clearInterval(invaderInterval);
+                    // ゲームオーバー処理（仮）
+                    alert("ゲームオーバー！");
+                    location.reload();
+                } else {
+                    invader.style.top = invaderTop + 2 + 'px';
+                }
+            }, 30);
+        }
+
+        // 弾がインベーダーに当たったか確認
+        function checkBulletCollision(bullet) {
+            const invaders = document.querySelectorAll('.invader');
+            invaders.forEach(invader => {
+                const bulletRect = bullet.getBoundingClientRect();
+                const invaderRect = invader.getBoundingClientRect();
+                if (
+                    bulletRect.left < invaderRect.right &&
+                    bulletRect.right > invaderRect.left &&
+                    bulletRect.top < invaderRect.bottom &&
+                    bulletRect.bottom > invaderRect.top
+                ) {
+                    // 弾とインベーダーが重なったら
+                    bullet.remove();
+                    invader.remove();
+                    score += 100;
+                    document.getElementById('score').textContent = 'スコア: ' + score;
+                }
+            });
+        }
+
+        // インベーダーを定期的に生成
+        setInterval(createInvader, 2000);
+    </script>
+</body>
+</html>
