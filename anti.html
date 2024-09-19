@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>イカのインベーダーゲーム</title>
+    <style>
+        body {
+            background-color: black;
+            margin: 0;
+            overflow: hidden;
+            font-family: sans-serif;
+            touch-action: none; /* スクロール防止 */
+        }
+
+        #game-area {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background-color: black;
+        }
+
+        /* イカのスタイル */
+        .ika {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            background-color: transparent;
+            transform: translateX(-50%);
+        }
+
+        .ika-body {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            background-color: #ff6347;
+        }
+
+        .ika-body::before {
+            content: "";
+            position: absolute;
+            top: -30px;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 30px solid #ff6347;
+        }
+
+        .legs {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: space-between;
+            width: 70px;
+        }
+
+        .leg {
+            width: 5px;
+            height: 40px;
+            background-color: #ff6347;
+        }
+
+        .bullet {
+            position: absolute;
+            width: 5px;
+            height: 20px;
+            background-color: red;
+        }
+
+        .invader {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: white;
+        }
+
+        .score {
+            color: white;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-area">
+        <!-- イカの宇宙船 -->
+        <div class="ika" id="ika">
+            <div class="ika-body"></div>
+            <div class="legs">
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+            </div>
+        </div>
+        <div class="score" id="score">スコア: 0</div>
+    </div>
+
+    <script>
+        const gameArea = document.getElementById('game-area');
+        const ika = document.getElementById('ika');
+        let score = 0;
+
+        // 宇宙船（イカ）の移動
+        let ikaX = window.innerWidth / 2;
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+                ikaX -= 10;
+            } else if (event.key === 'ArrowRight') {
+                ikaX += 10;
+            }
+            ikaX = Math.max(0, Math.min(window.innerWidth - 50, ikaX));
+            ika.style.left = ikaX + 'px';
+        });
+
+        // タッチ操作でイカを移動
+        gameArea.addEventListener('touchmove', function(event) {
+            ikaX = event.touches[0].clientX - ika.offsetWidth / 2;
+            ikaX = Math.max(0, Math.min(window.innerWidth - 50, ikaX));
+            ika.style.left = ikaX + 'px';
+        });
+
+        // 弾を発射
+        document.addEventListener('keydown', function(event) {
+            if (event.key === ' ') { // スペースキーで弾発射
+                fireBullet();
+            }
+        });
+
+        // タップで弾発射
+        gameArea.addEventListener('touchend', function() {
+            fireBullet();
+        });
+
+        // 弾の生成
+        function fireBullet() {
+            const bullet = document.createElement('div');
+            bullet.classList.add('bullet');
+            bullet.style.left = (ikaX + 22.5) + 'px'; // イカの中心に合わせる
+            bullet.style.bottom = '70px'; // イカの上から発射
+
+            gameArea.appendChild(bullet);
+
+            // 弾を上に動かす
+            const bulletInterval = setInterval(() => {
+                const bulletBottom = parseInt(bullet.style.bottom);
+                if (bulletBottom > window.innerHeight) {
+                    bullet.remove();
+                    clearInterval(bulletInterval);
+                } else {
+                    bullet.style.bottom = bulletBottom + 5 + 'px';
+                    checkBulletCollision(bullet);
+                }
+            }, 10);
+        }
+
+        // インベーダーの生成
+        function createInvader() {
+            const invader = document.createElement('div');
+            invader.classList.add('invader');
+            const randomX = Math.random() * (window.innerWidth - 40);
+            invader.style.left = randomX + 'px';
+            invader.style.top = '0px';
+            gameArea.appendChild(invader);
+
+            // インベーダーを下に動かす
+            const invaderInterval = setInterval(() => {
+                const invaderTop = parseInt(invader.style.top);
+                if (invaderTop > window.innerHeight) {
+                    invader.remove();
+                    clearInterval(invaderInterval);
+                    // ゲームオーバー処理（仮）
+                    alert("ゲームオーバー！");
+                    location.reload();
+                } else {
+                    invader.style.top = invaderTop + 2 + 'px';
+                }
+            }, 30);
+        }
+
+        // 弾がインベーダーに当たったか確認
+        function checkBulletCollision(bullet) {
+            const invaders = document.querySelectorAll('.invader');
+            invaders.forEach(invader => {
+                const bulletRect = bullet.getBoundingClientRect();
+                const invaderRect = invader.getBoundingClientRect();
+                if (
+                    bulletRect.left < invaderRect.right &&
+                    bulletRect.right > invaderRect.left &&
+                    bulletRect.top < invaderRect.bottom &&
+                    bulletRect.bottom > invaderRect.top
+                ) {
+                    // 弾とインベーダーが重なったら
+                    bullet.remove();
+                    invader.remove();
+                    score += 100;
+                    document.getElementById('score').textContent = 'スコア: ' + score;
+                }
+            });
+        }
+
+        // インベーダーを定期的に生成
+        setInterval(createInvader, 2000);
+    </script>
+</body>
+</html>
