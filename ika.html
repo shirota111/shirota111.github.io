@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSSで描くイカ</title>
+    <title>CSSで描くイカ - 足10本</title>
     <style>
         body {
             text-align: center;
@@ -44,28 +44,22 @@
             border-bottom: 50px solid #ff6347;
         }
 
-        /* イカの足 (複数の線) */
-        .ika::after {
-            content: "";
+        /* イカの足 (長方形の足を10本) */
+        .legs {
             position: absolute;
-            bottom: -40px;
+            bottom: -50px;
             left: 50%;
             transform: translateX(-50%);
-            display: block;
-            width: 60px;
-            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            width: 120px;
         }
 
-        /* 足を表現する線 */
-        .ika::after::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -40px;
-            width: 2px;
-            height: 80px;
+        /* 各足のスタイル */
+        .leg {
+            width: 10px;
+            height: 60px;
             background-color: #ff6347;
-            transform: rotate(45deg);
         }
 
         /* ひっくり返るアニメーション */
@@ -75,9 +69,22 @@
     </style>
 </head>
 <body>
-    <h1>CSSで描くイカをひっくり返すゲーム</h1>
+    <h1>イカれてんだろ必殺！イカ返し</h1>
     <div class="game-container">
-        <div class="ika" id="ika"></div>
+        <div class="ika" id="ika">
+            <div class="legs">
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+            </div>
+        </div>
     </div>
 
     <script>
