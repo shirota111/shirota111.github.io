@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>七色に輝くウンコ</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f8ff;
+        }
+
+        .poop {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+
+        /* ウンコのスタイル */
+        .poop::before {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 80px solid #8B4513;
+            border-radius: 50% 50% 0 0;
+            top: 20px;
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: bottom;
+        }
+
+        .poop::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 80px solid #8B4513;
+            border-radius: 50% 50% 0 0;
+            top: 40px;
+            left: -20px;
+            transform: rotate(45deg);
+            transform-origin: bottom;
+        }
+
+        /* 輝きアニメーション */
+        @keyframes rainbow {
+            0% { color: #ff0000; }
+            14% { color: #ff7f00; }
+            28% { color: #ffff00; }
+            42% { color: #00ff00; }
+            57% { color: #0000ff; }
+            71% { color: #4b0082; }
+            85% { color: #9400d3; }
+            100% { color: #ff0000; }
+        }
+
+        .poop {
+            animation: rainbow 3s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="poop"></div>
+</body>
+</html>
