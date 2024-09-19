@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>イカが落ちてくるゲーム</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            text-align: center;
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        /* イカのスタイル */
+        .ika {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #ff6347;
+            transition: transform 0.6s ease;
+        }
+
+        /* イカの頭 (三角形) */
+        .ika::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 50px solid #ff6347;
+        }
+
+        /* イカの足 (長方形の足を10本) */
+        .legs {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: space-between;
+            width: 120px;
+        }
+
+        .leg {
+            width: 10px;
+            height: 60px;
+            background-color: #ff6347;
+        }
+
+        /* ひっくり返るアニメーション */
+        .ika-flip {
+            transform: rotateY(180deg);
+        }
+
+        /* 習字風フォントの設定 */
+        .shuuji {
+            font-size: 100px;
+            color: #000;
+            font-family: 'Kaisei Decol', serif;
+            margin-top: 50px;
+        }
+
+        /* スコア表示 */
+        .score {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>イカが落ちてくるゲーム</h1>
+    <div class="shuuji">必殺</div>
+
+    <!-- スコア表示 -->
+    <div class="score">スコア: <span id="score">0</span></div>
+
+    <script>
+        let score = 0;
+
+        // スコアを更新する関数
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+        }
+
+        // イカを生成する関数
+        function createIka() {
+            const ika = document.createElement('div');
+            ika.classList.add('ika');
+
+            // ランダムなX位置に配置
+            const randomX = Math.random() * (window.innerWidth - 100); // 画面の幅内でランダム
+            ika.style.left = randomX + 'px';
+            ika.style.top = '-100px'; // 画面の上から出現
+
+            // 足を追加
+            const legs = document.createElement('div');
+            legs.classList.add('legs');
+            for (let i = 0; i < 10; i++) {
+                const leg = document.createElement('div');
+                leg.classList.add('leg');
+                legs.appendChild(leg);
+            }
+            ika.appendChild(legs);
+
+            // イカをクリックしたらひっくり返す
+            ika.addEventListener('click', function () {
+                ika.classList.toggle('ika-flip');
+                score += 10; // スコアを増やす
+                updateScore(); // スコアを表示更新
+            });
+
+            document.body.appendChild(ika);
+
+            // イカを落下させるアニメーション
+            let fallInterval = setInterval(function () {
+                const ikaTop = parseInt(window.getComputedStyle(ika).getPropertyValue('top'));
+                if (ikaTop < window.innerHeight) {
+                    ika.style.top = ikaTop + 5 + 'px'; // 徐々に下に移動
+                } else {
+                    clearInterval(fallInterval); // イカが画面の下に到達したら停止
+                    ika.remove(); // イカを削除
+                }
+            }, 20);
+        }
+
+        // イカを定期的に生成する
+        setInterval(createIka, 1000); // 1秒ごとにイカを生成
+    </script>
+</body>
+</html>
