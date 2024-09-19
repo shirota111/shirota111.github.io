@@ -235,7 +235,16 @@
                     ika.remove();
                     clearInterval(ikaInterval);
                     // ゲームオーバー処理（仮）
-                    
+                    alert("ゲームオーバー！");
+                    location.reload();
+                } else {
+                    ika.style.top = ikaTop + 2 + 'px';
+                }
+            }, 30);
+        }
+
+
+
 
         // 弾がインベーダーに当たったか確認
         function checkBulletCollision(bullet) {
