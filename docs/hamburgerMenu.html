@@ -207,7 +207,13 @@
             .catch(error => console.error('Error loading shogi2.html:', error));
    
 
-
+// invader.html を読み込む
+fetch('invader.html')
+    .then(response => response.text())
+    .then(html => {
+        document.getElementById('home').innerHTML += html;
+    })
+    .catch(error => console.error('Error loading invader.html:', error));
 
 
 </script>
