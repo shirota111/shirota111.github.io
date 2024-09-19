@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>七色に輝くウンコ</title>
+    <title>七色グラデーションウンコ</title>
     <style>
         body {
             display: flex;
@@ -18,9 +18,18 @@
             position: relative;
             width: 100px;
             height: 100px;
+            background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+            background-size: 700% 700%;
+            border-radius: 50%;
+            animation: gradientShift 5s ease infinite;
         }
 
-        /* ウンコのスタイル */
+        @keyframes gradientShift {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
         .poop::before {
             content: "";
             position: absolute;
@@ -28,12 +37,12 @@
             height: 0;
             border-left: 50px solid transparent;
             border-right: 50px solid transparent;
-            border-bottom: 80px solid #8B4513;
+            border-bottom: 80px solid transparent;
+            border-top: 60px solid #8B4513;
             border-radius: 50% 50% 0 0;
             top: 20px;
             left: 0;
             transform: rotate(45deg);
-            transform-origin: bottom;
         }
 
         .poop::after {
@@ -43,28 +52,12 @@
             height: 0;
             border-left: 50px solid transparent;
             border-right: 50px solid transparent;
-            border-bottom: 80px solid #8B4513;
+            border-bottom: 80px solid transparent;
+            border-top: 60px solid #8B4513;
             border-radius: 50% 50% 0 0;
             top: 40px;
             left: -20px;
             transform: rotate(45deg);
-            transform-origin: bottom;
-        }
-
-        /* 輝きアニメーション */
-        @keyframes rainbow {
-            0% { color: #ff0000; }
-            14% { color: #ff7f00; }
-            28% { color: #ffff00; }
-            42% { color: #00ff00; }
-            57% { color: #0000ff; }
-            71% { color: #4b0082; }
-            85% { color: #9400d3; }
-            100% { color: #ff0000; }
-        }
-
-        .poop {
-            animation: rainbow 3s linear infinite;
         }
     </style>
 </head>
