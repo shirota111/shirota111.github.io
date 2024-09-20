@@ -1,0 +1,163 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vector Drawing</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+
+const canvas = document.getElementById('canvas');
+canvas.width = 600;
+canvas.height = 600;
+const ctx = canvas.getContext('2d');
+
+// 基準点（60px, 500px）を設定
+const originX = 60;
+const originY = 500;
+
+// ベクトルの長さを設定
+const xVector = 500; // Xベクトル
+const yVector = 500; // Yベクトル
+
+// ZベクトルはXベクトルとYベクトルの合成
+const zVector = Math.sqrt(xVector ** 2 + yVector ** 2);
+
+// ベクトルを描画する関数
+function drawVector(startX, startY, endX, endY, color) {
+    ctx.beginPath();
+    ctx.moveTo(startX, startY);
+    ctx.lineTo(endX, endY);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+}
+
+// 点を描画する関数
+function drawPoint(x, y, label, color) {
+    ctx.beginPath();
+    ctx.arc(x, y, 5, 0, Math.PI * 2, true);
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.font = '14px Arial';
+    ctx.fillText(label, x + 10, y - 10);
+}
+
+// キャンバスをクリアする関数
+function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+// 中間点を描画する関数
+function drawIntermediatePoints(startPoint, endPoint, numberOfPoints) {
+    const dx = (endPoint.x - startPoint.x) / (numberOfPoints + 1);
+    const dy = (endPoint.y - startPoint.y) / (numberOfPoints + 1);
+    
+    for (let i = 1; i <= numberOfPoints; i++) {
+        const x = startPoint.x + dx * i;
+        const y = startPoint.y + dy * i;
+        drawPoint(x, y, `点${i}`, 'purple');
+    }
+}
+
+// 平行四辺形を描画する関数
+function drawParallelogram() {
+    clearCanvas();
+
+    // Xベクトル（赤色）
+    drawVector(originX, originY, originX + xVector, originY, 'red');
+
+    // Yベクトル（緑色）
+    drawVector(originX, originY, originX, originY - yVector, 'green');
+
+    // Zベクトル（合成、青色）
+    drawVector(originX, originY, originX + xVector, originY - yVector, 'blue');
+
+    // 点を定義
+    const points = [
+        { label: 'O', color: 'blue' },
+        { label: 'P', color: 'red', offset: 50 },
+        { label: 'Q', color: 'green', offset: 100 },
+        { label: 'R', color: 'pink', offset: 150 },
+        { label: 'S', color: 'orange', offset: 200 },
+        { label: 'T', color: 'purple', offset: 250 },
+        { label: 'U', color: 'brown', offset: 300 }
+    ];
+
+    points.forEach(point => {
+        const x = originX + (point.offset || 0);
+        drawPoint(x, originY, point.label, point.color);
+    });
+
+    // Z + 50 ベクトルを描画
+    const zPlus50VectorX = 550;
+    const zPlus50VectorY = -550;
+    drawVector(originX + 50, originY, originX + 50 + zPlus50VectorX, originY + zPlus50VectorY, 'purple');
+
+    // 各点'の座標を計算
+    const scaleFactor = 250 / Math.abs(zPlus50VectorY);
+    const pointO = { x: originX, y: originY };
+    const pointOPrime = { x: pointO.x + zPlus50VectorX * scaleFactor, y: pointO.y + zPlus50VectorY * scaleFactor };
+    
+    // 中間点を描画
+    drawIntermediatePoints(pointO, pointOPrime, 5);
+
+    // 点O'を描画
+    drawPoint(pointOPrime.x, pointOPrime.y, "O'", 'orange');
+
+    // 各点'の描画（同様にP'、Q'、R'など）
+    points.slice(1).forEach((point, index) => {
+        const pointPrime = { x: (originX + (point.offset || 0)) + zPlus50VectorX * scaleFactor, y: originY + zPlus50VectorY * scaleFactor };
+        drawPoint(pointPrime.x, pointPrime.y, `${point.label}'`, 'orange');
+    });
+
+    // Zベクトル上に点Zを描画
+    const pointZ = { x: originX + xVector, y: originY - yVector };
+    drawPoint(pointZ.x, pointZ.y, 'Z', 'blue');
+
+    // 平行四辺形を描画
+    const polygons = [
+        [pointO, points[1], pointOPrime, points[1]], // A
+        [points[1], points[3], points[3], points[1]], // B
+        [points[2], points[3], points[3], points[2]], // C
+        [points[2], points[1], points[1], points[2]], // D
+        [points[4], points[3], points[3], points[4]], // E
+        [points[5], points[3], points[3], points[5]], // F
+        [points[5], points[4], points[4], points[5]], // G
+        [points[6], points[5], points[5], points[6]]  // H
+    ];
+
+    polygons.forEach((polygon, index) => {
+        ctx.fillStyle = index % 2 === 0 ? 'rgba(200, 200, 255, 0.5)' : 'rgba(255, 200, 200, 0.5)';
+        ctx.beginPath();
+        ctx.moveTo(polygon[0].x, polygon[0].y);
+        polygon.forEach(p => ctx.lineTo(p.x, p.y));
+        ctx.closePath();
+        ctx.fill();
+    });
+}
+
+// 描画実行
+drawParallelogram();
+
+</script>
+
+</body>
+</html>
