@@ -1,131 +1,246 @@
-const canvas = document.getElementById('canvas');
-canvas.width = 600;
-canvas.height = 600;
-const ctx = canvas.getContext('2d');
 
-// 基準点（500px, 500px）を設定
-const originX = 60;
-const originY = 500;
 
-// ベクトルの長さを設定
-const xVector = 500; // Xベクトル
-const yVector = 500; // Yベクトル
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vector Drawing</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
 
-// ZベクトルはXベクトルとYベクトルの合成
-const zVector = Math.sqrt(xVector ** 2 + yVector ** 2);
+<canvas id="canvas"></canvas>
 
-// ベクトルを描画する関数
-function drawVector(startX, startY, endX, endY, color) {
-    ctx.beginPath();
-    ctx.moveTo(startX, startY); // 開始点
-    ctx.lineTo(endX, endY);     // 終了点
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 2;
-    ctx.stroke();
-}
-
-// 点を描画する関数
-function drawPoint(x, y, label, color) {
-    ctx.beginPath();
-    ctx.arc(x, y, 5, 0, Math.PI * 2, true); // 半径5の円を描画
-    ctx.fillStyle = color;
-    ctx.fill();
-    ctx.font = '14px Arial';
-    ctx.fillText(label, x + 10, y - 10); // ラベルを描画
-}
-
-// キャンバスをクリアする関数
-function clearCanvas() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-
-// 格子を描画する関数
-function drawGrid(x, y, width, height, rows, cols) {
-    const cellWidth = width / cols;
-    const cellHeight = height / rows;
-
-    // 縦線を描画
-    for (let i = 0; i <= cols; i++) {
-        drawVector(x + i * cellWidth, y, x + i * cellWidth, y + height, 'lightgray');
+<script>const canvas = document.getElementById('canvas');
+    canvas.width = 600;
+    canvas.height = 600;
+    const ctx = canvas.getContext('2d');
+    
+    // 基準点（60px, 500px）を設定
+    const originX = 60;
+    const originY = 500;
+    
+    // ベクトルの長さを設定
+    const xVector = 500; // Xベクトル
+    const yVector = 500; // Yベクトル
+    
+    // ZベクトルはXベクトルとYベクトルの合成
+    const zVector = Math.sqrt(xVector ** 2 + yVector ** 2);
+    
+    // ベクトルを描画する関数
+    function drawVector(startX, startY, endX, endY, color) {
+        ctx.beginPath();
+        ctx.moveTo(startX, startY); // 開始点
+        ctx.lineTo(endX, endY);     // 終了点
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2;
+        ctx.stroke();
     }
+    
 
-    // 横線を描画
-    for (let i = 0; i <= rows; i++) {
-        drawVector(x, y + i * cellHeight, x + width, y + i * cellHeight, 'lightgray');
+
+    // 点を描画する関数
+    function drawPoint(x, y, label, color) {
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, Math.PI * 2, true); // 半径5の円を描画
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.font = '14px Arial';
+        ctx.fillText(label, x + 10, y - 10); // ラベルを描画
     }
-}
+    
+    // キャンバスをクリアする関数
+    function clearCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    
+    // 平行四辺形を描画する関数
+    function drawParallelogram() {
+        clearCanvas();
+    
 
-// 描画する
-function draw() {
-    clearCanvas();
 
-    // Xベクトル（赤色）
-    drawVector(originX, originY, originX + xVector, originY, 'red');
 
-    // Yベクトル（緑色）
-    drawVector(originX, originY, originX, originY - yVector, 'green');
+        // Xベクトル（赤色）
+        drawVector(originX, originY, originX + xVector, originY, 'red');
+    
+        // Yベクトル（緑色）
+        drawVector(originX, originY, originX, originY - yVector, 'green');
+    
+        // Zベクトル（合成、青色）
+        drawVector(originX, originY, originX + xVector, originY - yVector, 'blue');
+    
+        // 点O、P、Q、R、S、T、Uを描画
+        const pointO = { x: originX + 0, y: originY }; // O
+        const pointP = { x: originX + 50, y: originY }; // P
+        const pointQ = { x: originX + 100, y: originY }; // Q
+        const pointR = { x: originX + 150, y: originY }; // R
+        const pointS = { x: originX + 200, y: originY }; // S
+        const pointT = { x: originX + 250, y: originY }; // T
+        const pointU = { x: originX + 300, y: originY }; // U
+    
+        // 各点を描画
+        
+        drawPoint(pointO.x, pointO.y, 'O', 'blue');
+        drawPoint(pointP.x, pointP.y, 'P', 'red');
+        drawPoint(pointQ.x, pointQ.y, 'Q', 'green');
+        drawPoint(pointR.x, pointR.y, 'R', 'pink');
+        drawPoint(pointS.x, pointS.y, 'S', 'orange');
+        drawPoint(pointT.x, pointT.y, 'T', 'purple');
+        drawPoint(pointU.x, pointU.y, 'U', 'brown');
+    
 
-    // Zベクトル（合成、青色）
-    drawVector(originX, originY, originX + xVector, originY - yVector, 'blue');
+        // Z + 50 ベクトルを描画
+        const zPlus50VectorX = 550; // Zベクトル + 50 のX成分
+        const zPlus50VectorY = -550; // Zベクトル + 50 のY成分
+        drawVector(pointP.x, pointP.y, pointP.x + zPlus50VectorX, pointP.y + zPlus50VectorY, 'purple');
+    
 
-    // 点Pと点Qを描画する
-    const pointP = { x: originX + 50, y: originY }; // x軸方向に50px
-    const pointQ = { x: originX, y: originY - 50 }; // y軸方向に50px
+        // 各点'の座標を計算
+        const scaleFactor = 50 / Math.abs(zPlus50VectorY); // Z成分に基づいた比率
+    
+        // 各点'を描画
 
-    // 点Pを描画（赤色）
-    drawPoint(pointP.x, pointP.y, 'P', 'red');
 
-    // 点Qを描画（緑色）
-    drawPoint(pointQ.x, pointQ.y, 'Q', 'green');
+        const pointOPrime = { x: pointO.x + zPlus50VectorX * scaleFactor, y: pointO.y + zPlus50VectorY * scaleFactor };
+        drawPoint(pointOPrime.x, pointOPrime.y, "O'", 'orange');
 
-    // 点Pを起点にZ + 50ベクトルを描画する（紫色）
-    const zPlus50VectorX = 550; // Zベクトル + 50 のX成分
-    const zPlus50VectorY = -550; // Zベクトル + 50 のY成分
-    drawVector(pointP.x, pointP.y, pointP.x + zPlus50VectorX, pointP.y + zPlus50VectorY, 'purple');
+        const pointPPrime = { x: pointP.x + zPlus50VectorX * scaleFactor, y: pointP.y + zPlus50VectorY * scaleFactor };
+        drawPoint(pointPPrime.x, pointPPrime.y, "P'", 'orange');
+    
+        const pointQPrime = { x: pointQ.x + zPlus50VectorX * scaleFactor, y: pointQ.y + zPlus50VectorY * scaleFactor };
+        drawPoint(pointQPrime.x, pointQPrime.y, "Q'", 'yellow');
+    
+        const pointRPrime = { x: pointR.x + zPlus50VectorX * scaleFactor, y: pointR.y + zPlus50VectorY * scaleFactor };
+        drawPoint(pointRPrime.x, pointRPrime.y, "R'", 'yellow');
+    
+        const pointSPrime = { x: pointS.x + zPlus50VectorX * scaleFactor, y: pointS.y + zPlus50VectorY * scaleFactor };
+        drawPoint(pointSPrime.x, pointSPrime.y, "S'", 'cyan');
+    
+        const pointTPrime = { x: pointT.x + zPlus50VectorX * scaleFactor, y: pointT.y + zPlus50VectorY * scaleFactor };
+        drawPoint(pointTPrime.x, pointTPrime.y, "T'", 'magenta');
+    
+        const pointUPrime = { x: pointU.x + zPlus50VectorX * scaleFactor, y: pointU.y + zPlus50VectorY * scaleFactor };
+        drawPoint(pointUPrime.x, pointUPrime.y, "U'", 'lime');
+    
 
-    // Z + 50 ベクトル上のZ座標が50の点P'を求める
-    const zCoord = 50; // Z座標
-    const scaleFactor = zCoord / Math.abs(zPlus50VectorY); // Z成分に基づいた比率
+        // Zベクトル上に点Zを描画
+        const pointZ = { x: originX + xVector, y: originY - yVector };
+        drawPoint(pointZ.x, pointZ.y, 'Z', 'blue');
+    
 
-    // P' の座標を計算
-    const pointPPrime = {
-        x: pointP.x + zPlus50VectorX * scaleFactor,
-        y: pointP.y + zPlus50VectorY * scaleFactor
-    };
+        // 平行四辺形Aを描画
+        ctx.fillStyle = 'rgba(200, 200, 255, 0.5)';
+        ctx.beginPath();
+        ctx.moveTo(originX, originY);
+        ctx.lineTo(pointP.x, pointP.y);
+        ctx.lineTo(pointPPrime.x, pointPPrime.y);
+        ctx.lineTo(pointOPrime.x, pointOPrime.y);
+        ctx.closePath();
+        ctx.fill();
+    
+        // 平行四辺形Bを描画
+        ctx.fillStyle = 'rgba(200, 200, 255, 0.5)';
+        ctx.beginPath();
+        ctx.moveTo(pointP.x, pointP.y);
+        ctx.lineTo(pointR.x, pointR.y);
+        ctx.lineTo(pointRPrime.x, pointRPrime.y);
+        ctx.lineTo(pointPPrime.x, pointPPrime.y);
+        ctx.closePath();
+        ctx.fill();
+   
+   // 平行四辺形Cを描画
+ctx.fillStyle = 'rgba(255, 200, 200, 0.5)'; // 半透明の色
+ctx.beginPath();
+ctx.moveTo(pointQ.x, pointQ.y); // 点Q
+ctx.lineTo(pointR.x, pointR.y); // 点R
+ctx.lineTo(pointRPrime.x, pointRPrime.y); // 点R'
+ctx.lineTo(pointQPrime.x, pointQPrime.y); // 点Q'
+ctx.closePath();
+ctx.fill();
 
-    // 点P'を描画（オレンジ色）
-    drawPoint(pointPPrime.x, pointPPrime.y, "P'", 'orange');
+// 平行四辺形Dを描画
+ctx.fillStyle = 'rgba(200, 255, 200, 0.5)'; // 半透明の色
+ctx.beginPath();
+ctx.moveTo(pointQ.x, pointQ.y); // 点Q
+ctx.lineTo(pointP.x, pointP.y); // 点P
+ctx.lineTo(pointPPrime.x, pointPPrime.y); // 点P'
+ctx.lineTo(pointQPrime.x, pointQPrime.y); // 点Q'
+ctx.closePath();
+ctx.fill();
 
-    // Zベクトル上に点Zを描画する（Z = 50）
-    const scaleFactorZ = zCoord / Math.abs(yVector); // Zベクトルに対する比率
-    const pointZ = {
-        x: originX + xVector * scaleFactorZ,
-        y: originY - yVector * scaleFactorZ
-    };
+   // 平行四辺形Eを描画
+ctx.fillStyle = 'rgba(200, 200, 255, 0.5)'; // 半透明の色
+ctx.beginPath();
+ctx.moveTo(pointS.x, pointS.y); // 点S
+ctx.lineTo(pointR.x, pointR.y); // 点R
+ctx.lineTo(pointRPrime.x, pointRPrime.y); // 点R'
+ctx.lineTo(pointSPrime.x, pointSPrime.y); // 点S'
+ctx.closePath();
+ctx.fill();
 
-    // 点Zを描画（青色）
-    drawPoint(pointZ.x, pointZ.y, 'Z', 'blue');
-
-    // 点Zと点P'を結ぶ線を描画（灰色）
-    drawVector(pointZ.x, pointZ.y, pointPPrime.x, pointPPrime.y, 'gray');
-
-    // 四角形を描画
-    ctx.fillStyle = 'rgba(200, 200, 255, 0.5)'; // 半透明の色
+ // 平行四辺形Fを描画
+ ctx.fillStyle = 'rgba(255, 200, 200, 0.5)'; // 半透明の色
     ctx.beginPath();
-    ctx.moveTo(originX, originY); // 原点
-    ctx.lineTo(pointP.x, pointP.y); // 点P
-    ctx.lineTo(pointPPrime.x, pointPPrime.y); // 点P'
-    ctx.lineTo(pointZ.x, pointZ.y); // 点Z
+    ctx.moveTo(pointT.x, pointT.y); // 点T
+    ctx.lineTo(pointR.x, pointR.y); // 点R
+    ctx.lineTo(pointRPrime.x, pointRPrime.y); // 点R'
+    ctx.lineTo(pointTPrime.x, pointTPrime.y); // 点T'
     ctx.closePath();
     ctx.fill();
-    ctx.strokeStyle = 'blue';
-    ctx.stroke();
 
-    // 10×10のマスを描画
-    const rectWidth = pointPPrime.x - originX;
-    const rectHeight = pointZ.y - originY;
-    drawGrid(originX, originY - rectHeight, rectWidth, rectHeight, 10, 10);
+    // 平行四辺形Gを描画
+    ctx.fillStyle = 'rgba(200, 255, 200, 0.5)'; // 半透明の色
+    ctx.beginPath();
+ctx.moveTo(pointT.x, pointT.y); // 点T
+ctx.lineTo(pointS.x, pointS.y); // 点S
+ctx.lineTo(pointSPrime.x, pointSPrime.y); // 点S'
+ctx.lineTo(pointTPrime.x, pointTPrime.y); // 点T'
+ctx.closePath();
+ctx.fill();
+
+
+// 平行四辺形Hを描画
+ctx.fillStyle = 'rgba(200, 255, 200, 0.5)'; // 半透明の色
+    ctx.beginPath();
+    ctx.moveTo(pointU.x, pointU.y); // 点U
+    ctx.lineTo(pointT.x, pointT.y); // 点T
+    ctx.lineTo(pointTPrime.x, pointTPrime.y); // 点T'
+    ctx.lineTo(pointUPrime.x, pointUPrime.y); // 点U'
+    ctx.closePath();
+    ctx.fill();
+
+     // 平行四辺形Iを描画
+     ctx.fillStyle = 'rgba(200, 200, 255, 0.5)'; // 半透明の色
+    ctx.beginPath();
+    ctx.moveTo(pointU.x, pointU.y); // 点U
+    ctx.lineTo(pointS.x, pointS.y); // 点S
+    ctx.lineTo(pointSPrime.x, pointSPrime.y); // 点S'
+    ctx.lineTo(pointUPrime.x, pointUPrime.y); // 点U'
+    ctx.closePath();
+    ctx.fill();
+
 }
+  
+    
+    // 描画実行
+    drawParallelogram();
+    
 
-// 描画実行
-draw();
+</script>
+
+</body>
+</html>
