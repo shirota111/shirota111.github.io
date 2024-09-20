@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vector Drawing</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<script>
+// JavaScriptでCanvasを取得
+const canvas = document.getElementById('canvas');
+canvas.width = 600;
+canvas.height = 600;
+const ctx = canvas.getContext('2d');
+
+// 基準点（500px, 500px）を設定
+const originX = 500;
+const originY = 500;
+
+// ベクトルの長さを設定
+const xVector = 30; // Xベクトル
+const yVector = 50; // Yベクトル
+
+// ZベクトルはXベクトルとYベクトルの合成
+const zVector = Math.sqrt(xVector ** 2 + yVector ** 2);
+
+// ベクトルを描画する関数
+function drawVector(startX, startY, endX, endY, color) {
+    ctx.beginPath();
+    ctx.moveTo(startX, startY); // 開始点
+    ctx.lineTo(endX, endY);     // 終了点
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+}
+
+// キャンバスをクリアする関数
+function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+// 描画する
+function draw() {
+    clearCanvas();
+
+    // Xベクトル（赤色）
+    drawVector(originX, originY, originX + xVector, originY, 'red');
+
+    // Yベクトル（緑色）
+    drawVector(originX, originY, originX, originY - yVector, 'green');
+
+    // Zベクトル（合成、青色）
+    drawVector(originX, originY, originX + xVector, originY - yVector, 'blue');
+}
+
+// 描画実行
+draw();
+</script>
+
+</body>
+</html>
