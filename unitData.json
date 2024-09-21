@@ -1,0 +1,5 @@
+{
+    "1": { "name": "兵士", "image": "soldier.png" },
+    "2": { "name": "騎士", "image": "knight.png" },
+    "3": { "name": "魔法使い", "image": "mage.png" }
+}
