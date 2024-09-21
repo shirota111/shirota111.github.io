@@ -7,20 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vector Drawing</title>
     <style>
-      body {
+        body {
             display: flex;
-　　　　　　　margin: 0;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
             background-color: transparent;
 
-  canvas {
+        canvas {
             border: 1px solid black;
-        
-         
-                
+   
+
+    
  
             
             background-color: transparent; /* Canvas背景透明 */
-        }  
+    }
     </style>
 </head>
 <body>
@@ -35,7 +38,7 @@
     // 基準点（60px, 500px）を設定
     const originX = 100;
     const originY = 500;
-
+    const tileSize = 50;   // タイルのサイズ
 
     // ベクトルの長さを設定
     const xVector = 500; // Xベクトル
@@ -305,6 +308,9 @@ ctx.fillStyle = 'rgba(200, 255, 200, 0.5)'; // 半透明の色
     // 描画実行
     drawParallelogram();
 </script>
+
+
+
 
 </body>
 </html>

@@ -30,9 +30,10 @@
     const ctx = canvas.getContext('2d');
     
     // 基準点（60px, 500px）を設定
-    const originX = 60;
+    const originX = 100;
     const originY = 500;
-    
+
+
     // ベクトルの長さを設定
     const xVector = 500; // Xベクトル
     const yVector = 500; // Yベクトル
@@ -92,32 +93,6 @@
         const pointT = { x: originX + 250, y: originY }; // T
         const pointU = { x: originX + 300, y: originY }; // U
     
-
-        // 点O、P、Q、R、S、T、Uを描画
-        const point1 = { x: originX + 0, y: originY }; // 1
-        const point2 = { x: originX + 50, y: originY }; // 2
-        const point3 = { x: originX + 100, y: originY }; // 3
-        const point4 = { x: originX + 150, y: originY }; // 4
-        const point5 = { x: originX + 200, y: originY }; //5
-        const point6 = { x: originX + 250, y: originY }; // 6
-        const point7 = { x: originX + 300, y: originY }; // 7
-    
-
-        // 各点を描画
-        
-        drawPoint(point1.x, pointO.y, '1', 'blue');
-        drawPoint(point2.x, pointP.y, '2', 'red');
-        drawPoint(point3.x, pointQ.y, '3', 'green');
-        drawPoint(point4.x, pointR.y, '4', 'pink');
-        drawPoint(point5.x, pointS.y, '5', 'orange');
-        drawPoint(point6.x, pointT.y, '6', 'purple');
-        drawPoint(point7.x, pointU.y, '7', 'brown');
-    
-
-
-
-
-
         // 各点を描画
         
         drawPoint(pointO.x, pointO.y, 'O', 'blue');
@@ -135,8 +110,37 @@
         drawVector(pointP.x, pointP.y, pointP.x + zPlus50VectorX, pointP.y + zPlus50VectorY, 'purple');
     
 
+        
+        //Q ベクトルを描画
+        const zPlus100VectorX = 550; // Zベクトル + 150 のX成分
+        const zPlus100VectorY = -550; // Zベクトル + 150 のY成分
+        drawVector(pointQ.x, pointQ.y, pointQ.x + zPlus100VectorX, pointQ.y + zPlus100VectorY, 'purple');
+    
+
+        // R ベクトルを描画
+const zPlus200VectorX = 550; // RベクトルのX成分（例として同じ成分を使用）
+const zPlus200VectorY = -550; // RベクトルのY成分（例として同じ成分を使用）
+drawVector(pointR.x, pointR.y, pointR.x + zPlus200VectorX, pointR.y + zPlus200VectorY, 'purple');
+
+        // S ベクトルを描画
+const zPlus400VectorX = 550; // SベクトルのX成分（例として同じ成分を使用）
+const zPlus400VectorY = -550; // SベクトルのY成分（例として同じ成分を使用）
+drawVector(pointS.x, pointS.y, pointS.x + zPlus400VectorX, pointS.y + zPlus400VectorY, 'purple');
+
+// T ベクトルを描画
+const zPlus600VectorX = 550; // TベクトルのX成分
+const zPlus600VectorY = -550; // TベクトルのY成分
+drawVector(pointT.x, pointT.y, pointT.x + zPlus600VectorX, pointT.y + zPlus600VectorY, 'purple');
+
+//U ベクトルを描画
+        const zPlus300VectorX = 550; // Zベクトル + 150 のX成分
+        const zPlus300VectorY = -550; // Zベクトル + 150 のY成分
+        drawVector(pointU.x, pointU.y, pointU.x + zPlus300VectorX, pointU.y + zPlus300VectorY, 'purple');
+    
+
+
         // 各点'の座標を計算
-        const scaleFactor = 250 / Math.abs(zPlus50VectorY); // Z成分に基づいた比率
+        const scaleFactor = 50 / Math.abs(zPlus50VectorY); // Z成分に基づいた比率
     
         // 各点'を描画
 
@@ -162,33 +166,6 @@
         const pointUPrime = { x: pointU.x + zPlus50VectorX * scaleFactor, y: pointU.y + zPlus50VectorY * scaleFactor };
         drawPoint(pointUPrime.x, pointUPrime.y, "U'", 'lime');
     
-// 各点'を描画
-
-
-const point1Prime = { x: point1.x + zPlus50VectorX * scaleFactor, y: point1.y + zPlus50VectorY * scaleFactor };
-        drawPoint(point1Prime.x, point1Prime.y, "1'", 'orange');
-
-        const point2Prime = { x: point2.x + zPlus50VectorX * scaleFactor, y: point2.y + zPlus50VectorY * scaleFactor };
-        drawPoint(point2Prime.x, point2Prime.y, "2'", 'orange');
-    
-        const point3Prime = { x: point3.x + zPlus50VectorX * scaleFactor, y: pointQ.y + zPlus50VectorY * scaleFactor };
-        drawPoint(point3Prime.x, point3Prime.y, "3'", 'yellow');
-    
-        const point4Prime = { x: point4.x + zPlus50VectorX * scaleFactor, y: pointR.y + zPlus50VectorY * scaleFactor };
-        drawPoint(point4Prime.x, point4Prime.y, "4'", 'yellow');
-    
-        const point5Prime = { x: point5.x + zPlus50VectorX * scaleFactor, y: pointS.y + zPlus50VectorY * scaleFactor };
-        drawPoint(point5Prime.x, point5Prime.y, "5'", 'cyan');
-    
-        const point6Prime = { x: point6.x + zPlus50VectorX * scaleFactor, y: point6.y + zPlus50VectorY * scaleFactor };
-        drawPoint(point6Prime.x, point6Prime.y, "T'", 'magenta');
-    
-        const point7Prime = { x: point7.x + zPlus50VectorX * scaleFactor, y: point7.y + zPlus50VectorY * scaleFactor };
-        drawPoint(point7Prime.x, point7Prime.y, "U'", 'lime');
-    
-
-
-
 
         // Zベクトル上に点Zを描画
         const pointZ = { x: originX + xVector, y: originY - yVector };
@@ -291,8 +268,6 @@ ctx.fillStyle = 'rgba(200, 255, 200, 0.5)'; // 半透明の色
     
     // 描画実行
     drawParallelogram();
-    
-
 </script>
 
 </body>
