@@ -1,6 +1,7 @@
 {
-    "1": { "name": "warrior", "image": "soldier.png",
-
+    "1": { 
+      "name": "warrior", 
+      "image": "soldier.png",
       "HP": 150,
       "MP": 30,
       "Attack": 40,
