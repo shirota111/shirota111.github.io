@@ -11,6 +11,8 @@
             top: 0;
             left: 0;
             z-index: 1;
+                      
+            background-color: transparent; /* Canvas背景透明 */
         }
 
         #container {
@@ -37,7 +39,8 @@
             padding: 20px;
             border-radius: 10px;
             width: 300px;
-            z-index: 2;
+            z-index: 2;         
+            
         }
 
         select {
@@ -54,6 +57,10 @@
     </style>
 </head>
 <body>
+
+    <input type="number" id="unitInput" placeholder="ユニット番号を入力">
+    <button id="placeUnitBtn">ユニット配置</button>
+
 
 <div id="container">
     <canvas id="myCanvas" width="600" height="600"></canvas>
@@ -72,12 +79,16 @@
 </div>
 
 <script>
-    const canvas = document.getElementById('myCanvas');
-    const ctx = canvas.getContext('2d');
+ const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+        let unitData = {};  // フェッチされたユニットデータを保持する変数
+        let selectedUnit = null;
 
-    // ユニット画像をロード
-    const unitImage = new Image();
-    unitImage.src = '6h246esn.png'; // ユニットの画像パスを指定
+        // 外部ファイルからユニットデータを取得
+        async function fetchUnitData() {
+            const response = await fetch('unitData.json');  // 外部のユニットデータファイルを取得
+            unitData = await response.json();
+        }
 
     // 座標リスト
     const points = [
@@ -121,13 +132,10 @@
         });
     }
 
-    function drawParallelogram() {
-        drawPoints();
-    }
-
     function clearCanvas() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
 
     function highlightTile(clickX, clickY) {
         const tileSize = 50;
@@ -137,28 +145,60 @@
         const tileY = Math.floor((clickY - originY) / tileSize) * tileSize + originY;
 
         clearCanvas();
-        drawParallelogram();
+        drawPoints();
 
         ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
         ctx.fillRect(tileX, tileY, tileSize, tileSize);
 
-        placeUnit(tileX, tileY);
+       // クリックされたタイルにユニットを描画
+       if (selectedUnit !== null) {
+                placeUnit(tileX, tileY, selectedUnit);
+            }
     }
 
-    function placeUnit(x, y) {
-        const unitSize = 40; 
-        ctx.drawImage(unitImage, x + 5, y + 5, unitSize, unitSize); 
-    }
+        // 指定されたユニットをタイルに描画
+        function placeUnit(x, y, unitId) {
+            const unitImage = new Image();
+            const unitInfo = unitData[unitId];
 
-    canvas.addEventListener('click', function(event) {
-        const rect = canvas.getBoundingClientRect();
-        const clickX = event.clientX - rect.left;
-        const clickY = event.clientY - rect.top;
+            if (!unitInfo) {
+                console.error('指定されたユニットIDが存在しません');
+                return;
+            }
 
-        highlightTile(clickX, clickY);
-    });
+            unitImage.src = unitInfo.image; // ユニットの画像パスを取得
 
-    drawParallelogram();
+            // ユニット画像がロードされた後に描画
+            unitImage.onload = function() {
+                const unitSize = 40;  // ユニットのサイズ
+                ctx.drawImage(unitImage, x + 5, y + 5, unitSize, unitSize);
+            };
+        }
+
+
+// キャンバスクリックイベント
+canvas.addEventListener('click', function(event) {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const clickY = event.clientY - rect.top;
+
+            highlightTile(clickX, clickY);
+        });
+
+  // ユーザーが入力したユニット番号を選択
+  document.getElementById('placeUnitBtn').addEventListener('click', function() {
+            const unitId = document.getElementById('unitInput').value;
+            selectedUnit = unitId;  // 選択されたユニットIDを保持
+        });
+
+        // 初期設定としてユニットデータをフェッチ
+        fetchUnitData().then(() => {
+            drawPoints();  // ユニットデータがフェッチされた後に座標を描画
+        });
+
+
+
+
 
     // Data Viewer section
     document.getElementById('dataSelect').addEventListener('change', function() {
