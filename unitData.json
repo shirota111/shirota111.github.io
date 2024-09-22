@@ -1,5 +1,22 @@
 {
-    "1": { "name": "兵士", "image": "soldier.png" },
-    "2": { "name": "騎士", "image": "knight.png" },
-    "3": { "name": "魔法使い", "image": "mage.png" }
+    "1": { "name": "warrior", "image": "soldier.png",
+
+      "HP": 150,
+      "MP": 30,
+      "Attack": 40,
+      "Magic": 10,
+      "Arm": 25
+    },
+
+ },
+    "2": { "name": "knight", "image": "knight.png" },
+    "3": { "name": "mage", "image": "mage.png" ,
+
+"HP": 80,
+      "MP": 120,
+      "Attack": 15,
+      "Magic": 60,
+      "Arm": 10
+    }
+}
 }
