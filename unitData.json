@@ -1,4 +1,5 @@
-{"units":[
+{
+  "units": {
     "1": { 
       "name": "warrior", 
       "image": "soldier.png",
@@ -8,16 +9,18 @@
       "Magic": 10,
       "Arm": 25
     },
-
-
-    "2": { "name": "knight", "image": "knight.png" },
-    "3": { "name": "mage", "image": "mage.png" ,
-
-"HP": 80,
+    "2": { 
+      "name": "knight", 
+      "image": "knight.png"
+    },
+    "3": { 
+      "name": "mage",   
+      "image": "mage.png",
+      "HP": 80,
       "MP": 120,
       "Attack": 15,
       "Magic": 60,
       "Arm": 10
     }
-]
-｝
+  }
+}
