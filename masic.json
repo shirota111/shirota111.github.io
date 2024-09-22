@@ -1,0 +1,14 @@
+{
+  "spells": [
+    {
+      "name": "Fireball",
+      "cost": 20,
+      "damage": 50
+    },
+    {
+      "name": "Heal",
+      "cost": 10,
+      "effect": "Restores 30 HP"
+    }
+  ]
+}
