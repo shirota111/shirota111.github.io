@@ -1,4 +1,4 @@
-{
+{"units":[
     "1": { 
       "name": "warrior", 
       "image": "soldier.png",
@@ -19,4 +19,5 @@
       "Magic": 60,
       "Arm": 10
     }
-
+]
+｝
