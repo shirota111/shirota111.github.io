@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Principles & Analogy Task Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .task-box, .solution-box {
+            width: 48%;
+            padding: 20px;
+            border: 2px solid #333;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        .task-list {
+            margin: 10px 0;
+        }
+        .task {
+            margin-bottom: 5px;
+            padding: 10px;
+            background-color: #eee;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>第一原理思考と類推を利用したタスク管理</h1>
+
+<div id="container">
+    <div class="task-box">
+        <h2>タスクの追加</h2>
+        <input type="text" id="taskInput" placeholder="新しいタスクを追加">
+        <button id="addTaskBtn">タスクを追加</button>
+        <h3>タスクリスト</h3>
+        <div id="taskList" class="task-list"></div>
+    </div>
+    
+    <div class="solution-box">
+        <h2>解決アプローチ</h2>
+        <button id="firstPrinciplesBtn">第一原理思考を適用</button>
+        <button id="analogyBtn">類推を適用</button>
+        <div id="solutionOutput">
+            <p>解決策がここに表示されます。</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    const taskList = document.getElementById('taskList');
+    const taskInput = document.getElementById('taskInput');
+
+    // タスク追加機能
+    document.getElementById('addTaskBtn').addEventListener('click', function() {
+        const task = taskInput.value.trim();
+        if (task !== '') {
+            const taskItem = document.createElement('div');
+            taskItem.className = 'task';
+            taskItem.textContent = task;
+            taskList.appendChild(taskItem);
+            taskInput.value = '';  // 入力をクリア
+        }
+    });
+
+    // 第一原理思考を適用するボタンのクリックイベント
+    document.getElementById('firstPrinciplesBtn').addEventListener('click', function() {
+        // タスクを根本的に分析し、最も基本的な要素まで分解する仮想的な例
+        const tasks = document.querySelectorAll('.task');
+        let solution = '<h3>第一原理思考による解決策</h3>';
+        tasks.forEach((task, index) => {
+            solution += `<p>タスク${index + 1}: "${task.textContent}" の本質的な問題を分解し、基本要素に取り組む。</p>`;
+        });
+        document.getElementById('solutionOutput').innerHTML = solution;
+    });
+
+    // 類推を適用するボタンのクリックイベント
+    document.getElementById('analogyBtn').addEventListener('click', function() {
+        // 過去の解決策や似たような問題の解決策を適用する仮想的な例
+        const tasks = document.querySelectorAll('.task');
+        let solution = '<h3>類推による解決策</h3>';
+        tasks.forEach((task, index) => {
+            solution += `<p>タスク${index + 1}: "${task.textContent}" に似た過去の成功例を参考に解決。</p>`;
+        });
+        document.getElementById('solutionOutput').innerHTML = solution;
+    });
+</script>
+
+</body>
+</html>

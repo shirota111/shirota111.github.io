@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Mind Map</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        canvas {
+            border: 1px solid black;
+        }
+        #clearButton {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 10px;
+            background-color: lightblue;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="mindMapCanvas"></canvas>
+<button id="clearButton">全消し</button>
+
+<script>
+    const canvas = document.getElementById('mindMapCanvas');
+    const ctx = canvas.getContext('2d');
+    let nodes = [];
+    let lines = [];
+    let selectedNode = null;
+
+    // キャンバスのサイズを画面いっぱいにする
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // ノードを作成
+    function createNode(text, x, y) {
+        const node = {
+            text: text,
+            x: x,
+            y: y
+        };
+        nodes.push(node);
+        drawNode(node);
+    }
+
+    // ノードを描画
+    function drawNode(node) {
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, 40, 0, Math.PI * 2);
+        ctx.fillStyle = "lightblue";
+        ctx.fill();
+        ctx.stroke();
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = "black";
+        ctx.font = "16px Arial";
+        ctx.fillText(node.text, node.x, node.y);
+    }
+
+    // 線を作成
+    function createLine(fromNode, toNode) {
+        const line = { from: fromNode, to: toNode };
+        lines.push(line);
+        drawLine(line);
+    }
+
+    // 線を描画
+    function drawLine(line) {
+        ctx.beginPath();
+        ctx.moveTo(line.from.x, line.from.y);
+        ctx.lineTo(line.to.x, line.to.y);
+        ctx.stroke();
+    }
+
+    // 全消し
+    function clearAll() {
+        nodes = [];
+        lines = [];
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // イベントリスナー
+    canvas.addEventListener('contextmenu', (e) => e.preventDefault());  // 右クリックメニューを無効化
+
+    canvas.addEventListener('click', (event) => {
+        const text = prompt("Enter node text:");
+        if (text) {
+            createNode(text, event.clientX, event.clientY);
+        }
+    });
+
+    canvas.addEventListener('mousedown', (event) => {
+        if (event.button === 1) {  // 中クリックで線を作成
+            const clickedNode = findNodeAtPosition(event.clientX, event.clientY);
+            if (clickedNode) {
+                if (selectedNode) {
+                    createLine(selectedNode, clickedNode);
+                    selectedNode = null;
+                } else {
+                    selectedNode = clickedNode;
+                }
+            }
+        }
+    });
+
+    document.getElementById('clearButton').addEventListener('click', clearAll);
+
+    // 指定座標にノードがあるか確認
+    function findNodeAtPosition(x, y) {
+        return nodes.find(node => Math.hypot(node.x - x, node.y - y) < 40);
+    }
+</script>
+
+</body>
+</html>
