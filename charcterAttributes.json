@@ -1,0 +1,9 @@
+{
+  "attributes": [
+    { "name": "HP", "description": "Health Points" },
+    { "name": "MP", "description": "Mana Points" },
+    { "name": "Attack", "description": "Physical Attack Power" },
+    { "name": "Magic", "description": "Magical Attack Power" },
+    { "name": "Arm", "description": "Armor Strength" }
+  ]
+}
