@@ -35,6 +35,8 @@
     let nodes = [];
     let lines = [];
     let selectedNode = null;
+    let longPressTimeout;  // 長押しを判定するためのタイムアウト
+    const longPressDuration = 1000;  // 長押しの時間（ミリ秒）
 
     // キャンバスのサイズを画面いっぱいにする
     function resizeCanvas() {
@@ -84,6 +86,15 @@
         ctx.stroke();
     }
 
+    // ノードを削除
+    function deleteNode(node) {
+        const index = nodes.indexOf(node);
+        if (index !== -1) {
+            nodes.splice(index, 1);
+        }
+        redraw();
+    }
+
     // 全消し
     function clearAll() {
         nodes = [];
@@ -91,36 +102,53 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
-    // イベントリスナー
-    canvas.addEventListener('contextmenu', (e) => e.preventDefault());  // 右クリックメニューを無効化
+    // 画面全体を再描画
+    function redraw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        nodes.forEach(drawNode);
+        lines.forEach(drawLine);
+    }
 
-    canvas.addEventListener('click', (event) => {
-        const text = prompt("Enter node text:");
-        if (text) {
-            createNode(text, event.clientX, event.clientY);
-        }
+    // 指定座標にノードがあるか確認
+    function findNodeAtPosition(x, y) {
+        return nodes.find(node => Math.hypot(node.x - x, node.y - y) < 40);
+    }
+
+    // タッチ開始時の処理
+    canvas.addEventListener('touchstart', (event) => {
+        const touch = event.touches[0];
+        const x = touch.clientX;
+        const y = touch.clientY;
+        const clickedNode = findNodeAtPosition(x, y);
+
+        longPressTimeout = setTimeout(() => {
+            // 長押しが発生した場合はノードを削除
+            if (clickedNode) {
+                deleteNode(clickedNode);
+            }
+        }, longPressDuration);
     });
 
-    canvas.addEventListener('mousedown', (event) => {
-        if (event.button === 1) {  // 中クリックで線を作成
-            const clickedNode = findNodeAtPosition(event.clientX, event.clientY);
-            if (clickedNode) {
-                if (selectedNode) {
-                    createLine(selectedNode, clickedNode);
-                    selectedNode = null;
-                } else {
-                    selectedNode = clickedNode;
+    // タッチ終了時の処理
+    canvas.addEventListener('touchend', (event) => {
+        clearTimeout(longPressTimeout);  // 長押しをキャンセル
+        if (event.touches.length === 0) {
+            const touch = event.changedTouches[0];
+            const x = touch.clientX;
+            const y = touch.clientY;
+            const clickedNode = findNodeAtPosition(x, y);
+
+            if (!clickedNode) {
+                // 短いタップだった場合はノードを作成
+                const text = prompt("Enter node text:");
+                if (text) {
+                    createNode(text, x, y);
                 }
             }
         }
     });
 
     document.getElementById('clearButton').addEventListener('click', clearAll);
-
-    // 指定座標にノードがあるか確認
-    function findNodeAtPosition(x, y) {
-        return nodes.find(node => Math.hypot(node.x - x, node.y - y) < 40);
-    }
 </script>
 
 </body>
