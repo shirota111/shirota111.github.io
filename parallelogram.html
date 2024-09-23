@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>平行四辺形のハイライト</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <h1>平行四辺形のタイルをハイライト</h1>
+    <canvas id="myCanvas" width="600" height="600"></canvas>
+    <input type="text" id="unitInput" placeholder="ユニットIDを入力">
+    <button id="placeUnitBtn">ユニットを配置</button>
+
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+        let unitData = {};  // フェッチされたユニットデータを保持する変数
+        let selectedUnit = null;
+
+        // 座標リスト
+        const points = [
+            { x: 100, y: 500, label: 'O' },   // 点O
+            { x: 150, y: 500, label: 'P' },   // 点P
+            { x: 150, y: 450, label: "O'" },  // 点O'
+            { x: 200, y: 450, label: "P'" },  // 点P'
+        ];
+
+        function drawPoints() {
+            points.forEach(point => {
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+                ctx.fillStyle = 'black';
+                ctx.fill();
+                ctx.fillText(point.label, point.x + 10, point.y - 10);
+            });
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function highlightParallelogram(clickX, clickY) {
+            const originX = 100;
+            const originY = 500;
+            const tileSize = 50; // 平行四辺形の基本サイズ
+
+            // O, O', P', P の座標を定義（基準座標に対応）
+            const O = { x: originX, y: originY };
+            const OP = { x: originX + tileSize, y: originY - tileSize };
+            const PP = { x: originX + tileSize * 2, y: originY - tileSize };
+            const P = { x: originX + tileSize * 2, y: originY };
+
+            // 描画のクリア
+            clearCanvas();
+            drawPoints();
+
+            // 平行四辺形を描画
+            ctx.beginPath();
+            ctx.moveTo(O.x, O.y);        // 点O
+            ctx.lineTo(OP.x, OP.y);      // 点O'
+            ctx.lineTo(PP.x, PP.y);      // 点P'
+            ctx.lineTo(P.x, P.y);        // 点P
+            ctx.closePath();             // 形を閉じる
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';  // 半透明の赤
+            ctx.fill();                  // 内側を塗りつぶし
+        }
+
+        // キャンバスクリックイベント
+        canvas.addEventListener('click', function(event) {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const clickY = event.clientY - rect.top;
+
+            highlightParallelogram(clickX, clickY);
+        });
+
+        // 初期描画
+        drawPoints();
+    </script>
+</body>
+</html>
