@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>平行四辺形の描画</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="600" height="600"></canvas>
+    <script>
+        // コンテキストの設定
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // 座標リスト
+        const points = [
+            { x: 100, y: 500, label: 'O' },   // 点O
+            { x: 150, y: 500, label: 'P' },   // 点P
+            { x: 200, y: 500, label: 'Q' },   // 点Q
+            { x: 250, y: 500, label: 'R' },   // 点R
+            { x: 300, y: 500, label: 'S' },   // 点S
+            { x: 350, y: 500, label: 'T' },   // 点T
+            { x: 400, y: 500, label: 'U' },   // 点U
+            { x: 150, y: 450, label: "O'" },  // 点O'
+            { x: 200, y: 450, label: "P'" },  // 点P'
+            { x: 250, y: 450, label: "Q'" },  // 点Q'
+            { x: 300, y: 450, label: "R'" },  // 点R'
+            { x: 350, y: 450, label: "S'" },  // 点S'
+            { x: 400, y: 450, label: "T'" },  // 点T'
+            { x: 450, y: 450, label: "U'" },  // 点U'
+            { x: 200, y: 400, label: '1' },   // 点1
+            { x: 250, y: 400, label: '2' },   // 点2
+            { x: 300, y: 400, label: '3' },   // 点3
+            { x: 350, y: 400, label: '4' },   // 点4
+            { x: 400, y: 400, label: '5' },   // 点5
+            { x: 450, y: 400, label: '6' },   // 点6
+            { x: 500, y: 400, label: '7' },   // 点7
+            { x: 250, y: 350, label: '8' },   // 点8
+            { x: 300, y: 350, label: '9' },   // 点9
+            { x: 350, y: 350, label: '10' },  // 点10
+            { x: 400, y: 350, label: '11' },  // 点11
+            { x: 450, y: 350, label: '12' },  // 点12
+            { x: 500, y: 350, label: '13' },  // 点13
+            { x: 550, y: 350, label: '14' }   // 点14
+        ];
+
+        // 各平行四辺形を描画する関数
+        function drawParallelograms() {
+            const shapes = [
+                { topLeft: points[0], topRight: points[1], bottomLeft: points[7], bottomRight: points[8] }, // O, P, O', P'
+                { topLeft: points[1], topRight: points[2], bottomLeft: points[8], bottomRight: points[9] }, // P, Q, P', Q'
+                { topLeft: points[2], topRight: points[3], bottomLeft: points[9], bottomRight: points[10] }, // Q, R, Q', R'
+                { topLeft: points[3], topRight: points[4], bottomLeft: points[10], bottomRight: points[11] }, // R, S, R', S'
+                { topLeft: points[4], topRight: points[5], bottomLeft: points[11], bottomRight: points[12] }, // S, T, S', T'
+                { topLeft: points[5], topRight: points[6], bottomLeft: points[12], bottomRight: points[13] }, // T, U, T', U'
+            ];
+
+            shapes.forEach(shape => {
+                ctx.beginPath();
+                ctx.moveTo(shape.topLeft.x, shape.topLeft.y);          // 上左
+                ctx.lineTo(shape.topRight.x, shape.topRight.y);       // 上右
+                ctx.lineTo(shape.bottomRight.x, shape.bottomRight.y); // 下右
+                ctx.lineTo(shape.bottomLeft.x, shape.bottomLeft.y);   // 下左
+                ctx.closePath();                                       // 形を閉じる
+
+                // 塗りつぶしスタイル
+                ctx.fillStyle = 'rgba(255, 0, 0, 0.5)'; // 半透明の赤
+                ctx.fill(); // 内部を塗りつぶす
+            });
+        }
+
+        // 描画処理
+        function draw() {
+            // キャンバスのクリア
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 平行四辺形を描画
+            drawParallelograms();
+            
+            // 点のラベルを描画
+            points.forEach(point => {
+                ctx.fillStyle = 'black'; // 点の色
+                ctx.fillText(point.label, point.x, point.y - 10); // 点のラベル
+            });
+        }
+
+        // 描画を実行
+        draw();
+    </script>
+</body>
+</html>
