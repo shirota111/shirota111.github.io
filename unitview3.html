@@ -135,84 +135,94 @@
 
 
         function highlightParallelogram(clickX, clickY) {
-            const tileSize = 50; // 平行四辺形の基本サイズ
+    const tileSize = 50; // 平行四辺形の基本サイズ
 
-            // フロア関数を使用してクリック座標をグリッドにスナップ
-            const snappedX = Math.floor(clickX / tileSize) * tileSize;
-            const snappedY = Math.floor(clickY / tileSize) * tileSize;
+    // フロア関数を使用してクリック座標をグリッドにスナップ
+    const snappedX = Math.floor(clickX / tileSize) * tileSize;
+    const snappedY = Math.floor(clickY / tileSize) * tileSize;
 
-            // 平行四辺形の4つの頂点を定義
-            const O = { x: snappedX, y: snappedY + tileSize };         // 左下
-            const OP = { x: snappedX + tileSize, y: snappedY };       // 右上
-            const PP = { x: snappedX + tileSize * 2, y: snappedY };   // 右上
-            const P = { x: snappedX + tileSize * 2, y: snappedY + tileSize }; // 右下
+    // 平行四辺形の4つの頂点を定義
+    const O = { x: snappedX, y: snappedY + tileSize };         // 左下
+    const OP = { x: snappedX + tileSize, y: snappedY };       // 右上
+    const PP = { x: snappedX + tileSize * 2, y: snappedY };   // 右上
+    const P = { x: snappedX + tileSize * 2, y: snappedY + tileSize }; // 右下
 
-            // 描画のクリア
-            clearCanvas();
-            drawPoints();
+    // 描画のクリア
+    clearCanvas();
+    drawPoints();
 
-            // 平行四辺形を描画
-            ctx.beginPath();
-            ctx.moveTo(O.x, O.y);      // 点O
-            ctx.lineTo(OP.x, OP.y);    // 点O'
-            ctx.lineTo(PP.x, PP.y);    // 点P'
-            ctx.lineTo(P.x-50, P.y);      // 点P
-            ctx.closePath();           // 形を閉じる
+    // 平行四辺形を描画
+    ctx.beginPath();
+    ctx.moveTo(O.x, O.y);      // 点O
+    ctx.lineTo(OP.x, OP.y);    // 点O'
+    ctx.lineTo(PP.x, PP.y);    // 点P'
+    ctx.lineTo(P.x - 50, P.y);  // 点P
+    ctx.closePath();           // 形を閉じる
 
-            ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';  // 半透明の赤
-            ctx.fill();                  // 内側を塗りつぶし
-        }        
+    ctx.fillStyle = 'rgba(0, 0, 255, 0.3)';  // 半透明の青
+    ctx.fill();                  // 内側を塗りつぶす
+}
 
+function highlightTile(clickX, clickY) {
+    const tileSize = 50; 
+    const originX = 100; 
+    const originY = 500; 
 
-////
+    // タイル位置を計算
+    const tileX = Math.floor((clickX - originX) / tileSize) * tileSize + originX;
+    const tileY = Math.floor((clickY - originY) / tileSize) * tileSize + originY;
 
-    function highlightTile(clickX, clickY) {
-        const tileSize = 50;
-        const originX = 100;
-        const originY = 500;
-        const tileX = Math.floor((clickX - originX) / tileSize) * tileSize + originX;
-        const tileY = Math.floor((clickY - originY) / tileSize) * tileSize + originY;
+    // 描画のクリア
+    clearCanvas();
+    drawPoints();
 
-        clearCanvas();
-        drawPoints();
+    // タイルを描画
+    ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';  // 半透明の赤
+    ctx.fillRect(tileX, tileY, tileSize, tileSize);
 
-        ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
-        ctx.fillRect(tileX, tileY, tileSize, tileSize);
+    // クリックされたタイルにユニットを描画
+    if (selectedUnit !== null) {
+        placeUnit(tileX, tileY, selectedUnit);
+    }
+}
 
-       // クリックされたタイルにユニットを描画
-       if (selectedUnit !== null) {
-                placeUnit(tileX, tileY, selectedUnit);
-            }
+// 指定されたユニットをタイルに描画
+function placeUnit(x, y, unitId) {
+    const unitImage = new Image();
+    const unitInfo = unitData[unitId];
+
+    if (!unitInfo) {
+        console.error('指定されたユニットIDが存在しません');
+        return;
     }
 
-        // 指定されたユニットをタイルに描画
-        function placeUnit(x, y, unitId) {
-            const unitImage = new Image();
-            const unitInfo = unitData[unitId];
+    unitImage.src = unitInfo.image; // ユニットの画像パスを取得
 
-            if (!unitInfo) {
-                console.error('指定されたユニットIDが存在しません');
-                return;
-            }
-
-            unitImage.src = unitInfo.image; // ユニットの画像パスを取得
-
-            // ユニット画像がロードされた後に描画
-            unitImage.onload = function() {
-                const unitSize = 40;  // ユニットのサイズ
-                ctx.drawImage(unitImage, x + 5, y + 5, unitSize, unitSize);
-            };
-        }
+    // ユニット画像がロードされた後に描画
+    unitImage.onload = function() {
+        const unitSize = 40;  // ユニットのサイズ
+        ctx.drawImage(unitImage, x + 5, y + 5, unitSize, unitSize);
+    };
+}
 
 
-// キャンバスクリックイベント
 canvas.addEventListener('click', function(event) {
-            const rect = canvas.getBoundingClientRect();
-            const clickX = event.clientX - rect.left;
-            const clickY = event.clientY - rect.top;
+    const clickX = event.clientX;
+    const clickY = event.clientY;
 
-            highlightTile(clickX, clickY);
-        });
+    // どちらをハイライトするかを判定
+    if (isInParallelogram(clickX, clickY)) {
+        highlightParallelogram(clickX, clickY);
+    } else {
+        highlightTile(clickX, clickY);
+    }
+});
+
+// 平行四辺形内かどうかを判定する関数
+function isInParallelogram(x, y) {
+    // 実際の判定ロジックを実装
+    return false; // プレースホルダー
+}
 
   // ユーザーが入力したユニット番号を選択
   document.getElementById('placeUnitBtn').addEventListener('click', function() {
