@@ -36,7 +36,7 @@
     const ctx = canvas.getContext('2d');
     
     // 基準点（60px, 500px）を設定
-    const originX = 100;
+    const originX = 110;
     const originY = 500;
     const tileSize = 50;   // タイルのサイズ
 
@@ -101,19 +101,19 @@
 
         const point1 = { x: originX + 100, y: originY　-100}; // 1
         const point2 = { x: originX + 150, y: originY　-100}; // 2
-        const point3 = { x: originX + 200, y: originY　-100}; // 1
-        const point4 = { x: originX + 250, y: originY　-100}; // 2
-        const point5 = { x: originX + 300, y: originY　-100}; // 2
-        const point6 = { x: originX + 350, y: originY　-100}; // 2
+        const point3 = { x: originX + 200, y: originY　-100}; // 3
+        const point4 = { x: originX + 250, y: originY　-100}; // 4
+        const point5 = { x: originX + 300, y: originY　-100}; // 5
+        const point6 = { x: originX + 350, y: originY　-100}; // 6
         
-        const point7 = { x: originX + 400, y: originY　-100}; // 2
-        const point8 = { x: originX + 150, y: originY - 150}; // 2
-const point9 = { x: originX + 200, y: originY - 150}; // 2
-const point10 = { x: originX + 250, y: originY - 150}; // 2
-const point11 = { x: originX + 300, y: originY - 150}; // 2
-const point12 = { x: originX + 350, y: originY - 150}; // 2
-const point13 = { x: originX + 400, y: originY - 150}; // 2
-const point14 = { x: originX + 450, y: originY - 150}; // 2
+        const point7 = { x: originX + 400, y: originY　-100}; // 7
+        const point8 = { x: originX + 150, y: originY - 150}; // 8
+const point9 = { x: originX + 200, y: originY - 150}; // 9
+const point10 = { x: originX + 250, y: originY - 150}; // 10
+const point11 = { x: originX + 300, y: originY - 150}; // 11
+const point12 = { x: originX + 350, y: originY - 150}; // 12
+const point13 = { x: originX + 400, y: originY - 150}; // 13
+const point14 = { x: originX + 450, y: originY - 150}; // 14
 
         
         // 各点を描画
@@ -146,35 +146,35 @@ const point14 = { x: originX + 450, y: originY - 150}; // 2
         // Z + 50 ベクトルを描画
         const zPlus50VectorX = 550; // Zベクトル + 50 のX成分
         const zPlus50VectorY = -550; // Zベクトル + 50 のY成分
-        drawVector(pointP.x, pointP.y, pointP.x + zPlus50VectorX, pointP.y + zPlus50VectorY, 'purple');
+        drawVector(pointP.x, pointP.y, pointP.x + zPlus50VectorX, pointP.y + zPlus50VectorY, 'blue');
     
 
         
         //Q ベクトルを描画
         const zPlus100VectorX = 550; // Zベクトル + 150 のX成分
         const zPlus100VectorY = -550; // Zベクトル + 150 のY成分
-        drawVector(pointQ.x, pointQ.y, pointQ.x + zPlus100VectorX, pointQ.y + zPlus100VectorY, 'purple');
+        drawVector(pointQ.x, pointQ.y, pointQ.x + zPlus100VectorX, pointQ.y + zPlus100VectorY, 'blue');
     
 
         // R ベクトルを描画
 const zPlus200VectorX = 550; // RベクトルのX成分（例として同じ成分を使用）
 const zPlus200VectorY = -550; // RベクトルのY成分（例として同じ成分を使用）
-drawVector(pointR.x, pointR.y, pointR.x + zPlus200VectorX, pointR.y + zPlus200VectorY, 'purple');
+drawVector(pointR.x, pointR.y, pointR.x + zPlus200VectorX, pointR.y + zPlus200VectorY, 'blue');
 
         // S ベクトルを描画
 const zPlus400VectorX = 550; // SベクトルのX成分（例として同じ成分を使用）
 const zPlus400VectorY = -550; // SベクトルのY成分（例として同じ成分を使用）
-drawVector(pointS.x, pointS.y, pointS.x + zPlus400VectorX, pointS.y + zPlus400VectorY, 'purple');
+drawVector(pointS.x, pointS.y, pointS.x + zPlus400VectorX, pointS.y + zPlus400VectorY, 'blue');
 
 // T ベクトルを描画
 const zPlus600VectorX = 550; // TベクトルのX成分
 const zPlus600VectorY = -550; // TベクトルのY成分
-drawVector(pointT.x, pointT.y, pointT.x + zPlus600VectorX, pointT.y + zPlus600VectorY, 'purple');
+drawVector(pointT.x, pointT.y, pointT.x + zPlus600VectorX, pointT.y + zPlus600VectorY, 'blue');
 
 //U ベクトルを描画
         const zPlus300VectorX = 550; // Zベクトル + 150 のX成分
         const zPlus300VectorY = -550; // Zベクトル + 150 のY成分
-        drawVector(pointU.x, pointU.y, pointU.x + zPlus300VectorX, pointU.y + zPlus300VectorY, 'purple');
+        drawVector(pointU.x, pointU.y, pointU.x + zPlus300VectorX, pointU.y + zPlus300VectorY, 'blue');
     
 
 
