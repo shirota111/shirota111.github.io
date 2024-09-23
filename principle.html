@@ -79,11 +79,20 @@
 
     // 第一原理思考を適用するボタンのクリックイベント
     document.getElementById('firstPrinciplesBtn').addEventListener('click', function() {
-        // タスクを根本的に分析し、最も基本的な要素まで分解する仮想的な例
+        // タスクを根本的に分析し、要素に分解して再構築するプロセス
         const tasks = document.querySelectorAll('.task');
         let solution = '<h3>第一原理思考による解決策</h3>';
         tasks.forEach((task, index) => {
-            solution += `<p>タスク${index + 1}: "${task.textContent}" の本質的な問題を分解し、基本要素に取り組む。</p>`;
+            // タスクを分解する
+            let taskParts = task.textContent.split(' ');
+            solution += `<p>タスク${index + 1}: "${task.textContent}" を分解すると:</p>`;
+            taskParts.forEach((part, i) => {
+                solution += `<p>要素${i + 1}: ${part}</p>`;
+            });
+
+            // 分解した要素を再構築して新しい解決策を提示
+            let reconstructedTask = taskParts.reverse().join(' ');
+            solution += `<p>再構築した解決策: "${reconstructedTask}"</p>`;
         });
         document.getElementById('solutionOutput').innerHTML = solution;
     });
