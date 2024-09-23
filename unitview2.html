@@ -55,6 +55,22 @@
             padding: 10px;
             border-radius: 5px;
         }
+
+        #parallelogramUnit {
+            background-color: transparent; /* Canvas背景透明 */
+            position: absolute;
+            top: 50px;
+            left: 0;
+            
+            padding: 20px;
+            border-radius: 10px;
+            width: 496px;
+            height: 527px;
+            z-index: 2;       
+        }
+
+
+
     </style>
 </head>
 <body>
@@ -66,6 +82,12 @@
 <div id="container">
     <canvas id="myCanvas" width="600" height="600"></canvas>
     <iframe src="polygon.html"></iframe>
+</div>
+
+
+<div id="parallelogramUnit">
+   
+    <iframe src="parallelogramUnit.html"></iframe>
 </div>
 
 <div id="dataWindow">
