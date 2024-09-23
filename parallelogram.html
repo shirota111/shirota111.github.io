@@ -27,7 +27,7 @@
             { x: 100, y: 500, label: 'O' },   // 点O
             { x: 150, y: 500, label: 'P' },   // 点P
             { x: 150, y: 450, label: "O'" },  // 点O'
-            { x: 200, y: 450, label: "P'" },  // 点P'
+            { x: 100, y: 450, label: "P'" },  // 点P'
         ];
 
         function drawPoints() {
@@ -64,9 +64,7 @@
             ctx.moveTo(O.x, O.y);        // 点O
             ctx.lineTo(OP.x, OP.y);      // 点O'
             ctx.lineTo(PP.x, PP.y);      // 点P'
-            ctx.lineTo(PO.x, PO.y);      // 点O'
-
-
+            ctx.lineTo(P.x, P.y);        // 点P
             ctx.closePath();             // 形を閉じる
             ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';  // 半透明の赤
             ctx.fill();                  // 内側を塗りつぶし
