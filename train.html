@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電車の車内で短縮形を元に戻すゲーム</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .train-car {
+            width: 800px;
+            height: 300px;
+            background-color: lightblue;
+            position: relative;
+            margin: 20px auto;
+            border: 2px solid black;
+            border-radius: 10px;
+        }
+        .window {
+            width: 80px;
+            height: 40px;
+            background-color: white;
+            position: absolute;
+            border: 2px solid black;
+        }
+        .strap {
+            width: 20px;
+            height: 50px;
+            background-color: orange;
+            position: absolute;
+            top: 0;
+            border-radius: 10px;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+
+<h1>電車の車内で短縮形を元に戻すゲーム</h1>
+<div class="train-car">
+    <!-- 窓の配置 -->
+    <div class="window" style="left: 50px; top: 100px;"></div>
+    <div class="window" style="left: 150px; top: 100px;"></div>
+    <div class="window" style="left: 250px; top: 100px;"></div>
+    <div class="window" style="left: 350px; top: 100px;"></div>
+    <div class="window" style="left: 450px; top: 100px;"></div>
+    <div class="window" style="left: 550px; top: 100px;"></div>
+    <div class="window" style="left: 650px; top: 100px;"></div>
+
+    <!-- 吊り革の配置 -->
+    <div class="strap" style="left: 100px;"></div>
+    <div class="strap" style="left: 250px;"></div>
+    <div class="strap" style="left: 400px;"></div>
+    <div class="strap" style="left: 550px;"></div>
+    <div class="strap" style="left: 700px;"></div>
+</div>
+
+<p id="word-to-expand">コンビニ</p> <!-- 初期表示する短縮形 -->
+<button onclick="playWord()">音声再生</button>
+<button onclick="startRecognition()">音声で答える</button>
+
+<div id="result"></div>
+
+<script>
+    // 短縮形のマッピング
+    const abbreviationMap = {
+        "コンビニ": "コンビニエンスストア",
+        "アプリ": "アプリケーション"
+    };
+
+    // 音声再生
+    function playWord() {
+        const word = document.getElementById('word-to-expand').innerText;
+        const utterance = new SpeechSynthesisUtterance(word);
+        window.speechSynthesis.speak(utterance);
+    }
+
+    // 音声認識の開始
+    function startRecognition() {
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'ja-JP';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        recognition.onresult = function(event) {
+            const spokenWord = event.results[0][0].transcript;
+            const expanded = abbreviationMap[spokenWord] || "未定義の短縮形";
+            document.getElementById('result').innerText = spokenWord + " → " + expanded;
+        };
+
+        recognition.onerror = function(event) {
+            console.error('Error occurred in recognition: ' + event.error);
+            document.getElementById('result').innerText = "音声認識エラー";
+        };
+
+        recognition.start();
+    }
+</script>
+
+</body>
+</html>
