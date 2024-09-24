@@ -86,66 +86,67 @@
             unitData = await response.json();
         }
 
-    // 座標リスト
-    const points = [
-        { x: 100, y: 500, label: 'O' },   // 点O
-        { x: 150, y: 500, label: 'P' },  // 点P
-        { x: 200, y: 500, label: 'Q' },  // 点Q
-        { x: 250, y: 500, label: 'R' },  // 点R
-        { x: 300, y: 500, label: 'S' },  // 点S
-        { x: 350, y: 500, label: 'T' },  // 点T
-        { x: 400, y: 500, label: 'U' },  // 点U
-        { x: 150, y: 450, label: "O'" }, // 点O'
-        { x: 200, y: 450, label: "P'" }, // 点P'
-        { x: 250, y: 450, label: "Q'" }, // 点Q'
-        { x: 300, y: 450, label: "R'" }, // 点R'
-        { x: 350, y: 450, label: "S'" }, // 点S'
-        { x: 400, y: 450, label: "T'" }, // 点T'
-        { x: 450, y: 450, label: "U'" }, // 点U'
-        { x: 200, y: 400, label: '1' },  // 点1
-        { x: 250, y: 400, label: '2' },  // 点2
-        { x: 300, y: 400, label: '3' },  // 点3
-        { x: 350, y: 400, label: '4' },  // 点4
-        { x: 400, y: 400, label: '5' },  // 点5
-        { x: 450, y: 400, label: '6' },  // 点6
-        { x: 500, y: 400, label: '7' },  // 点7
-        { x: 250, y: 350, label: '8' },  // 点8
-        { x: 300, y: 350, label: '9' },  // 点9
-        { x: 350, y: 350, label: '10' }, // 点10
-        { x: 400, y: 350, label: '11' }, // 点11
-        { x: 450, y: 350, label: '12' }, // 点12
-        { x: 500, y: 350, label: '13' }, // 点13
-        { x: 550, y: 350, label: '14' }  // 点14
-    ];
+    // HTML Canvas 要素の取得
+const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
 
-    function drawPoints() {
-        points.forEach(point => {
-            ctx.beginPath();
-            ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
-            ctx.fillStyle = 'black';
-            ctx.fill();
-            ctx.fillText(point.label, point.x + 10, point.y - 10);
-        });
-    }
+// 座標リスト
+const points = [
+    { x: 100, y: 500, label: 'O' },   // 点O
+    { x: 150, y: 500, label: 'P' },   // 点P
+    { x: 200, y: 500, label: 'Q' },   // 点Q
+    { x: 250, y: 500, label: 'R' },   // 点R
+    { x: 300, y: 500, label: 'S' },   // 点S
+    { x: 350, y: 500, label: 'T' },   // 点T
+    { x: 400, y: 500, label: 'U' },   // 点U
+    { x: 150, y: 450, label: "O'" },  // 点O'
+    { x: 200, y: 450, label: "P'" },  // 点P'
+    { x: 250, y: 450, label: "Q'" },  // 点Q'
+    { x: 300, y: 450, label: "R'" },  // 点R'
+    { x: 350, y: 450, label: "S'" },  // 点S'
+    { x: 400, y: 450, label: "T'" },  // 点T'
+    { x: 450, y: 450, label: "U'" },  // 点U'
+    { x: 200, y: 400, label: '1' },   // 点1
+    { x: 250, y: 400, label: '2' },   // 点2
+    { x: 300, y: 400, label: '3' },   // 点3
+    { x: 350, y: 400, label: '4' },   // 点4
+    { x: 400, y: 400, label: '5' },   // 点5
+    { x: 450, y: 400, label: '6' },   // 点6
+    { x: 500, y: 400, label: '7' },   // 点7
+    { x: 250, y: 350, label: '8' },   // 点8
+    { x: 300, y: 350, label: '9' },   // 点9
+    { x: 350, y: 350, label: '10' },  // 点10
+    { x: 400, y: 350, label: '11' },  // 点11
+    { x: 450, y: 350, label: '12' },  // 点12
+    { x: 500, y: 350, label: '13' },  // 点13
+    { x: 550, y: 350, label: '14' }   // 点14
+];
 
-    function clearCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
+let selectedUnit = null; // 選択されたユニット
 
+function drawPoints() {
+    points.forEach(point => {
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = 'black';
+        ctx.fill();
+        ctx.fillText(point.label, point.x + 10, point.y - 10);
+    });
+}
 
+function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
 
-        function highlightParallelogram(clickX, clickY) {
+// 平行四辺形をハイライトする関数
+function highlightParallelogram(clickX, clickY) {
     const tileSize = 50; // 平行四辺形の基本サイズ
 
-    // フロア関数を使用してクリック座標をグリッドにスナップ
-    const snappedX = Math.floor(clickX / tileSize) * tileSize;
-    const snappedY = Math.floor(clickY / tileSize) * tileSize;
-
-    // 平行四辺形の4つの頂点を定義
-    const O = { x: snappedX, y: snappedY + tileSize };         // 左下
-    const OP = { x: snappedX + tileSize, y: snappedY };       // 右上
-    const PP = { x: snappedX + tileSize * 2, y: snappedY };   // 右上
-    const P = { x: snappedX + tileSize * 2, y: snappedY + tileSize }; // 右下
+    // スナップを外してそのままクリック座標を使用
+    const O = { x: clickX, y: clickY + tileSize };            // 左下
+    const OP = { x: clickX + tileSize, y: clickY };           // 右上
+    const PP = { x: clickX + tileSize * 2, y: clickY };       // 右上
+    const P = { x: clickX + tileSize * 2, y: clickY + tileSize }; // 右下
 
     // 描画のクリア
     clearCanvas();
@@ -156,74 +157,57 @@
     ctx.moveTo(O.x, O.y);      // 点O
     ctx.lineTo(OP.x, OP.y);    // 点O'
     ctx.lineTo(PP.x, PP.y);    // 点P'
-    ctx.lineTo(P.x - 50, P.y);  // 点P
+    ctx.lineTo(P.x, P.y);      // 点P
     ctx.closePath();           // 形を閉じる
 
     ctx.fillStyle = 'rgba(0, 0, 255, 0.3)';  // 半透明の青
     ctx.fill();                  // 内側を塗りつぶす
 }
 
-function highlightTile(clickX, clickY) {
-    const tileSize = 50; 
-    const originX = 100; 
-    const originY = 500; 
+// 正方形をハイライトする関数
+function highlightSquare(clickX, clickY) {
+    const tileSize = 50; // 正方形の1辺の長さ
 
-    // タイル位置を計算
-    const tileX = Math.floor((clickX - originX) / tileSize) * tileSize + originX;
-    const tileY = Math.floor((clickY - originY) / tileSize) * tileSize + originY;
+    // クリック座標を基に正方形の頂点を定義
+    const P = { x: clickX, y: clickY };                      // 左下
+    const OP = { x: clickX, y: clickY - tileSize };          // 左上
+    const Q = { x: clickX + tileSize, y: clickY - tileSize }; // 右上
+    const PQ = { x: clickX + tileSize, y: clickY };          // 右下
 
-    // 描画のクリア
-    clearCanvas();
-    drawPoints();
+    // 正方形を描画
+    ctx.beginPath();
+    ctx.moveTo(P.x, P.y);      // 点P（左下）
+    ctx.lineTo(OP.x, OP.y);    // 点O'（左上）
+    ctx.lineTo(Q.x, Q.y);      // 点Q（右上）
+    ctx.lineTo(PQ.x, PQ.y);    // 点P'（右下）
+    ctx.closePath();           // 形を閉じる
 
-    // タイルを描画
-    ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';  // 半透明の赤
-    ctx.fillRect(tileX, tileY, tileSize, tileSize);
-
-    // クリックされたタイルにユニットを描画
-    if (selectedUnit !== null) {
-        placeUnit(tileX, tileY, selectedUnit);
-    }
+    ctx.fillStyle = 'rgba(0, 255, 0, 0.3)';  // 半透明の緑
+    ctx.fill();  // 内側を塗りつぶす
 }
 
-// 指定されたユニットをタイルに描画
-function placeUnit(x, y, unitId) {
-    const unitImage = new Image();
-    const unitInfo = unitData[unitId];
-
-    if (!unitInfo) {
-        console.error('指定されたユニットIDが存在しません');
-        return;
-    }
-
-    unitImage.src = unitInfo.image; // ユニットの画像パスを取得
-
-    // ユニット画像がロードされた後に描画
-    unitImage.onload = function() {
-        const unitSize = 40;  // ユニットのサイズ
-        ctx.drawImage(unitImage, x + 5, y + 5, unitSize, unitSize);
-    };
+// ユニットを配置する関数（必要に応じて実装）
+function placeUnit(x, y, unit) {
+    ctx.fillStyle = 'black';
+    ctx.fillText(unit, x + 15, y + 30); // ユニット名を描画
 }
 
+// クリックイベントの設定
+canvas.addEventListener('click', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    const clickX = event.clientX - rect.left;
+    const clickY = event.clientY - rect.top;
 
-canvas.addEventListener('click', function(event) {
-    const clickX = event.clientX;
-    const clickY = event.clientY;
+    // 平行四辺形をハイライト
+    highlightParallelogram(clickX, clickY);
 
-    // どちらをハイライトするかを判定
-    if (isInParallelogram(clickX, clickY)) {
-        highlightParallelogram(clickX, clickY);
-    } else {
-        highlightTile(clickX, clickY);
-    }
+    // 正方形をハイライト
+    highlightSquare(clickX, clickY);
 });
 
-// 平行四辺形内かどうかを判定する関数
-function isInParallelogram(x, y) {
-    // 実際の判定ロジックを実装
-    return false; // プレースホルダー
-}
-
+// 初期描画
+clearCanvas();
+drawPoints();
   // ユーザーが入力したユニット番号を選択
   document.getElementById('placeUnitBtn').addEventListener('click', function() {
             const unitId = document.getElementById('unitInput').value;
