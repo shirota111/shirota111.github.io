@@ -12,8 +12,8 @@ app.use(bodyParser.json());
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',  // MySQLのユーザー名
-    password: 'b0550219',  // MySQLのパスワード
-    database: 'shirota111'
+    password: 'b9',  // MySQLのパスワード
+    database: '1'
 });
 
 db.connect((err) => {
