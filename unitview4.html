@@ -10,7 +10,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 1;
+            z-index: 1;          
             background-color: transparent; /* Canvas背景透明 */
         }
 
@@ -31,6 +31,18 @@
             height: 300px;
             z-index: 2;         
         }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        #dataDisplay {
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -43,57 +55,99 @@
     </div>
 
     <div id="dataWindow">
-        <div id="dataDisplay"></div>
+        <iframe src="unitdata.html"></iframe>
     </div>
 
     <script>
         const canvas = document.getElementById('myCanvas');
         const ctx = canvas.getContext('2d');
-        let clickCount = 0; // クリック回数をカウントする変数
+        let unitData = {};  // フェッチされたユニットデータを保持する変数
+        let selectedUnit = null;
 
-        // 三角形OO'Pと三角形PO'P'を組み合わせた平行四辺形を描画
-        function drawParallelogram() {
-            ctx.fillStyle = 'rgba(255, 0, 0, 0.3)'; // 赤色でハイライト
+        // 外部ファイルからユニットデータを取得
+        async function fetchUnitData() {
+            const response = await fetch('unitData.json');  // 外部のユニットデータファイルを取得
+            unitData = await response.json();
+        }
+
+        // 座標リスト
+        const points = [
+            { x: 100, y: 450, label: 'O' },
+            { x: 200, y: 450, label: "P'" },
+            { x: 300, y: 450, label: "Q'" },
+            { x: 400, y: 450, label: "R'" },
+            { x: 500, y: 450, label: 'S' },
+            { x: 150, y: 500, label: 'T' },
+            { x: 250, y: 500, label: 'U' },
+            { x: 350, y: 500, label: 'V' },
+            { x: 450, y: 500, label: 'W' },
+            { x: 550, y: 500, label: 'X' }
+        ];
+
+        function drawPoints() {
+            points.forEach(point => {
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+                ctx.fillStyle = 'black';
+                ctx.fill();
+                ctx.fillText(point.label, point.x + 10, point.y - 10);
+            });
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function highlightSquare(x, y) {
+            ctx.fillStyle = 'rgba(0, 255, 0, 0.3)'; // 緑色のハイライト
+            ctx.fillRect(x, y, 50, 50); // 50x50の正方形
+            console.log("逆行列を計算中...");
+            // 逆行列の計算ロジックを追加
+        }
+
+        function highlightParallelogram(x, y) {
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.3)'; // 赤色のハイライト
             ctx.beginPath();
-            ctx.moveTo(100, 450);  // O
-            ctx.lineTo(150, 500);  // P
-            ctx.lineTo(200, 450);  // O'
-            ctx.lineTo(150, 400);  // P'
+            ctx.moveTo(x, y); // 左下
+            ctx.lineTo(x + 50, y - 25); // 右上
+            ctx.lineTo(x + 100, y - 25); // 右下
+            ctx.lineTo(x + 50, y); // 左上
             ctx.closePath();
             ctx.fill();
+            console.log("行列式を計算中...");
+            // 行列式の計算ロジックを追加
         }
 
-        // 正方形を描画
-        function drawSquare() {
-            ctx.fillStyle = 'rgba(0, 0, 255, 0.3)'; // 青色でハイライト
-            ctx.fillRect(250, 400, 100, 100); // x, y, width, height
-        }
-
-        // クリックイベント
         canvas.addEventListener('click', function(event) {
             const rect = canvas.getBoundingClientRect();
             const clickX = event.clientX - rect.left;
             const clickY = event.clientY - rect.top;
 
-            clickCount++; // クリック回数を増加
-
-            // クリック回数に応じた描画
-            if (clickCount === 1) {
+            // 正方形をクリックした場合
+            if (clickX > 100 && clickX < 150 && clickY > 450 && clickY < 500) {
                 clearCanvas();
-                drawParallelogram();
-            } else if (clickCount === 2) {
+                drawPoints();
+                highlightSquare(100, 450);
+            }
+            // 平行四辺形をクリックした場合
+            else if (clickX > 200 && clickX < 300 && clickY > 450 && clickY < 500) {
                 clearCanvas();
-                drawSquare();
-            } else if (clickCount === 3) {
-                clearCanvas(); // ハイライトを終了
-                clickCount = 0; // クリックカウントをリセット
+                drawPoints();
+                highlightParallelogram(200, 450);
             }
         });
 
-        // キャンバスをクリアする関数
-        function clearCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
+        // ユーザーが入力したユニット番号を選択
+        document.getElementById('placeUnitBtn').addEventListener('click', function() {
+            const unitId = document.getElementById('unitInput').value;
+            selectedUnit = unitId;  // 選択されたユニットIDを保持
+        });
+
+        // 初期設定としてユニットデータをフェッチ
+        fetchUnitData().then(() => {
+            drawPoints();  // ユニットデータがフェッチされた後に座標を描画
+        });
     </script>
+
 </body>
 </html>
