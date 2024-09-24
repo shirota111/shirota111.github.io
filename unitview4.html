@@ -1,128 +1,99 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canvas Drawing</title>
+    <title>Layered Canvas and Data Viewer</title>
     <style>
         canvas {
             border: 1px solid black;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            background-color: transparent; /* Canvas背景透明 */
+        }
+
+        #container {
+            position: relative;
+            width: 600px;
+            height: 600px;
+        }
+
+        #dataWindow {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background-color: rgba(0, 0, 255, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            height: 300px;
+            z-index: 2;         
         }
     </style>
 </head>
 <body>
-    <canvas id="canvas" width="800" height="600"></canvas>
+
+    <input type="number" id="unitInput" placeholder="ユニット番号を入力">
+    <button id="placeUnitBtn">ユニット配置</button>
+
+    <div id="container">
+        <canvas id="myCanvas" width="600" height="600"></canvas>
+    </div>
+
+    <div id="dataWindow">
+        <div id="dataDisplay"></div>
+    </div>
+
     <script>
-        const canvas = document.getElementById('canvas');
+        const canvas = document.getElementById('myCanvas');
         const ctx = canvas.getContext('2d');
-        const tileSize = 50; // タイルサイズ
-        const points = [
-            { x: 100, y: 500, label: 'O' },
-            { x: 150, y: 500, label: 'P' },
-            { x: 200, y: 500, label: 'Q' },
-            { x: 250, y: 500, label: 'R' },
-            { x: 300, y: 500, label: 'S' },
-            { x: 350, y: 500, label: 'T' },
-            { x: 400, y: 500, label: 'U' },
-            { x: 150, y: 450, label: "O'" },
-            { x: 200, y: 450, label: "P'" },
-            { x: 250, y: 450, label: "Q'" },
-            { x: 300, y: 450, label: "R'" },
-            { x: 350, y: 450, label: "S'" },
-            { x: 400, y: 450, label: "T'" },
-            { x: 450, y: 450, label: "U'" },
-            { x: 200, y: 400, label: '1' },
-            { x: 250, y: 400, label: '2' },
-            { x: 300, y: 400, label: '3' },
-            { x: 350, y: 400, label: '4' },
-            { x: 400, y: 400, label: '5' },
-            { x: 450, y: 400, label: '6' },
-            { x: 500, y: 400, label: '7' },
-            { x: 250, y: 350, label: '8' },
-            { x: 300, y: 350, label: '9' },
-            { x: 350, y: 350, label: '10' },
-            { x: 400, y: 350, label: '11' },
-            { x: 450, y: 350, label: '12' },
-            { x: 500, y: 350, label: '13' },
-            { x: 550, y: 350, label: '14' }
-        ];
+        let clickCount = 0; // クリック回数をカウントする変数
 
-        function clearCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-
-        function drawPoints() {
-            points.forEach(point => {
-                ctx.fillStyle = 'black';
-                ctx.fillRect(point.x, point.y, 5, 5);
-                ctx.fillText(point.label, point.x, point.y - 5);
-            });
-        }
-
-        function highlightShapes(tileX, tileY) {
-            const flooredX = Math.floor(tileX / tileSize) * tileSize;
-            const flooredY = Math.floor(tileY / tileSize) * tileSize;
-
-            clearCanvas();
-            drawPoints();
-
-            // 正方形の描画
-            ctx.fillStyle = 'rgba(0, 255, 0, 0.5)'; // 半透明の緑
-            ctx.fillRect(flooredX, flooredY, tileSize, tileSize);
-
-            // 平行四辺形の描画
-            ctx.fillStyle = 'rgba(0, 0, 255, 0.5)'; // 半透明の青
+        // 三角形OO'Pと三角形PO'P'を組み合わせた平行四辺形を描画
+        function drawParallelogram() {
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.3)'; // 赤色でハイライト
             ctx.beginPath();
-            ctx.moveTo(flooredX, flooredY); // 左下
-            ctx.lineTo(flooredX + tileSize / 6, flooredY - tileSize); // 左上
-            ctx.lineTo(flooredX + tileSize + tileSize / 6, flooredY - tileSize); // 右上
-            ctx.lineTo(flooredX + tileSize, flooredY); // 右下
+            ctx.moveTo(100, 450);  // O
+            ctx.lineTo(150, 500);  // P
+            ctx.lineTo(200, 450);  // O'
+            ctx.lineTo(150, 400);  // P'
             ctx.closePath();
             ctx.fill();
-
-            // 重なり部分をチェック
-            if (checkOverlap(flooredX, flooredY)) {
-                ctx.fillStyle = 'rgba(255, 255, 0, 0.7)'; // 半透明の黄色
-                ctx.fillRect(flooredX, flooredY, tileSize, tileSize); // 正方形部分を重ねて塗りつぶす
-            }
         }
 
-        function checkOverlap(tileX, tileY) {
-            // 平行四辺形の4点を計算
-            const parallelogramPoints = [
-                { x: tileX, y: tileY }, // 左下
-                { x: tileX + tileSize / 4, y: tileY - tileSize }, // 左上
-                { x: tileX + tileSize + tileSize / 4, y: tileY - tileSize }, // 右上
-                { x: tileX + tileSize, y: tileY } // 右下
-            ];
-
-            // 正方形の領域をチェック
-            const squarePoints = [
-                { x: tileX, y: tileY },
-                { x: tileX + tileSize, y: tileY },
-                { x: tileX + tileSize, y: tileY + tileSize },
-                { x: tileX, y: tileY + tileSize }
-            ];
-
-            // 簡単な重なりチェック
-            return (
-                squarePoints[0].x < parallelogramPoints[2].x && 
-                squarePoints[2].x > parallelogramPoints[0].x && 
-                squarePoints[0].y < parallelogramPoints[1].y && 
-                squarePoints[2].y > parallelogramPoints[0].y
-            );
+        // 正方形を描画
+        function drawSquare() {
+            ctx.fillStyle = 'rgba(0, 0, 255, 0.3)'; // 青色でハイライト
+            ctx.fillRect(250, 400, 100, 100); // x, y, width, height
         }
 
         // クリックイベント
         canvas.addEventListener('click', function(event) {
-            const clickX = event.offsetX;
-            const clickY = event.offsetY;
+            const rect = canvas.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const clickY = event.clientY - rect.top;
 
-            highlightShapes(clickX, clickY);
+            clickCount++; // クリック回数を増加
+
+            // クリック回数に応じた描画
+            if (clickCount === 1) {
+                clearCanvas();
+                drawParallelogram();
+            } else if (clickCount === 2) {
+                clearCanvas();
+                drawSquare();
+            } else if (clickCount === 3) {
+                clearCanvas(); // ハイライトを終了
+                clickCount = 0; // クリックカウントをリセット
+            }
         });
 
-        clearCanvas();
-        drawPoints();
+        // キャンバスをクリアする関数
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
     </script>
 </body>
 </html>
