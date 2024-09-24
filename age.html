@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>年齢確認</title>
+    <script>
+        function accessGranted() {
+            alert("アクセスが許可されました。");
+            // アクセスを許可する処理を追加
+        }
+
+        function accessDenied() {
+            alert("アクセスが拒否されました。");
+            // アクセスを拒否する処理を追加
+        }
+    </script>
+</head>
+<body>
+    <h1>年齢確認</h1>
+    <p>あなたは18歳以上ですか？</p>
+    <button onclick="accessGranted()">はい</button>
+    <button onclick="accessDenied()">いいえ</button>
+</body>
+</html>
