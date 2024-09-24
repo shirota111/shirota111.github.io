@@ -74,8 +74,8 @@
             ctx.fillStyle = 'rgba(0, 0, 255, 0.5)'; // 半透明の青
             ctx.beginPath();
             ctx.moveTo(flooredX, flooredY); // 左下
-            ctx.lineTo(flooredX + tileSize / 4, flooredY - tileSize); // 左上
-            ctx.lineTo(flooredX + tileSize + tileSize / 4, flooredY - tileSize); // 右上
+            ctx.lineTo(flooredX + tileSize / 6, flooredY - tileSize); // 左上
+            ctx.lineTo(flooredX + tileSize + tileSize / 6, flooredY - tileSize); // 右上
             ctx.lineTo(flooredX + tileSize, flooredY); // 右下
             ctx.closePath();
             ctx.fill();
