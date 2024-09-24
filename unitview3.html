@@ -55,22 +55,6 @@
             padding: 10px;
             border-radius: 5px;
         }
-
-        #parallelogramUnit {
-            background-color: transparent; /* Canvas背景透明 */
-            position: absolute;
-            top: 50px;
-            left: 0;
-            
-            padding: 20px;
-            border-radius: 10px;
-            width: 496px;
-            height: 527px;
-            z-index: 2;       
-        }
-
-
-
     </style>
 </head>
 <body>
@@ -82,12 +66,6 @@
 <div id="container">
     <canvas id="myCanvas" width="600" height="600"></canvas>
     <iframe src="polygon.html"></iframe>
-</div>
-
-
-<div id="parallelogramUnit">
-   
-    <iframe src="parallelogramUnit.html"></iframe>
 </div>
 
 <div id="dataWindow">
@@ -110,34 +88,34 @@
 
     // 座標リスト
     const points = [
-      { x: 100, y: 450, label: 'O' },   // 点O
-{ x: 150, y: 500, label: 'P' },   // 点P
-{ x: 200, y: 500, label: 'Q' },   // 点Q
-{ x: 250, y: 500, label: 'R' },   // 点R
-{ x: 300, y: 500, label: 'S' },   // 点S
-{ x: 350, y: 500, label: 'T' },   // 点T
-{ x: 400, y: 500, label: 'U' },   // 点U
-{ x: 150, y: 400, label: "O'" },  // 点O'
-{ x: 200, y: 450, label: "P'" },  // 点P'
-{ x: 250, y: 450, label: "Q'" },  // 点Q'
-{ x: 300, y: 450, label: "R'" },  // 点R'
-{ x: 350, y: 450, label: "S'" },  // 点S'
-{ x: 400, y: 450, label: "T'" },  // 点T'
-{ x: 450, y: 450, label: "U'" },  // 点U'
-{ x: 200, y: 400, label: '1' },   // 点1
-{ x: 250, y: 400, label: '2' },   // 点2
-{ x: 300, y: 400, label: '3' },   // 点3
-{ x: 350, y: 400, label: '4' },   // 点4
-{ x: 400, y: 400, label: '5' },   // 点5
-{ x: 450, y: 400, label: '6' },   // 点6
-{ x: 500, y: 400, label: '7' },   // 点7
-{ x: 250, y: 350, label: '8' },   // 点8
-{ x: 300, y: 350, label: '9' },   // 点9
-{ x: 350, y: 350, label: '10' },  // 点10
-{ x: 400, y: 350, label: '11' },  // 点11
-{ x: 450, y: 350, label: '12' },  // 点12
-{ x: 500, y: 350, label: '13' },  // 点13
-{ x: 550, y: 350, label: '14' }   // 点14
+        { x: 100, y: 500, label: 'O' },   // 点O
+        { x: 150, y: 500, label: 'P' },  // 点P
+        { x: 200, y: 500, label: 'Q' },  // 点Q
+        { x: 250, y: 500, label: 'R' },  // 点R
+        { x: 300, y: 500, label: 'S' },  // 点S
+        { x: 350, y: 500, label: 'T' },  // 点T
+        { x: 400, y: 500, label: 'U' },  // 点U
+        { x: 150, y: 450, label: "O'" }, // 点O'
+        { x: 200, y: 450, label: "P'" }, // 点P'
+        { x: 250, y: 450, label: "Q'" }, // 点Q'
+        { x: 300, y: 450, label: "R'" }, // 点R'
+        { x: 350, y: 450, label: "S'" }, // 点S'
+        { x: 400, y: 450, label: "T'" }, // 点T'
+        { x: 450, y: 450, label: "U'" }, // 点U'
+        { x: 200, y: 400, label: '1' },  // 点1
+        { x: 250, y: 400, label: '2' },  // 点2
+        { x: 300, y: 400, label: '3' },  // 点3
+        { x: 350, y: 400, label: '4' },  // 点4
+        { x: 400, y: 400, label: '5' },  // 点5
+        { x: 450, y: 400, label: '6' },  // 点6
+        { x: 500, y: 400, label: '7' },  // 点7
+        { x: 250, y: 350, label: '8' },  // 点8
+        { x: 300, y: 350, label: '9' },  // 点9
+        { x: 350, y: 350, label: '10' }, // 点10
+        { x: 400, y: 350, label: '11' }, // 点11
+        { x: 450, y: 350, label: '12' }, // 点12
+        { x: 500, y: 350, label: '13' }, // 点13
+        { x: 550, y: 350, label: '14' }  // 点14
     ];
 
     function drawPoints() {
@@ -155,53 +133,96 @@
         }
 
 
-    function highlightTile(clickX, clickY) {
-        const tileSize = 50;
-        const originX = 100;
-        const originY = 500;
-        const tileX = Math.floor((clickX - originX) / tileSize) * tileSize + originX;
-        const tileY = Math.floor((clickY - originY) / tileSize) * tileSize + originY;
 
-        clearCanvas();
-        drawPoints();
+        function highlightParallelogram(clickX, clickY) {
+    const tileSize = 50; // 平行四辺形の基本サイズ
 
-        ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
-        ctx.fillRect(tileX, tileY, tileSize, tileSize);
+    // フロア関数を使用してクリック座標をグリッドにスナップ
+    const snappedX = Math.floor(clickX / tileSize) * tileSize;
+    const snappedY = Math.floor(clickY / tileSize) * tileSize;
 
-       // クリックされたタイルにユニットを描画
-       if (selectedUnit !== null) {
-                placeUnit(tileX, tileY, selectedUnit);
-            }
+    // 平行四辺形の4つの頂点を定義
+    const O = { x: snappedX, y: snappedY + tileSize };         // 左下
+    const OP = { x: snappedX + tileSize, y: snappedY };       // 右上
+    const PP = { x: snappedX + tileSize * 2, y: snappedY };   // 右上
+    const P = { x: snappedX + tileSize * 2, y: snappedY + tileSize }; // 右下
+
+    // 描画のクリア
+    clearCanvas();
+    drawPoints();
+
+    // 平行四辺形を描画
+    ctx.beginPath();
+    ctx.moveTo(O.x, O.y);      // 点O
+    ctx.lineTo(OP.x, OP.y);    // 点O'
+    ctx.lineTo(PP.x, PP.y);    // 点P'
+    ctx.lineTo(P.x - 50, P.y);  // 点P
+    ctx.closePath();           // 形を閉じる
+
+    ctx.fillStyle = 'rgba(0, 0, 255, 0.3)';  // 半透明の青
+    ctx.fill();                  // 内側を塗りつぶす
+}
+
+function highlightTile(clickX, clickY) {
+    const tileSize = 50; 
+    const originX = 100; 
+    const originY = 500; 
+
+    // タイル位置を計算
+    const tileX = Math.floor((clickX - originX) / tileSize) * tileSize + originX;
+    const tileY = Math.floor((clickY - originY) / tileSize) * tileSize + originY;
+
+    // 描画のクリア
+    clearCanvas();
+    drawPoints();
+
+    // タイルを描画
+    ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';  // 半透明の赤
+    ctx.fillRect(tileX, tileY, tileSize, tileSize);
+
+    // クリックされたタイルにユニットを描画
+    if (selectedUnit !== null) {
+        placeUnit(tileX, tileY, selectedUnit);
+    }
+}
+
+// 指定されたユニットをタイルに描画
+function placeUnit(x, y, unitId) {
+    const unitImage = new Image();
+    const unitInfo = unitData[unitId];
+
+    if (!unitInfo) {
+        console.error('指定されたユニットIDが存在しません');
+        return;
     }
 
-        // 指定されたユニットをタイルに描画
-        function placeUnit(x, y, unitId) {
-            const unitImage = new Image();
-            const unitInfo = unitData[unitId];
+    unitImage.src = unitInfo.image; // ユニットの画像パスを取得
 
-            if (!unitInfo) {
-                console.error('指定されたユニットIDが存在しません');
-                return;
-            }
-
-            unitImage.src = unitInfo.image; // ユニットの画像パスを取得
-
-            // ユニット画像がロードされた後に描画
-            unitImage.onload = function() {
-                const unitSize = 40;  // ユニットのサイズ
-                ctx.drawImage(unitImage, x + 5, y + 5, unitSize, unitSize);
-            };
-        }
+    // ユニット画像がロードされた後に描画
+    unitImage.onload = function() {
+        const unitSize = 40;  // ユニットのサイズ
+        ctx.drawImage(unitImage, x + 5, y + 5, unitSize, unitSize);
+    };
+}
 
 
-// キャンバスクリックイベント
 canvas.addEventListener('click', function(event) {
-            const rect = canvas.getBoundingClientRect();
-            const clickX = event.clientX - rect.left;
-            const clickY = event.clientY - rect.top;
+    const clickX = event.clientX;
+    const clickY = event.clientY;
 
-            highlightTile(clickX, clickY);
-        });
+    // どちらをハイライトするかを判定
+    if (isInParallelogram(clickX, clickY)) {
+        highlightParallelogram(clickX, clickY);
+    } else {
+        highlightTile(clickX, clickY);
+    }
+});
+
+// 平行四辺形内かどうかを判定する関数
+function isInParallelogram(x, y) {
+    // 実際の判定ロジックを実装
+    return false; // プレースホルダー
+}
 
   // ユーザーが入力したユニット番号を選択
   document.getElementById('placeUnitBtn').addEventListener('click', function() {
