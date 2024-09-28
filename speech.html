@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スピーチリスト</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>有名スピーチリスト</h1>
+    <ul id="speechList"></ul>
+
+    <script>
+        // JSONファイルを読み込む関数
+        async function fetchSpeeches() {
+            try {
+                const response = await fetch('speeches.json');
+                const data = await response.json();
+                displaySpeeches(data.speeches);
+            } catch (error) {
+                console.error('Error fetching the JSON data:', error);
+            }
+        }
+
+        // スピーチを表示する関数
+        function displaySpeeches(speeches) {
+            const speechList = document.getElementById('speechList');
+            for (const key in speeches) {
+                const speech = speeches[key];
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `<strong>${speech.title}</strong> - ${speech.author} (${speech.date})<br>${speech.summary}`;
+                speechList.appendChild(listItem);
+            }
+        }
+
+        // ページ読み込み時にJSONを取得
+        window.onload = fetchSpeeches;
+    </script>
+</body>
+</html>
