@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,14 +12,24 @@
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 1;          
-            background-color: transparent; /* Canvas背景透明 */
+            z-index: 1;
+            background-color: transparent;
         }
 
         #container {
             position: relative;
             width: 600px;
             height: 600px;
+        }
+
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            z-index: 0;
         }
 
         #dataWindow {
@@ -29,7 +41,7 @@
             border-radius: 10px;
             width: 300px;
             height: 300px;
-            z-index: 2;         
+            z-index: 2;
         }
 
         select {
@@ -43,6 +55,19 @@
             padding: 10px;
             border-radius: 5px;
         }
+
+        #parallelogramUnit {
+            background-color: transparent;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            padding: 20px;
+            border-radius: 10px;
+            width: 496px;
+            height: 527px;
+            z-index: 2;
+        }
+
     </style>
 </head>
 <body>
@@ -52,6 +77,11 @@
 
     <div id="container">
         <canvas id="myCanvas" width="600" height="600"></canvas>
+        <iframe src="polygon.html"></iframe>
+    </div>
+
+    <div id="parallelogramUnit">
+        <iframe src="parallelogramUnit.html"></iframe>
     </div>
 
     <div id="dataWindow">
@@ -61,54 +91,37 @@
     <script>
         const canvas = document.getElementById('myCanvas');
         const ctx = canvas.getContext('2d');
-        let unitData = {};  // フェッチされたユニットデータを保持する変数
+        let unitData = {};
         let selectedUnit = null;
 
-        // 外部ファイルからユニットデータを取得
         async function fetchUnitData() {
-            const response = await fetch('unitData.json');  // 外部のユニットデータファイルを取得
+            const response = await fetch('unitData.json');
             unitData = await response.json();
         }
 
-        // 座標リスト
-            const points = [
-      { x: 100, y: 500, label: 'O' },   // 点O
-{ x: 150, y: 500, label: 'P' },   // 点P
-{ x: 200, y: 500, label: 'Q' },   // 点Q
-{ x: 250, y: 500, label: 'R' },   // 点R
-{ x: 300, y: 500, label: 'S' },   // 点S
-{ x: 350, y: 500, label: 'T' },   // 点T
-{ x: 400, y: 500, label: 'U' },   // 点U
-{ x: 150, y: 450, label: "O'" },  // 点O'
-{ x: 200, y: 450, label: "P'" },  // 点P'
-{ x: 250, y: 450, label: "Q'" },  // 点Q'
-{ x: 300, y: 450, label: "R'" },  // 点R'
-{ x: 350, y: 450, label: "S'" },  // 点S'
-{ x: 400, y: 450, label: "T'" },  // 点T'
-{ x: 450, y: 450, label: "U'" },  // 点U'
-{ x: 200, y: 400, label: '1' },   // 点1
-{ x: 250, y: 400, label: '2' },   // 点2
-{ x: 300, y: 400, label: '3' },   // 点3
-{ x: 350, y: 400, label: '4' },   // 点4
-{ x: 400, y: 400, label: '5' },   // 点5
-{ x: 450, y: 400, label: '6' },   // 点6
-{ x: 500, y: 400, label: '7' },   // 点7
-{ x: 250, y: 350, label: '8' },   // 点8
-{ x: 300, y: 350, label: '9' },   // 点9
-{ x: 350, y: 350, label: '10' },  // 点10
-{ x: 400, y: 350, label: '11' },  // 点11
-{ x: 450, y: 350, label: '12' },  // 点12
-{ x: 500, y: 350, label: '13' },  // 点13
-{ x: 550, y: 350, label: '14' }   // 点14
+        // 座標を2次元配列に変更
+        const points = [
+            [{ x: 100, y: 450, label: 'O' }, { x: 150, y: 500, label: 'P' }, { x: 200, y: 500, label: 'Q' }],
+            [{ x: 250, y: 500, label: 'R' }, { x: 300, y: 500, label: 'S' }, { x: 350, y: 500, label: 'T' }],
+            [{ x: 400, y: 500, label: 'U' }, { x: 150, y: 400, label: "O'" }, { x: 200, y: 450, label: "P'" }],
+            [{ x: 250, y: 450, label: "Q'" }, { x: 300, y: 450, label: "R'" }, { x: 350, y: 450, label: "S'" }],
+            [{ x: 400, y: 450, label: "T'" }, { x: 450, y: 450, label: "U'" }, { x: 200, y: 400, label: '1' }],
+            [{ x: 250, y: 400, label: '2' }, { x: 300, y: 400, label: '3' }, { x: 350, y: 400, label: '4' }],
+            [{ x: 400, y: 400, label: '5' }, { x: 450, y: 400, label: '6' }, { x: 500, y: 400, label: '7' }],
+            [{ x: 250, y: 350, label: '8' }, { x: 300, y: 350, label: '9' }, { x: 350, y: 350, label: '10' }],
+            [{ x: 400, y: 350, label: '11' }, { x: 450, y: 350, label: '12' }, { x: 500, y: 350, label: '13' }],
+            [{ x: 550, y: 350, label: '14' }]
         ];
 
         function drawPoints() {
-            points.forEach(point => {
-                ctx.beginPath();
-                ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
-                ctx.fillStyle = 'black';
-                ctx.fill();
-                ctx.fillText(point.label, point.x + 10, point.y - 10);
+            points.forEach(row => {
+                row.forEach(point => {
+                    ctx.beginPath();
+                    ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+                    ctx.fillStyle = 'black';
+                    ctx.fill();
+                    ctx.fillText(point.label, point.x + 10, point.y - 10);
+                });
             });
         }
 
@@ -116,56 +129,59 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
 
-        function highlightSquare(x, y) {
-            ctx.fillStyle = 'rgba(0, 255, 0, 0.3)'; // 緑色のハイライト
-            ctx.fillRect(x, y, 50, 50); // 50x50の正方形
-            console.log("逆行列を計算中...");
-            // 逆行列の計算ロジックを追加
+        function highlightTile(clickX, clickY) {
+            const tileSize = 50;
+            const originX = 100;
+            const originY = 500;
+            const tileX = Math.floor((clickX - originX) / tileSize) * tileSize + originX;
+            const tileY = Math.floor((clickY - originY) / tileSize) * tileSize + originY;
+
+            clearCanvas();
+            drawPoints();
+
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
+            ctx.fillRect(tileX, tileY, tileSize, tileSize);
+
+            if (selectedUnit !== null) {
+                placeUnit(tileX, tileY, selectedUnit);
+            }
         }
 
-        function highlightParallelogram(x, y) {
-            ctx.fillStyle = 'rgba(255, 0, 0, 0.3)'; // 赤色のハイライト
-            ctx.beginPath();
-            ctx.moveTo(x, y); // 左下
-            ctx.lineTo(x + 50, y - 50 ); // 右上
-            ctx.lineTo(x + 100, y - 50); // 右下
-            ctx.lineTo(x + 50, y); // 左上
-            ctx.closePath();
-            ctx.fill();
-            console.log("行列式を計算中...");
-            // 行列式の計算ロジックを追加
+        function placeUnit(x, y, unitId) {
+            const unitImage = new Image();
+            const unitInfo = unitData[unitId];
+
+            if (!unitInfo) {
+                console.error('指定されたユニットIDが存在しません');
+                return;
+            }
+
+            unitImage.src = unitInfo.image;
+
+            unitImage.onload = function () {
+                const unitSize = 40;
+                ctx.drawImage(unitImage, x + 5, y + 5, unitSize, unitSize);
+            };
         }
 
-        canvas.addEventListener('click', function(event) {
+        canvas.addEventListener('click', function (event) {
             const rect = canvas.getBoundingClientRect();
             const clickX = event.clientX - rect.left;
             const clickY = event.clientY - rect.top;
 
-            // 正方形をクリックした場合
-            if (clickX > 100 && clickX < 150 && clickY > 450 && clickY < 500) {
-                clearCanvas();
-                drawPoints();
-                highlightSquare(100, 450);
-            }
-            // 平行四辺形をクリックした場合
-            else if (clickX > 200 && clickX < 300 && clickY > 450 && clickY < 500) {
-                clearCanvas();
-                drawPoints();
-                highlightParallelogram(100, 450);
-            }
+            highlightTile(clickX, clickY);
         });
 
-        // ユーザーが入力したユニット番号を選択
-        document.getElementById('placeUnitBtn').addEventListener('click', function() {
+        document.getElementById('placeUnitBtn').addEventListener('click', function () {
             const unitId = document.getElementById('unitInput').value;
-            selectedUnit = unitId;  // 選択されたユニットIDを保持
+            selectedUnit = unitId;
         });
 
-        // 初期設定としてユニットデータをフェッチ
         fetchUnitData().then(() => {
-            drawPoints();  // ユニットデータがフェッチされた後に座標を描画
+            drawPoints();
         });
     </script>
 
 </body>
 </html>
+
