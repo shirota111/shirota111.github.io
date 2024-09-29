@@ -1,9 +1,13 @@
+こちらのコードは、fetchData で unitData.json からデータを取得し、それをもとに2次元配列を作成して表示する仕組みです。次のHTMLファイルでは、2D Arrays with Fetch Dataと、最初のキャンバスを描画する機能を組み合わせて実装します。
+
+以下のHTMLファイルでは、2次元配列のデータをキャンバス上に表示し、他の要素と統合しています。
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Layered Canvas and Data Viewer</title>
+    <title>Layered Canvas and 2D Array Data Viewer</title>
     <style>
         canvas {
             border: 1px solid black;
@@ -11,8 +15,7 @@
             top: 0;
             left: 0;
             z-index: 1;
-                      
-            background-color: transparent; /* Canvas背景透明 */
+            background-color: transparent;
         }
 
         #container {
@@ -40,21 +43,21 @@
             border-radius: 10px;
             width: 300px;
             height: 300px;
-            z-index: 2;         
-            
+            z-index: 2;
         }
 
-        select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
+        #parallelogramUnit {
+            background-color: transparent;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            padding: 20px;
+            border-radius: 10px;
+            width: 496px;
+            height: 527px;
+            z-index: 2;
         }
 
-        #dataDisplay {
-            background-color: white;
-            padding: 10px;
-            border-radius: 5px;
-        }
     </style>
 </head>
 <body>
@@ -62,213 +65,161 @@
     <input type="number" id="unitInput" placeholder="ユニット番号を入力">
     <button id="placeUnitBtn">ユニット配置</button>
 
+    <div id="container">
+        <canvas id="myCanvas" width="600" height="600"></canvas>
+        <iframe src="polygon.html"></iframe>
+    </div>
 
-<div id="container">
-    <canvas id="myCanvas" width="600" height="600"></canvas>
-    <iframe src="polygon.html"></iframe>
-</div>
+    <div id="parallelogramUnit">
+        <iframe src="parallelogramUnit.html"></iframe>
+    </div>
 
-<div id="dataWindow">
-    
-   
-    <iframe src="unitdata.html"></iframe>
-</div>
+    <div id="dataWindow">
+        <iframe src="unitdata.html"></iframe>
+    </div>
 
-<script>
- const canvas = document.getElementById('myCanvas');
+    <div id="output"></div>
+
+    <script>
+        const canvas = document.getElementById('myCanvas');
         const ctx = canvas.getContext('2d');
-        let unitData = {};  // フェッチされたユニットデータを保持する変数
+        let unitData = {};
         let selectedUnit = null;
 
-        // 外部ファイルからユニットデータを取得
-        async function fetchUnitData() {
-            const response = await fetch('unitData.json');  // 外部のユニットデータファイルを取得
-            unitData = await response.json();
+        // 外部データをフェッチして2次元配列を作成
+        let height1Array = [];
+        let height2Array = [];
+
+        async function fetchData() {
+            try {
+                const response = await fetch('unitData.json');
+                const data = await response.json();
+
+                height1Array = create2DArray(data.units, 1);
+                height2Array = create2DArray(data.magic, 2);
+
+                displayArrays();
+            } catch (error) {
+                console.error('データの取得に失敗しました:', error);
+            }
         }
 
-    // HTML Canvas 要素の取得
-const canvas = document.getElementById('myCanvas');
-const ctx = canvas.getContext('2d');
+        function create2DArray(data, height) {
+            const rows = 3;
+            const cols = 3;
+            let array = [];
 
-// 座標リスト
-const points = [
-    { x: 100, y: 500, label: 'O' },   // 点O
-    { x: 150, y: 500, label: 'P' },   // 点P
-    { x: 200, y: 500, label: 'Q' },   // 点Q
-    { x: 250, y: 500, label: 'R' },   // 点R
-    { x: 300, y: 500, label: 'S' },   // 点S
-    { x: 350, y: 500, label: 'T' },   // 点T
-    { x: 400, y: 500, label: 'U' },   // 点U
-    { x: 150, y: 450, label: "O'" },  // 点O'
-    { x: 200, y: 450, label: "P'" },  // 点P'
-    { x: 250, y: 450, label: "Q'" },  // 点Q'
-    { x: 300, y: 450, label: "R'" },  // 点R'
-    { x: 350, y: 450, label: "S'" },  // 点S'
-    { x: 400, y: 450, label: "T'" },  // 点T'
-    { x: 450, y: 450, label: "U'" },  // 点U'
-    { x: 200, y: 400, label: '1' },   // 点1
-    { x: 250, y: 400, label: '2' },   // 点2
-    { x: 300, y: 400, label: '3' },   // 点3
-    { x: 350, y: 400, label: '4' },   // 点4
-    { x: 400, y: 400, label: '5' },   // 点5
-    { x: 450, y: 400, label: '6' },   // 点6
-    { x: 500, y: 400, label: '7' },   // 点7
-    { x: 250, y: 350, label: '8' },   // 点8
-    { x: 300, y: 350, label: '9' },   // 点9
-    { x: 350, y: 350, label: '10' },  // 点10
-    { x: 400, y: 350, label: '11' },  // 点11
-    { x: 450, y: 350, label: '12' },  // 点12
-    { x: 500, y: 350, label: '13' },  // 点13
-    { x: 550, y: 350, label: '14' }   // 点14
-];
+            for (let i = 0; i < rows; i++) {
+                array[i] = [];
+                for (let j = 0; j < cols; j++) {
+                    if (height === 1) {
+                        array[i][j] = data[i]?.name || `Unit-${i}-${j}`;
+                    } else if (height === 2) {
+                        array[i][j] = data[j]?.name || `Magic-${i}-${j}`;
+                    }
+                }
+            }
+            return array;
+        }
 
-let selectedUnit = null; // 選択されたユニット
+        function displayArrays() {
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = `
+                <h2>Height 1 (Unit Data):</h2>
+                <pre>${JSON.stringify(height1Array, null, 2)}</pre>
+                <h2>Height 2 (Magic Data):</h2>
+                <pre>${JSON.stringify(height2Array, null, 2)}</pre>
+            `;
+        }
 
-function drawPoints() {
-    points.forEach(point => {
-        ctx.beginPath();
-        ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
-        ctx.fillStyle = 'black';
-        ctx.fill();
-        ctx.fillText(point.label, point.x + 10, point.y - 10);
-    });
-}
+        // 座標を2次元配列に変更
+        const points = [
+            [{ x: 100, y: 450, label: 'O' }, { x: 150, y: 500, label: 'P' }, { x: 200, y: 500, label: 'Q' }],
+            [{ x: 250, y: 500, label: 'R' }, { x: 300, y: 500, label: 'S' }, { x: 350, y: 500, label: 'T' }],
+            [{ x: 400, y: 500, label: 'U' }, { x: 150, y: 400, label: "O'" }, { x: 200, y: 450, label: "P'" }]
+        ];
 
-function clearCanvas() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
+        function drawPoints() {
+            points.forEach(row => {
+                row.forEach(point => {
+                    ctx.beginPath();
+                    ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+                    ctx.fillStyle = 'black';
+                    ctx.fill();
+                    ctx.fillText(point.label, point.x + 10, point.y - 10);
+                });
+            });
+        }
 
-// 平行四辺形をハイライトする関数
-function highlightParallelogram(clickX, clickY) {
-    const tileSize = 50; // 平行四辺形の基本サイズ
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
 
-    // スナップを外してそのままクリック座標を使用
-    const O = { x: clickX, y: clickY + tileSize };            // 左下
-    const OP = { x: clickX + tileSize, y: clickY };           // 右上
-    const PP = { x: clickX + tileSize * 2, y: clickY };       // 右上
-    const P = { x: clickX + tileSize * 2, y: clickY + tileSize }; // 右下
+        function highlightTile(clickX, clickY) {
+            const tileSize = 50;
+            const originX = 100;
+            const originY = 500;
+            const tileX = Math.floor((clickX - originX) / tileSize) * tileSize + originX;
+            const tileY = Math.floor((clickY - originY) / tileSize) * tileSize + originY;
 
-    // 描画のクリア
-    clearCanvas();
-    drawPoints();
+            clearCanvas();
+            drawPoints();
 
-    // 平行四辺形を描画
-    ctx.beginPath();
-    ctx.moveTo(O.x, O.y);      // 点O
-    ctx.lineTo(OP.x, OP.y);    // 点O'
-    ctx.lineTo(PP.x, PP.y);    // 点P'
-    ctx.lineTo(P.x, P.y);      // 点P
-    ctx.closePath();           // 形を閉じる
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
+            ctx.fillRect(tileX, tileY, tileSize, tileSize);
 
-    ctx.fillStyle = 'rgba(0, 0, 255, 0.3)';  // 半透明の青
-    ctx.fill();                  // 内側を塗りつぶす
-}
+            if (selectedUnit !== null) {
+                placeUnit(tileX, tileY, selectedUnit);
+            }
+        }
 
-// 正方形をハイライトする関数
-function highlightSquare(clickX, clickY) {
-    const tileSize = 50; // 正方形の1辺の長さ
+        function placeUnit(x, y, unitId) {
+            const unitImage = new Image();
+            const unitInfo = unitData[unitId];
 
-    // クリック座標を基に正方形の頂点を定義
-    const P = { x: clickX, y: clickY };                      // 左下
-    const OP = { x: clickX, y: clickY - tileSize };          // 左上
-    const Q = { x: clickX + tileSize, y: clickY - tileSize }; // 右上
-    const PQ = { x: clickX + tileSize, y: clickY };          // 右下
+            if (!unitInfo) {
+                console.error('指定されたユニットIDが存在しません');
+                return;
+            }
 
-    // 正方形を描画
-    ctx.beginPath();
-    ctx.moveTo(P.x, P.y);      // 点P（左下）
-    ctx.lineTo(OP.x, OP.y);    // 点O'（左上）
-    ctx.lineTo(Q.x, Q.y);      // 点Q（右上）
-    ctx.lineTo(PQ.x, PQ.y);    // 点P'（右下）
-    ctx.closePath();           // 形を閉じる
+            unitImage.src = unitInfo.image;
 
-    ctx.fillStyle = 'rgba(0, 255, 0, 0.3)';  // 半透明の緑
-    ctx.fill();  // 内側を塗りつぶす
-}
+            unitImage.onload = function () {
+                const unitSize = 40;
+                ctx.drawImage(unitImage, x + 5, y + 5, unitSize, unitSize);
+            };
+        }
 
-// ユニットを配置する関数（必要に応じて実装）
-function placeUnit(x, y, unit) {
-    ctx.fillStyle = 'black';
-    ctx.fillText(unit, x + 15, y + 30); // ユニット名を描画
-}
+        canvas.addEventListener('click', function (event) {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const clickY = event.clientY - rect.top;
 
-// クリックイベントの設定
-canvas.addEventListener('click', (event) => {
-    const rect = canvas.getBoundingClientRect();
-    const clickX = event.clientX - rect.left;
-    const clickY = event.clientY - rect.top;
+            highlightTile(clickX, clickY);
+        });
 
-    // 平行四辺形をハイライト
-    highlightParallelogram(clickX, clickY);
-
-    // 正方形をハイライト
-    highlightSquare(clickX, clickY);
-});
-
-// 初期描画
-clearCanvas();
-drawPoints();
-  // ユーザーが入力したユニット番号を選択
-  document.getElementById('placeUnitBtn').addEventListener('click', function() {
+        document.getElementById('placeUnitBtn').addEventListener('click', function () {
             const unitId = document.getElementById('unitInput').value;
-            selectedUnit = unitId;  // 選択されたユニットIDを保持
+            selectedUnit = unitId;
         });
 
-        // 初期設定としてユニットデータをフェッチ
-        fetchUnitData().then(() => {
-            drawPoints();  // ユニットデータがフェッチされた後に座標を描画
+        fetchData().then(() => {
+            drawPoints();
         });
 
-
-
-    // Data Viewer section
-    document.getElementById('dataSelect').addEventListener('change', function() {
-        const selectedValue = this.value;
-        const dataDisplay = document.getElementById('dataDisplay');
-        dataDisplay.innerHTML = '';  // Clear previous data
-
-        if (selectedValue === "unitData") {
-            fetch('unitData.json')
-                .then(response => response.json())
-                .then(data => {
-                    data.units.forEach(unit => {
-                        let unitInfo = `<h2>${unit.name}</h2>
-                                        <p>HP: ${unit.HP}</p>
-                                        <p>MP: ${unit.MP}</p>
-                                        <p>Attack: ${unit.Attack}</p>
-                                        <p>Magic: ${unit.Magic}</p>
-                                        <p>Arm: ${unit.Arm}</p>`;
-                        dataDisplay.innerHTML += unitInfo;
-                    });
-                });
-
-        } else if (selectedValue === "characterAttributes") {
-            fetch('characterAttributes.json')
-                .then(response => response.json())
-                .then(data => {
-                    data.attributes.forEach(attr => {
-                        let attrInfo = `<h2>${attr.name}</h2>
-                                        <p>${attr.description}</p>`;
-                        dataDisplay.innerHTML += attrInfo;
-                    });
-                });
-
-        } else if (selectedValue === "magic") {
-            fetch('magic.json')
-                .then(response => response.json())
-                .then(data => {
-                    data.spells.forEach(spell => {
-                        let spellInfo = `<h2>${spell.name}</h2>
-                                         <p>Cost: ${spell.cost}</p>
-                                         <p>${spell.damage ? `Damage: ${spell.damage}` : `Effect: ${spell.effect}`}</p>`;
-                        dataDisplay.innerHTML += spellInfo;
-                    });
-                });
-        }
-    });
-
-
-</script>
+    </script>
 
 </body>
 </html>
+
+変更点
+
+fetchData 関数が2次元配列を作成し、キャンバス上にポイントを描画します。
+
+キャンバス上でクリックした場所にユニットを配置する機能を維持。
+
+2次元配列の内容が output 要素内で表示されるようになっています。
+
+
+これにより、unitData.json からのデータフェッチとキャンバ
+
