@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSSで描くイカと必殺文字</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            text-align: center;
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .game-container {
+            margin-top: 50px;
+        }
+
+        /* イカの胴体 (四角形) */
+        .ika {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            background-color: #ff6347;
+            margin: 0 auto;
+            transition: transform 0.6s ease;
+        }
+
+        /* イカの頭 (三角形) */
+        .ika::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 50px solid #ff6347;
+        }
+
+        /* イカの足 (長方形の足を10本) */
+        .legs {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: space-between;
+            width: 120px;
+        }
+
+        /* 各足のスタイル */
+        .leg {
+            width: 10px;
+            height: 60px;
+            background-color: #ff6347;
+        }
+
+        /* ひっくり返るアニメーション */
+        .ika-flip {
+            transform: rotateY(180deg);
+        }
+
+        /* 習字風フォントの設定 */
+        .shuuji {
+            font-size: 100px;
+            color: #000;
+            font-family: 'Kaisei Decol', serif;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>イカれてるだろ(# ﾟДﾟ)</h1>
+    
+    <!-- 習字風「必殺」文字 -->
+    <div class="shuuji">必殺</div>
+<h2>イカ返し💢</h2>
+
+    <!-- イカの描画 -->
+    <div class="game-container">
+        <div class="ika" id="ika">
+            <div class="legs">
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // イカの要素を取得
+        const ikaElement = document.getElementById('ika');
+
+        // イカをクリックしたらひっくり返る
+        ikaElement.addEventListener('click', function() {
+            ikaElement.classList.toggle('ika-flip');
+        });
+    </script>
+</body>
+</html>

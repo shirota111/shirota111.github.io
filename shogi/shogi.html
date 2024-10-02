@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>将棋ゲーム</title>
+    <style>
+        /* 将棋盤のスタイル */
+        #shogi-board {
+            display: grid;
+            grid-template-columns: repeat(9, 50px);
+            grid-template-rows: repeat(9, 50px);
+            gap: 1px;
+            margin: 20px auto;
+            width: 450px;
+            height: 450px;
+            border: 2px solid #000;
+            background-color: #f0d9b5; /* 将棋盤の背景色 */
+        }
+
+        /* 各マスのスタイル */
+        .square {
+            width: 50px;
+            height: 50px;
+            background-color: #f0d9b5; /* マスの色 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            border: 1px solid #000; /* グリッド線の色 */
+        }
+
+        /* 駒のスタイル */
+        .piece {
+            font-weight: bold;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="shogi-board"></div> <!-- 将棋盤のコンテナ -->
+
+<script>
+    // 将棋盤の初期化と駒の配置
+    function initShogiBoard(komaData) {
+        const board = document.getElementById('shogi-board');
+
+        // 9x9のマスを生成
+        for (let i = 0; i < 81; i++) {
+            const square = document.createElement('div');
+            square.className = 'square';
+            board.appendChild(square);
+        }
+
+
+
+        // 駒を初期位置に配置
+        komaData.forEach(koma => {
+            const position = convertPosition(koma.position);
+            const square = board.children[position];
+            const pieceElement = document.createElement('div');
+            pieceElement.className = 'piece';
+            pieceElement.textContent = koma.piece;
+            square.appendChild(pieceElement);
+        });
+    }
+
+
+
+    // 将棋の座標をインデックスに変換する関数
+    function convertPosition(position) {
+        const letterToNumber = { A: 0, B: 1, C: 2, D: 3, E: 4, F: 5, G: 6, H: 7, I: 8 };
+        const file = parseInt(position.charAt(0)) - 1;
+        const rank = letterToNumber[position.charAt(1)];
+        return file * 9 + rank;
+    }
+
+    // 駒データのサンプル
+    const komaData = [
+        { piece: '一般人', position: '7A',reverse:'false' },
+        { piece: '一般人', position: '7B',reverse:'false' },
+        { piece: '一般人', position: '7C',reverse:'false' },
+        { piece: '一般人', position: '7D' ,reverse:'false'},
+        { piece: '一般人', position: '7E' ,reverse:'false'},
+        { piece: '一般人', position: '7F' ,reverse:'false'},
+        { piece: '一般人', position: '7G' ,reverse:'false'},
+        { piece: '一般人', position: '7H' ,reverse:'false'},
+        { piece: '一般人', position: '7I',reverse:'false' },
+        { piece: '乙π侍', position: '8H',reverse:'false' },
+        { piece: 'Ama無能', position: '8B',reverse:'false' },
+        { piece: '朕', position: '9E',reverse:'false' },
+        { piece: '野珍', position: '9A' ,reverse:'false'},
+        { piece: '狸馬', position: '9B',reverse:'false' },
+        { piece: '訓兄', position: '9D',reverse:'false' },
+        { piece: '訓兄', position: '9F' ,reverse:'false'},
+        { piece: '猿短', position: '9C',reverse:'false' },
+        { piece: '猿短', position: '9G' ,reverse:'false'},
+        { piece: '野珍', position: '9I' ,reverse:'false'},
+        { piece: '狸馬', position: '9H',reverse:'false' },
+
+        { piece: '一般人', position: '3A' ,reverse:'true'},
+        { piece: '一般人', position: '3B' },
+        { piece: '一般人', position: '3C' },
+        { piece: '一般人', position: '3D' },
+        { piece: '一般人', position: '3E' },
+        { piece: '一般人', position: '3F' },
+        { piece: '一般人', position: '3G' },
+        { piece: '一般人', position: '3H' },
+        { piece: '一般人', position: '3I' },
+        { piece: '乙π侍', position: '2H' },
+        { piece: 'Ama無能', position: '2B' },
+        { piece: '朕', position: '1E' },
+        { piece: '野珍', position: '1A' },
+        { piece: '狸馬', position: '1B' },
+        { piece: '訓兄', position: '1D' },
+        { piece: '訓兄', position: '1F' },
+        { piece: '猿短', position: '1C' },
+        { piece: '猿短', position: '1G' },
+        { piece: '野珍', position: '1I' },
+        { piece: '狸馬', position: '1H' },
+    ];
+
+    // 将棋盤を初期化
+    initShogiBoard(komaData);
+</script>
+
+</body>
+</html>

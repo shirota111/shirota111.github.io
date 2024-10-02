@@ -1,0 +1,77 @@
+  /* 将棋盤のスタイル */
+      #shogi-board {
+        display: grid;
+        grid-template-columns: repeat(9, 50px);
+        grid-template-rows: repeat(9, 50px);
+        gap: 1px;
+        margin: 20px auto;
+        width: 450px;
+        height: 450px;
+        border: 2px solid #000;
+        background-color: #f0d9b5; /* 将棋盤の背景色 */
+        position: relative;
+    }
+
+    /* 各マスのスタイル */
+    .square {
+        width: 50px;
+        height: 50px;
+        background-color: #f0d9b5; /* マスの色 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        border: 1px solid #000; /* グリッド線の色 */
+        position: relative;
+    }
+
+    /* 駒のスタイル */
+    .piece {
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer; /* ドラッグのためのカーソル */
+    }
+
+    /* 駒のスタイル */
+    .piece.一般人 { color: #000; }
+    .piece.乙π侍 { color: #ff0000; }
+    .piece.Ama無能 { color: #0000ff; }
+    .piece.朕 { color: #008000; }
+    .piece.野珍 { color: #ffa500; }
+    .piece.狸馬 { color: #800080; }
+    .piece.訓兄 { color: #ff1493; }
+    .piece.猿短 { color: #ff4500; }
+
+    /* 駒の反転スタイル */
+    .reverse {
+        transform: scaleY(-1); /* 駒を上下反転 */
+    }
+
+    /* 座標ラベルのスタイル */
+    .coordinate-label {
+        position: absolute;
+        font-size: 10px;
+        color: #000;
+    }
+
+    /* 横軸ラベル */
+    .horizontal-label {
+        top: -20px;
+        left: 0;
+        right: 0;
+        text-align: center;
+    }
+
+    /* 縦軸ラベル */
+    .vertical-label {
+        left: -20px;
+        top: 0;
+        bottom: 0;
+        text-align: center;
+        writing-mode: vertical-rl;
+    }
+
+    /* 移動可能範囲のスタイル */
+    .highlight {
+        background-color: rgba(0, 255, 0, 0.5); /* 半透明の緑色 */
+    }

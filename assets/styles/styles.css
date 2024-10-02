@@ -1,0 +1,114 @@
+﻿
+body {
+    background-color: lightblue;
+    background-image: url('/assets/images/1.10.10_313420711.gif');
+    background-size: 200px 800px;
+    background-repeat: repeat;
+    background-position: center center;
+   
+}
+
+
+/* 表紙 */
+.book-simple {
+    position: relative;
+    box-sizing: border-box;
+    width: 200px;
+    height: 250px;
+    margin: auto; /* 中央に配置するために追加 */
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    -webkit-transition: box-shadow 2s ease;
+    transition: box-shadow 2s ease;
+    background-color: #124f4b;
+    box-shadow: -2px 0 0 0 #124f4b,-1px 4px 1px 1px rgba(0,0,0,.2),20px 0 20px 0 rgba(0,0,0,0);
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+    -webkit-perspective-origin: 0 150%;
+    perspective-origin: 0 150%;
+}
+.book-simple:hover, input[type="checkbox"]:checked ~ .book-simple {
+    box-shadow: -2px 0 0 0 #124f4b,0 4px 1px 1px rgba(0,0,0,.2),-195px 5px 1px -5px rgba(0,0,0,.2);
+}
+.book-simple::before {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: calc( 100% - 10px);
+    content: '';
+    -webkit-transition-timing-function: ease;
+    transition-timing-function: ease;
+    -webkit-transition-duration: 2.5s;
+    transition-duration: 2.5s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    background-color: #249690;
+    box-shadow: 0 2px 0 0 #124f4b;
+}
+.book-simple:hover::before, input[type="checkbox"]:checked ~ .book-simple::before {
+    -webkit-transform: rotateY(-185deg);
+    transform: rotateY(-185deg);
+}
+
+/* 中身 */
+.book-simple .book-inbox {
+    position: relative;
+    box-sizing: border-box;
+    height: 100%;
+    padding: 10px;
+    transition: box-shadow 1.8s ease;
+    transition-delay: .3s;
+    background-color: #e2e1dc;
+    box-shadow: 200px 0 1px 0 rgba(0,0,0,.4) inset,-2px 0 0 0 #249690;
+}
+.book-simple .book-inbox:after {
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 8px;
+    content: '';
+    background-color: #afada3;
+}
+.book-simple:hover .book-inbox, input[type="checkbox"]:checked ~ .book-simple .book-inbox {
+    box-shadow: -0 0 8px 0 rgba(0,0,0,.0) inset,-2px 0 0 0 #249690;
+}
+
+/* ボタン */
+.book-simple-switch {
+    display: block;
+    width: 6em;
+    margin-right: auto;
+    margin-left: auto;
+    padding: .5em;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: #fff;
+    box-shadow: 0 5px 0 0 #999;
+}
+input[name='book-simple-switch'] {
+    display: none;
+}
+input[type="checkbox"] ~ .book-simple-switch:after {
+    content: attr(data-book-simple-open);
+}
+input[type="checkbox"]:checked ~ .book-simple-switch:after {
+    content: attr(data-book-simple-shut);
+}
+
+/* コンテナのフレックスボックススタイル */
+#book-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center; /* 垂直方向にも中央寄せするために追加 */
+    height: 100vh; /* 画面全体の高さを占有するために追加 */
+    gap: 20px; /* 要素間に20pxのスペースを追加 */}

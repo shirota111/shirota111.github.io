@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>イカインベーダーゲーム</title>
+    <style>
+        body {
+            background-color: black;
+            margin: 0;
+            overflow: hidden;
+            font-family: sans-serif;
+            touch-action: none; /* スクロール防止 */
+        }
+
+        #game-area {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background-color: black;
+        }
+
+        /* 宇宙船 */
+        .spaceship {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            background-color: transparent;
+            transform: translateX(-50%);
+        }
+
+        .spaceship-body {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            background-color: #00f;
+        }
+
+        .spaceship-body::before {
+            content: "";
+            position: absolute;
+            top: -30px;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 30px solid #00f;
+        }
+
+        .legs {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: space-between;
+            width: 70px;
+        }
+
+        .leg {
+            width: 5px;
+            height: 40px;
+            background-color: #00f;
+        }
+
+        /* イカのインベーダー */
+        .ika {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: transparent;
+        }
+
+        .ika-body {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            background-color: #ff6347;
+        }
+
+        .ika-body::before {
+            content: "";
+            position: absolute;
+            top: -30px;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 30px solid #ff6347;
+        }
+
+        .legs {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: space-between;
+            width: 70px;
+        }
+
+        .leg {
+            width: 5px;
+            height: 40px;
+            background-color: #ff6347;
+        }
+
+        .bullet {
+            position: absolute;
+            width: 5px;
+            height: 20px;
+            background-color: red;
+        }
+
+        .invader {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+        }
+
+        .score {
+            color: white;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-area">
+        <!-- 宇宙船 -->
+        <div class="spaceship" id="spaceship">
+            <div class="spaceship-body"></div>
+            <div class="legs">
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+            </div>
+        </div>
+        <div class="score" id="score">スコア: 0</div>
+    </div>
+
+    <script>
+        const gameArea = document.getElementById('game-area');
+        const spaceship = document.getElementById('spaceship');
+        let score = 0;
+
+        // 宇宙船の移動
+        let spaceshipX = window.innerWidth / 2;
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+                spaceshipX -= 10;
+            } else if (event.key === 'ArrowRight') {
+                spaceshipX += 10;
+            }
+            spaceshipX = Math.max(0, Math.min(window.innerWidth - 50, spaceshipX));
+            spaceship.style.left = spaceshipX + 'px';
+        });
+
+        // タッチ操作で宇宙船を移動
+        gameArea.addEventListener('touchmove', function(event) {
+            spaceshipX = event.touches[0].clientX - spaceship.offsetWidth / 2;
+            spaceshipX = Math.max(0, Math.min(window.innerWidth - 50, spaceshipX));
+            spaceship.style.left = spaceshipX + 'px';
+        });
+
+        // 弾を発射
+        document.addEventListener('keydown', function(event) {
+            if (event.key === ' ') { // スペースキーで弾発射
+                fireBullet();
+            }
+        });
+
+        // タップで弾発射
+        gameArea.addEventListener('touchend', function() {
+            fireBullet();
+        });
+
+        // 弾の生成
+        function fireBullet() {
+            const bullet = document.createElement('div');
+            bullet.classList.add('bullet');
+            bullet.style.left = (spaceshipX + 22.5) + 'px'; // 宇宙船の中心に合わせる
+            bullet.style.bottom = '70px'; // 宇宙船の上から発射
+
+            gameArea.appendChild(bullet);
+
+            // 弾を上に動かす
+            const bulletInterval = setInterval(() => {
+                const bulletBottom = parseInt(bullet.style.bottom);
+                if (bulletBottom > window.innerHeight) {
+                    bullet.remove();
+                    clearInterval(bulletInterval);
+                } else {
+                    bullet.style.bottom = bulletBottom + 5 + 'px';
+                    checkBulletCollision(bullet);
+                }
+            }, 10);
+        }
+
+        // イカのインベーダーの生成
+        function createInvader() {
+            const ika = document.createElement('div');
+            ika.classList.add('ika');
+            ika.innerHTML = `
+                <div class="ika-body"></div>
+                <div class="legs">
+                    <div class="leg"></div>
+                    <div class="leg"></div>
+                    <div class="leg"></div>
+                    <div class="leg"></div>
+                    <div class="leg"></div>
+                </div>
+            `;
+            const randomX = Math.random() * (window.innerWidth - 50);
+            ika.style.left = randomX + 'px';
+            ika.style.top = '0px';
+            gameArea.appendChild(ika);
+
+            // インベーダーを下に動かす
+            const ikaInterval = setInterval(() => {
+                const ikaTop = parseInt(ika.style.top);
+                if (ikaTop > window.innerHeight) {
+                    ika.remove();
+                    clearInterval(ikaInterval);
+                         
+    
+
+                    alert("ゲームオーバー！");
+                    location.reload();
+                } else {
+                    ika.style.top = ikaTop + 2 + 'px';
+                }
+            }, 30);
+        }
+
+
+
+        // 弾がインベーダーに当たったか確認
+        function checkBulletCollision(bullet) {
+            const invaders = document.querySelectorAll('.ika');
+            invaders.forEach(ika => {
+                const bulletRect = bullet.getBoundingClientRect();
+                const ikaRect = ika.getBoundingClientRect();
+                if (
+                    bulletRect.left < ikaRect.right &&
+                    bulletRect.right > ikaRect.left &&
+                    bulletRect.top < ikaRect.bottom &&
+                    bulletRect.bottom > ikaRect.top
+                ) {
+                    // 弾とインベーダーが重なったら
+                    bullet.remove();
+                    ika.remove();
+                    score += 100;
+                    document.getElementById('score').textContent = 'スコア: ' + score;
+                }
+            });
+        }
+
+        // インベーダーを定期的に生成
+        setInterval(createInvader, 2000);
+    </script>
+</body>
+</html>

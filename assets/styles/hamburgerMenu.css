@@ -1,0 +1,18 @@
+.hamburgerMenu {
+  cursor: pointer;
+}
+
+.bar {
+  width: 30px;
+  height: 5px;
+  background-color: #333;
+  margin: 6px 0;
+}
+
+.hamburgerMenuNav {
+  display: none;
+}
+
+.hamburgerMenuNav.active {
+  display: block;
+}

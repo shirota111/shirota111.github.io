@@ -1,0 +1,22 @@
+/* ダウンロードボタンのスタイル */
+#download-csv-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #28a745; /* グリーンの背景色 */
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+#download-csv-button:hover {
+    background-color: #218838; /* ホバー時に少し暗いグリーン */
+}
+
+/* ToDoリストの下に表示される通知メッセージ */
+#notification {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+}

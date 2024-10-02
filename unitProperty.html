@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Viewer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: rgba(0, 0, 255, 0.2); /* 青い透明な背景 */
+    }
+    #dataWindow {
+      background-color: rgba(0, 0, 255, 0.3); /* 青い透明なウィンドウ */
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      margin: 50px auto;
+    }
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    #dataDisplay {
+      background-color: white;
+      padding: 10px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="dataWindow">
+  <h1>Select Data Type</h1>
+
+  <!-- セレクトメニュー -->
+  <select id="dataSelect">
+    <option value="">-- Menu --</option>
+    <option value="unitData">Unit Data</option>
+    <option value="characterAttributes">Character Attributes</option>
+    <option value="magic">Magic Spells</option>
+  </select>
+
+  <!-- データ表示領域 -->
+  <div id="dataDisplay"></div>
+</div>
+
+<script>
+  document.getElementById('dataSelect').addEventListener('change', function() {
+    const selectedValue = this.value;
+    const dataDisplay = document.getElementById('dataDisplay');
+    dataDisplay.innerHTML = '';  // 既存のデータをクリア
+
+    if (selectedValue === "unitData") {
+      fetch('unitData.json')
+        .then(response => response.json())
+        .then(data => {
+          data.units.forEach(unit => {
+            let unitInfo = `<h2>${unit.name}</h2>
+                            <p>HP: ${unit.HP}</p>
+                            <p>MP: ${unit.MP}</p>
+                            <p>Attack: ${unit.Attack}</p>
+                            <p>Magic: ${unit.Magic}</p>
+                            <p>Arm: ${unit.Arm}</p>`;
+            dataDisplay.innerHTML += unitInfo;
+          });
+        });
+
+    } else if (selectedValue === "characterAttributes") {
+      fetch('characterAttributes.json')
+        .then(response => response.json())
+        .then(data => {
+          data.attributes.forEach(attr => {
+            let attrInfo = `<h2>${attr.name}</h2>
+                            <p>${attr.description}</p>`;
+            dataDisplay.innerHTML += attrInfo;
+          });
+        });
+
+    } else if (selectedValue === "magic") {
+      fetch('magic.json')
+        .then(response => response.json())
+        .then(data => {
+          data.spells.forEach(spell => {
+            let spellInfo = `<h2>${spell.name}</h2>
+                             <p>Cost: ${spell.cost}</p>
+                             <p>${spell.damage ? `Damage: ${spell.damage}` : `Effect: ${spell.effect}`}</p>`;
+            dataDisplay.innerHTML += spellInfo;
+          });
+        });
+    }
+  });
+</script>
+
+</body>
+</html>

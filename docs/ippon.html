@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPPONグランプリ風お題</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            background-color: #ffd700;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        .question {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            background-color: black;
+            color: #ffd700;
+            font-size: 24px;
+            padding: 10px;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .footer span {
+            font-weight: bold;
+        }
+
+        /* 特定の「O」に円を追加 */
+        .footer span:nth-child(2) {
+            color: #ffd700;
+            display: inline-block;
+            position: relative;
+        }
+
+        .footer span:nth-child(2)::before {
+            content: '';
+            width: 1.2em;
+            height: 1.2em;
+            border: 2px solid #ffd700;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .odai-container {
+            background-color: #ffd700;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .odai-text {
+            font-size: 20px;
+            color: #000;
+        }
+
+        .generate-button {
+            background-color: #ffd700;
+            color: #000;
+            padding: 10px 20px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+
+        .tweet-button {
+            background-color: #1DA1F2;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="question">
+            IPPONグランプリ風お題<br>
+            生成装置
+        </div>
+        <div class="footer">
+            <span>IPP</span><span>O</span><span>N GRAND PRIX</span>
+        </div>
+    </div>
+
+    <div class="odai-container" id="odai-container">
+        <div class="odai-text" id="odai">お題がここに表示されます</div>
+    </div>
+
+    <button class="generate-button" onclick="generateOdai()">お題を生成</button>
+    <a id="tweet-button" class="tweet-button" href="#" target="_blank">Xにそのまま投稿</a>
+
+    <script>
+        const subjects = [
+            "○○の新しい使い方を教えてください",
+            "○○ってどんな感じ？",
+            "新しく開発された○○、どんな特徴がある？",
+            "○○がついに○○を始めた！何をする？",
+            "これが○○の流行っている遊びだ！"
+        ];
+
+        const words = [
+            "冷蔵庫", "スリッパ", "スマホ", "ペン", "おばあちゃん", 
+            "ロボット", "バナナ", "スーパーマン", "電車", "時計"
+        ];
+
+        function generateOdai() {
+            const randomSubject = subjects[Math.floor(Math.random() * subjects.length)];
+            const randomWord1 = words[Math.floor(Math.random() * words.length)];
+            const randomWord2 = words[Math.floor(Math.random() * words.length)];
+
+            const odai = randomSubject.replace(/○○/g, () => randomWord1 === randomWord2 ? randomWord1 : randomWord2);
+            document.getElementById("odai").innerText = odai;
+
+            // Xの投稿リンクを生成
+            const tweetText = encodeURIComponent(odai);
+            const tweetUrl = `https://twitter.com/intent/tweet?text=${tweetText}`;
+            document.getElementById("tweet-button").setAttribute("href", tweetUrl);
+        }
+    </script>
+
+</body>
+</html>

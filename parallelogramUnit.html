@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>平行四辺形のハイライト</title>
+    <style>
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: transparent;
+
+        canvas {
+            border: 1px solid black;
+   
+
+    
+ 
+            
+            background-color: transparent; /* Canvas背景透明 */
+    }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="600" height="600"></canvas>
+
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+        let unitData = {};  // フェッチされたユニットデータを保持する変数
+        let selectedUnit = null;
+
+        // 座標リスト
+        const points = [
+            { x: 100, y: 500, label: 'O' },
+            { x: 150, y: 500, label: 'P' },
+            { x: 200, y: 500, label: 'Q' },
+            { x: 250, y: 500, label: 'R' },
+            { x: 300, y: 500, label: 'S' },
+            { x: 350, y: 500, label: 'T' },
+            { x: 400, y: 500, label: 'U' },
+            { x: 150, y: 450, label: "O'" },
+            { x: 200, y: 450, label: "P'" },
+            { x: 250, y: 450, label: "Q'" },
+            { x: 300, y: 450, label: "R'" },
+            { x: 350, y: 450, label: "S'" },
+            { x: 400, y: 450, label: "T'" },
+            { x: 450, y: 450, label: "U'" },
+            { x: 200, y: 400, label: '1' },
+            { x: 250, y: 400, label: '2' },
+            { x: 300, y: 400, label: '3' },
+            { x: 350, y: 400, label: '4' },
+            { x: 400, y: 400, label: '5' },
+            { x: 450, y: 400, label: '6' },
+            { x: 500, y: 400, label: '7' },
+            { x: 250, y: 350, label: '8' },
+            { x: 300, y: 350, label: '9' },
+            { x: 350, y: 350, label: '10' },
+            { x: 400, y: 350, label: '11' },
+            { x: 450, y: 350, label: '12' },
+            { x: 500, y: 350, label: '13' },
+            { x: 550, y: 350, label: '14' }
+        ];
+
+        function drawPoints() {
+            points.forEach(point => {
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+                ctx.fillStyle = 'black';
+                ctx.fill();
+                ctx.fillText(point.label, point.x + 10, point.y - 10);
+            });
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function highlightParallelogram(clickX, clickY) {
+            const tileSize = 50; // 平行四辺形の基本サイズ
+
+            // フロア関数を使用してクリック座標をグリッドにスナップ
+            const snappedX = Math.floor(clickX / tileSize) * tileSize;
+            const snappedY = Math.floor(clickY / tileSize) * tileSize;
+
+            // 平行四辺形の4つの頂点を定義
+            const O = { x: snappedX, y: snappedY + tileSize };         // 左下
+            const OP = { x: snappedX + tileSize, y: snappedY };       // 右上
+            const PP = { x: snappedX + tileSize * 2, y: snappedY };   // 右上
+            const P = { x: snappedX + tileSize * 2, y: snappedY + tileSize }; // 右下
+
+            // 描画のクリア
+            clearCanvas();
+            drawPoints();
+
+            // 平行四辺形を描画
+            ctx.beginPath();
+            ctx.moveTo(O.x, O.y);      // 点O
+            ctx.lineTo(OP.x, OP.y);    // 点O'
+            ctx.lineTo(PP.x, PP.y);    // 点P'
+            ctx.lineTo(P.x-50, P.y);      // 点P
+            ctx.closePath();           // 形を閉じる
+
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';  // 半透明の赤
+            ctx.fill();                  // 内側を塗りつぶし
+        }
+
+        // キャンバスクリックイベント
+        canvas.addEventListener('click', function(event) {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const clickY = event.clientY - rect.top;
+
+            highlightParallelogram(clickX, clickY);
+        });
+
+        // 初期描画
+        drawPoints();
+    </script>
+</body>
+</html>

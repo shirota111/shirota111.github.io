@@ -1,0 +1,57 @@
+
+
+
+
+
+body h1, h2 {
+            position: relative;
+            display: inline-block;
+            padding: 10px;
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            color: #f5f5f5;
+            margin: 0;
+        }
+
+     body   h1 {
+            font-size: 2em;
+            text-shadow: 2px 2px 0 #000;
+            margin-top: 20px;
+        }
+
+     body   h2 {
+            font-family: 'Courier New', monospace;
+            color: #f0e68c; /* カーキ色 */
+            font-size: 1.5em;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 #000;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+     body   h1::before, h1::after,
+    body    h2::before, h2::after {
+            content: '';
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.3);
+            border: 2px solid #f5f5f5;
+            border-radius: 50%; /* 円形 */
+            z-index: -1;
+        }
+
+    body    h1::before, h2::before {
+            width: 120%;
+            height: 120%;
+            top: -10%;
+            left: -10%;
+            transform: rotate(-10deg);
+        }
+
+   body     h1::after, h2::after {
+            width: 130%;
+            height: 130%;
+            top: -15%;
+            left: -15%;
+            transform: rotate(10deg);
+        }
+
+        

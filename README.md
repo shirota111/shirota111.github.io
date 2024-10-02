@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## ポートフォリオの作成経緯と使用技術
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=526682619)
@@ -84,3 +85,49 @@ const projectList = [
   },
 ];
 ```
+=======
+# はじめてのWebクライアントアプリケーション
+
+このプロジェクトは、初心者向けの
+moduleをfetchしたカレンダーと 
+ToDo リストの Web アプリケーションです。
+
+
+## フォルダ構成
+
+project/
+
+├── src/
+
+│  　　 ├── 2.js
+
+│  　　 ├── main.js
+
+│  　　 └── ... (その他のモジュールファイル)
+
+├── assets/
+
+│  　　 ├── styles/
+
+│  　　 │ 　　  └── style.css
+
+│   　　└── images/
+
+│     　　　　　　└── logo.png
+
+├── docs/
+
+│  　　 ├── index.html
+
+│   　　├── bundle.js
+
+│   　　├── pop.html
+
+│   　　└── ... (その他の公開ファイル)
+
+├── webpack.config.js
+
+├── README.md  ← ここに配置
+
+└── ... (その他の設定ファイル)
+>>>>>>> 68a4f25557580944fdc48fba9a850c55a6928767
