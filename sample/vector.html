@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vector Drawing</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<script>const canvas = document.getElementById('canvas');
+    canvas.width = 600;
+    canvas.height = 600;
+    const ctx = canvas.getContext('2d');
+    
+    // 基準点（500px, 500px）を設定
+    const originX = 60;
+    const originY = 500;
+    
+    // ベクトルの長さを設定
+    const xVector = 500; // Xベクトル
+    const yVector = 500; // Yベクトル
+    
+    // ZベクトルはXベクトルとYベクトルの合成
+    const zVector = Math.sqrt(xVector ** 2 + yVector ** 2);
+    
+    // ベクトルを描画する関数
+    function drawVector(startX, startY, endX, endY, color) {
+        ctx.beginPath();
+        ctx.moveTo(startX, startY); // 開始点
+        ctx.lineTo(endX, endY);     // 終了点
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+    }
+    
+    // 点を描画する関数
+    function drawPoint(x, y, label, color) {
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, Math.PI * 2, true); // 半径5の円を描画
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.font = '14px Arial';
+        ctx.fillText(label, x + 10, y - 10); // ラベルを描画
+    }
+    
+    // キャンバスをクリアする関数
+    function clearCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    
+    // 描画する
+    function draw() {
+        clearCanvas();
+    
+        // Xベクトル（赤色）
+        drawVector(originX, originY, originX + xVector, originY, 'red');
+    
+        // Yベクトル（緑色）
+        drawVector(originX, originY, originX, originY - yVector, 'green');
+    
+        // Zベクトル（合成、青色）
+        drawVector(originX, originY, originX + xVector, originY - yVector, 'blue');
+    
+        // 点Pと点Qを描画する
+        const pointP = { x: originX + 50, y: originY }; // x軸方向に50px
+        const pointQ = { x: originX, y: originY - 50 }; // y軸方向に50px
+    
+        // 点Pを描画（赤色）
+        drawPoint(pointP.x, pointP.y, 'P', 'red');
+    
+        // 点Qを描画（緑色）
+        drawPoint(pointQ.x, pointQ.y, 'Q', 'green');
+    
+        // 点Pを起点にZ + 50ベクトルを描画する（紫色）
+        const zPlus50VectorX = 550; // Zベクトル + 50 のX成分
+        const zPlus50VectorY = -550; // Zベクトル + 50 のY成分
+        drawVector(pointP.x, pointP.y, pointP.x + zPlus50VectorX, pointP.y + zPlus50VectorY, 'purple');
+    
+        // Z + 50 ベクトル上のZ座標が50の点P'を求める
+        const zCoord = 50; // Z座標
+        const scaleFactor = zCoord / Math.abs(zPlus50VectorY); // Z成分に基づいた比率
+    
+        // P' の座標を計算
+        const pointPPrime = {
+            x: pointP.x + zPlus50VectorX * scaleFactor,
+            y: pointP.y + zPlus50VectorY * scaleFactor
+        };
+    
+        // 点P'を描画（オレンジ色）
+        drawPoint(pointPPrime.x, pointPPrime.y, "P'", 'orange');
+    
+        // Zベクトル上に点Zを描画する（Z = 50）
+        const scaleFactorZ = zCoord / Math.abs(yVector); // Zベクトルに対する比率
+        const pointZ = {
+            x: originX + xVector * scaleFactorZ,
+            y: originY - yVector * scaleFactorZ
+        };
+    
+        // 点Zを描画（青色）
+        drawPoint(pointZ.x, pointZ.y, 'Z', 'blue');
+    
+        // 点Zと点P'を結ぶ線を描画（灰色）
+        drawVector(pointZ.x, pointZ.y, pointPPrime.x, pointPPrime.y, 'gray');
+    }
+    
+    // 描画実行
+    draw();
+    
+
+</script>
+
+</body>
+</html>

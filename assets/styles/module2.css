@@ -1,0 +1,34 @@
+/* module2.css */
+
+/* ToDoリストを表示するエリアのスタイル */
+.todo-container {
+    position: absolute; /* 絶対位置指定 */
+    left: 400px;  /* X座標 */
+    top: 400px;   /* Y座標 */
+    width: 300px; /* ToDoリストの幅 */
+    background-color: #f0f0f0; /* 背景色 */
+    padding: 20px; /* 内側の余白 */
+    border: 1px solid #ccc; /* 枠線 */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* 影を追加 */
+}
+
+/* ToDoリストのアイテムのスタイル */
+#todo-list {
+    list-style-type: none; /* リストのドットを消す */
+    padding: 0; /* パディングをなしに */
+    margin-top: 10px; /* 上のマージン */
+}
+
+#todo-list li {
+    background-color: #fff; /* リストアイテムの背景色 */
+    border: 1px solid #ccc; /* 枠線 */
+    padding: 10px; /* 内側の余白 */
+    margin-bottom: 10px; /* 下の余白 */
+    font-size: 1em; /* 文字サイズ */
+    border-radius: 5px; /* 角を丸く */
+}
+
+/* カレンダーのスタイル (参考までに含めます) */
+.calendar-container {
+    margin-bottom: 20px; /* カレンダーとToDoリストの間に余白を追加 */
+}

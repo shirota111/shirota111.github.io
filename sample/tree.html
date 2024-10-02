@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tree with Swing</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #87CEEB;
+            margin: 0;
+        }
+
+        .tree {
+            position: relative;
+            width: 200px;
+            height: 300px;
+        }
+
+        .trunk {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 20px;
+            height: 100px;
+            background-color: brown;
+            transform: translateX(-50%);
+        }
+
+        .branch {
+            position: absolute;
+            width: 100px;
+            height: 10px;
+            background-color: brown;
+        }
+
+        /* Branches */
+        .branch1 {
+            top: 40px;
+            left: 50%;
+            transform: translateX(-100%) rotate(30deg);
+        }
+
+        .branch2 {
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .branch3 {
+            top: 40px;
+            left: 50%;
+            transform: translateX(0%) rotate(-30deg);
+        }
+
+        /* Roots */
+        .roots {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 100px;
+            height: 20px;
+            background-color: brown;
+            transform: translateX(-50%) rotate(15deg);
+        }
+
+        /* Leaves */
+        .leaf {
+            position: absolute;
+            width: 50px;
+            height: 30px;
+            background-color: green;
+            border-radius: 50%;
+        }
+
+        .leaf1 {
+            top: 20px;
+            left: 10px;
+        }
+
+        .leaf2 {
+            top: 20px;
+            right: 10px;
+        }
+
+        .leaf3 {
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Swing */
+        .swing {
+            position: absolute;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 50px;
+        }
+
+        .rope {
+            position: absolute;
+            width: 2px;
+            height: 50px;
+            background-color: black;
+        }
+
+        .rope-left {
+            left: 0;
+        }
+
+        .rope-right {
+            right: 0;
+        }
+
+        .seat {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="tree">
+        <div class="trunk"></div>
+        <div class="branch branch1"></div>
+        <div class="branch branch2"></div>
+        <div class="branch branch3"></div>
+        <div class="roots"></div>
+        <div class="leaf leaf1"></div>
+        <div class="leaf leaf2"></div>
+        <div class="leaf leaf3"></div>
+        <div class="swing">
+            <div class="rope rope-left"></div>
+            <div class="rope rope-right"></div>
+            <div class="seat"></div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,160 @@
+{
+    "speeches": {
+        "A": {
+            "title": "I Have a Dream",
+            "author": "Martin Luther King Jr.",
+            "date": "1963-08-28",
+            "summary": "A speech advocating for civil rights and equality."
+        },
+        "B": {
+            "title": "The Gettysburg Address",
+            "author": "Abraham Lincoln",
+            "date": "1863-11-19",
+            "summary": "A short but powerful speech honoring fallen soldiers."
+        },
+        "C": {
+            "title": "We Shall Fight on the Beaches",
+            "author": "Winston Churchill",
+            "date": "1940-06-04",
+            "summary": "A speech promising perseverance in the face of adversity."
+        },
+        "D": {
+            "title": "The Four Freedoms",
+            "author": "Franklin D. Roosevelt",
+            "date": "1941-01-06",
+            "summary": "A speech outlining the four essential human freedoms."
+        },
+        "E": {
+            "title": "Yes We Can",
+            "author": "Barack Obama",
+            "date": "2008-01-08",
+            "summary": "A campaign speech emphasizing hope and change."
+        },
+        "F": {
+            "title": "Ask Not What Your Country Can Do For You",
+            "author": "John F. Kennedy",
+            "date": "1961-01-20",
+            "summary": "A call to action for citizens to contribute to their country."
+        },
+        "G": {
+            "title": "Inaugural Address",
+            "author": "George Washington",
+            "date": "1789-04-30",
+            "summary": "The first inaugural address of the first President of the United States."
+        },
+        "H": {
+            "title": "The Ballot or the Bullet",
+            "author": "Malcolm X",
+            "date": "1964-04-03",
+            "summary": "A speech advocating for civil rights and self-defense."
+        },
+        "I": {
+            "title": "Ain't I a Woman?",
+            "author": "Sojourner Truth",
+            "date": "1851-05-29",
+            "summary": "A speech emphasizing women's rights and racial equality."
+        },
+        "J": {
+            "title": "The Danger of a Single Story",
+            "author": "Chimamanda Ngozi Adichie",
+            "date": "2009-07-12",
+            "summary": "A TED talk about the importance of diverse narratives."
+        },
+        "K": {
+            "title": "The Great Society",
+            "author": "Lyndon B. Johnson",
+            "date": "1964-05-22",
+            "summary": "A speech outlining the vision for a better America."
+        },
+        "L": {
+            "title": "I Am Prepared to Die",
+            "author": "Nelson Mandela",
+            "date": "1964-04-20",
+            "summary": "A speech in defense of the struggle against apartheid."
+        },
+        "M": {
+            "title": "The Power of Vulnerability",
+            "author": "Brené Brown",
+            "date": "2010-06-12",
+            "summary": "A TED talk on the importance of vulnerability."
+        },
+        "N": {
+            "title": "The Greatest Gift",
+            "author": "Mother Teresa",
+            "date": "1994-12-10",
+            "summary": "A speech emphasizing the value of love and service."
+        },
+        "O": {
+            "title": "On the Pulse of Morning",
+            "author": "Maya Angelou",
+            "date": "1993-01-20",
+            "summary": "A poem delivered at the inauguration of President Bill Clinton."
+        },
+        "P": {
+            "title": "The Power of Introverts",
+            "author": "Susan Cain",
+            "date": "2012-02-02",
+            "summary": "A TED talk advocating for the value of introverts."
+        },
+        "Q": {
+            "title": "This is Your Brain on Drugs",
+            "author": "Nancy Reagan",
+            "date": "1985-09-14",
+            "summary": "A speech addressing drug abuse and its effects."
+        },
+        "R": {
+            "title": "The Road to Character",
+            "author": "David Brooks",
+            "date": "2015-04-02",
+            "summary": "A speech discussing the importance of character in society."
+        },
+        "S": {
+            "title": "Stay Hungry, Stay Foolish",
+            "author": "Steve Jobs",
+            "date": "2005-06-12",
+            "summary": "A commencement speech about following your passions."
+        },
+        "T": {
+            "title": "Tear Down This Wall",
+            "author": "Ronald Reagan",
+            "date": "1987-06-12",
+            "summary": "A speech demanding the tearing down of the Berlin Wall."
+        },
+        "U": {
+            "title": "The Audacity of Hope",
+            "author": "Barack Obama",
+            "date": "2004-07-27",
+            "summary": "A speech emphasizing hope in the American dream."
+        },
+        "V": {
+            "title": "Victory Speech",
+            "author": "Winston Churchill",
+            "date": "1945-05-08",
+            "summary": "A speech celebrating the end of World War II."
+        },
+        "W": {
+            "title": "Women's Rights Are Human Rights",
+            "author": "Hillary Clinton",
+            "date": "1995-09-05",
+            "summary": "A speech advocating for women's rights globally."
+        },
+        "X": {
+            "title": "The Future of Race",
+            "author": "Ibram X. Kendi",
+            "date": "2019-08-22",
+            "summary": "A speech on understanding and combating racism."
+        },
+        "Y": {
+            "title": "You Matter",
+            "author": "Matthew McConaughey",
+            "date": "2020-03-11",
+            "summary": "A speech emphasizing self-worth and resilience."
+        },
+        "Z": {
+            "title": "Zig Ziglar's Secrets of Closing the Sale",
+            "author": "Zig Ziglar",
+            "date": "1975-01-01",
+            "summary": "A motivational speech on sales techniques and positivity."
+        }
+    }
+}

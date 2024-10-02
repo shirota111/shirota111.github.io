@@ -1,0 +1,225 @@
+こちらのコードは、fetchData で unitData.json からデータを取得し、それをもとに2次元配列を作成して表示する仕組みです。次のHTMLファイルでは、2D Arrays with Fetch Dataと、最初のキャンバスを描画する機能を組み合わせて実装します。
+
+以下のHTMLファイルでは、2次元配列のデータをキャンバス上に表示し、他の要素と統合しています。
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layered Canvas and 2D Array Data Viewer</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            background-color: transparent;
+        }
+
+        #container {
+            position: relative;
+            width: 600px;
+            height: 600px;
+        }
+
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            z-index: 0;
+        }
+
+        #dataWindow {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background-color: rgba(0, 0, 255, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            height: 300px;
+            z-index: 2;
+        }
+
+        #parallelogramUnit {
+            background-color: transparent;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            padding: 20px;
+            border-radius: 10px;
+            width: 496px;
+            height: 527px;
+            z-index: 2;
+        }
+
+    </style>
+</head>
+<body>
+
+    <input type="number" id="unitInput" placeholder="ユニット番号を入力">
+    <button id="placeUnitBtn">ユニット配置</button>
+
+    <div id="container">
+        <canvas id="myCanvas" width="600" height="600"></canvas>
+        <iframe src="polygon.html"></iframe>
+    </div>
+
+    <div id="parallelogramUnit">
+        <iframe src="parallelogramUnit.html"></iframe>
+    </div>
+
+    <div id="dataWindow">
+        <iframe src="unitdata.html"></iframe>
+    </div>
+
+    <div id="output"></div>
+
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+        let unitData = {};
+        let selectedUnit = null;
+
+        // 外部データをフェッチして2次元配列を作成
+        let height1Array = [];
+        let height2Array = [];
+
+        async function fetchData() {
+            try {
+                const response = await fetch('unitData.json');
+                const data = await response.json();
+
+                height1Array = create2DArray(data.units, 1);
+                height2Array = create2DArray(data.magic, 2);
+
+                displayArrays();
+            } catch (error) {
+                console.error('データの取得に失敗しました:', error);
+            }
+        }
+
+        function create2DArray(data, height) {
+            const rows = 3;
+            const cols = 3;
+            let array = [];
+
+            for (let i = 0; i < rows; i++) {
+                array[i] = [];
+                for (let j = 0; j < cols; j++) {
+                    if (height === 1) {
+                        array[i][j] = data[i]?.name || `Unit-${i}-${j}`;
+                    } else if (height === 2) {
+                        array[i][j] = data[j]?.name || `Magic-${i}-${j}`;
+                    }
+                }
+            }
+            return array;
+        }
+
+        function displayArrays() {
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = `
+                <h2>Height 1 (Unit Data):</h2>
+                <pre>${JSON.stringify(height1Array, null, 2)}</pre>
+                <h2>Height 2 (Magic Data):</h2>
+                <pre>${JSON.stringify(height2Array, null, 2)}</pre>
+            `;
+        }
+
+        // 座標を2次元配列に変更
+        const points = [
+            [{ x: 100, y: 450, label: 'O' }, { x: 150, y: 500, label: 'P' }, { x: 200, y: 500, label: 'Q' }],
+            [{ x: 250, y: 500, label: 'R' }, { x: 300, y: 500, label: 'S' }, { x: 350, y: 500, label: 'T' }],
+            [{ x: 400, y: 500, label: 'U' }, { x: 150, y: 400, label: "O'" }, { x: 200, y: 450, label: "P'" }]
+        ];
+
+        function drawPoints() {
+            points.forEach(row => {
+                row.forEach(point => {
+                    ctx.beginPath();
+                    ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+                    ctx.fillStyle = 'black';
+                    ctx.fill();
+                    ctx.fillText(point.label, point.x + 10, point.y - 10);
+                });
+            });
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function highlightTile(clickX, clickY) {
+            const tileSize = 50;
+            const originX = 100;
+            const originY = 500;
+            const tileX = Math.floor((clickX - originX) / tileSize) * tileSize + originX;
+            const tileY = Math.floor((clickY - originY) / tileSize) * tileSize + originY;
+
+            clearCanvas();
+            drawPoints();
+
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
+            ctx.fillRect(tileX, tileY, tileSize, tileSize);
+
+            if (selectedUnit !== null) {
+                placeUnit(tileX, tileY, selectedUnit);
+            }
+        }
+
+        function placeUnit(x, y, unitId) {
+            const unitImage = new Image();
+            const unitInfo = unitData[unitId];
+
+            if (!unitInfo) {
+                console.error('指定されたユニットIDが存在しません');
+                return;
+            }
+
+            unitImage.src = unitInfo.image;
+
+            unitImage.onload = function () {
+                const unitSize = 40;
+                ctx.drawImage(unitImage, x + 5, y + 5, unitSize, unitSize);
+            };
+        }
+
+        canvas.addEventListener('click', function (event) {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const clickY = event.clientY - rect.top;
+
+            highlightTile(clickX, clickY);
+        });
+
+        document.getElementById('placeUnitBtn').addEventListener('click', function () {
+            const unitId = document.getElementById('unitInput').value;
+            selectedUnit = unitId;
+        });
+
+        fetchData().then(() => {
+            drawPoints();
+        });
+
+    </script>
+
+</body>
+</html>
+
+変更点
+
+fetchData 関数が2次元配列を作成し、キャンバス上にポイントを描画します。
+
+キャンバス上でクリックした場所にユニットを配置する機能を維持。
+
+2次元配列の内容が output 要素内で表示されるようになっています。
+
+
+これにより、unitData.json からのデータフェッチとキャンバス描画を組み合わせたシステムが完成します。
+

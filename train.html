@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電車の車内で短縮形を元に戻すゲーム</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+        .train-car {
+            width: 90%;
+            max-width: 800px;
+            height: 300px;
+            background-color: lightblue;
+            position: relative;
+            margin: 20px auto;
+            border: 2px solid black;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .window {
+            width: 80px;
+            height: 40px;
+            background-color: white;
+            position: absolute;
+            border: 2px solid black;
+        }
+        .strap {
+            width: 20px;
+            height: 50px;
+            background-color: orange;
+            position: absolute;
+            top: 0;
+            border-radius: 10px;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.5em;
+        }
+        #bgm-control {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>電車の車内で短縮形を元に戻すゲーム</h1>
+<div class="train-car">
+    <!-- 窓の配置 -->
+    <div class="window" style="left: 50px; top: 100px;"></div>
+    <div class="window" style="left: 150px; top: 100px;"></div>
+    <div class="window" style="left: 250px; top: 100px;"></div>
+    <div class="window" style="left: 350px; top: 100px;"></div>
+    <div class="window" style="left: 450px; top: 100px;"></div>
+    <div class="window" style="left: 550px; top: 100px;"></div>
+    <div class="window" style="left: 650px; top: 100px;"></div>
+
+    <!-- 吊り革の配置 -->
+    <div class="strap" style="left: 100px;"></div>
+    <div class="strap" style="left: 250px;"></div>
+    <div class="strap" style="left: 400px;"></div>
+    <div class="strap" style="left: 550px;"></div>
+    <div class="strap" style="left: 700px;"></div>
+</div>
+
+<p id="word-to-expand">コンビニ</p> <!-- 初期表示する短縮形 -->
+<div id="result"></div>
+
+<!-- BGMコントロール -->
+<div id="bgm-control">
+    <audio id="bgm" loop>
+        <source src="train_background.mp3" type="audio/mpeg"> <!-- 電車のBGMファイル -->
+        お使いのブラウザは音声をサポートしていません。
+    </audio>
+    <audio id="bell-sound">
+        <source src="bell_sound.mp3" type="audio/mpeg"> <!-- 鈴の音 -->
+        お使いのブラウザは音声をサポートしていません。
+    </audio>
+    <audio id="whistle-sound">
+        <source src="whistle_sound.mp3" type="audio/mpeg"> <!-- 汽笛の音 -->
+        お使いのブラウザは音声をサポートしていません。
+    </audio>
+    <button onclick="toggleBGM()">BGMを再生/停止</button>
+</div>
+
+<script>
+    // 短縮形のマッピング
+    const abbreviationMap = {
+        "コンビニ": "コンビニエンスストア",
+        "アプリ": "アプリケーション"
+    };
+
+    // 短縮形のリスト
+    const abbreviations = Object.keys(abbreviationMap);
+
+    // ランダムに短縮形を生成し音声を再生
+    function generateRandomWord() {
+        const randomIndex = Math.floor(Math.random() * abbreviations.length);
+        const word = abbreviations[randomIndex];
+        document.getElementById('word-to-expand').innerText = word;
+
+        // 鈴の音を再生
+        const bellSound = document.getElementById('bell-sound');
+        bellSound.play();
+
+        // 自動で音声入力を開始
+        setTimeout(() => {
+            playWord();
+            startRecognition();
+        }, 1000); // 1秒後に音声を再生し認識を開始
+    }
+
+    // 音声再生
+    function playWord() {
+        const word = document.getElementById('word-to-expand').innerText;
+        const utterance = new SpeechSynthesisUtterance(word);
+        window.speechSynthesis.speak(utterance);
+    }
+
+    // 音声認識の開始
+    function startRecognition() {
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'ja-JP';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        recognition.onresult = function(event) {
+            const spokenWord = event.results[0][0].transcript;
+            const expanded = abbreviationMap[spokenWord] || "未定義の短縮形";
+
+            // 結果を表示
+            document.getElementById('result').innerText = spokenWord + " → " + expanded;
+
+            // 正解のときに汽笛の音を再生
+            if (abbreviationMap[spokenWord]) {
+                const whistleSound = document.getElementById('whistle-sound');
+                whistleSound.play();
+            }
+        };
+
+        recognition.onerror = function(event) {
+            console.error('Error occurred in recognition: ' + event.error);
+            document.getElementById('result').innerText = "音声認識エラー";
+        };
+
+        recognition.start();
+    }
+
+    // BGMの再生/停止
+    function toggleBGM() {
+        const bgm = document.getElementById('bgm');
+        if (bgm.paused) {
+            bgm.play();
+        } else {
+            bgm.pause();
+        }
+    }
+
+    // ページが読み込まれたらランダムな短縮形を生成
+    window.onload = generateRandomWord;
+</script>
+
+</body>
+</html>

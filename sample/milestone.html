@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Milestones</title>
+    <style>
+        /* CSS: タイムラインのスタイル */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+
+        h1 {
+            text-align: center;
+        }
+
+        #timeline {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+
+        .milestone {
+            position: relative;
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin: 20px;
+            width: 60%;
+            border-left: 6px solid #4CAF50;
+            border-radius: 5px;
+        }
+
+        .milestone-date {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .milestone-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .milestone-description {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Project Milestones</h1>
+    <div id="timeline"></div>
+
+    <script>
+        // JavaScript: マイルストーンデータと可視化
+        const milestones = [
+            { date: '2024-01-01', title: 'プロジェクト開始', description: 'プロジェクトのスタート、チーム編成。' },
+            { date: '2024-02-15', title: '設計完了', description: 'アーキテクチャ設計と技術選定の完了。' },
+            { date: '2024-04-01', title: '最初のリリース', description: '初期バージョンのリリース。' },
+            { date: '2024-06-01', title: 'ユーザーテスト開始', description: 'ユーザーテストとフィードバック収集。' },
+            { date: '2024-09-01', title: '最終リリース', description: '全機能を含む最終バージョンのリリース。' }
+        ];
+
+        // タイムライン要素を取得
+        const timeline = document.getElementById('timeline');
+
+        // マイルストーンをHTMLに追加
+        milestones.forEach(milestone => {
+            const milestoneElement = document.createElement('div');
+            milestoneElement.classList.add('milestone');
+            
+            milestoneElement.innerHTML = `
+                <div class="milestone-date">${milestone.date}</div>
+                <div class="milestone-title">${milestone.title}</div>
+                <div class="milestone-description">${milestone.description}</div>
+            `;
+            
+            timeline.appendChild(milestoneElement);
+        });
+    </script>
+</body>
+</html>

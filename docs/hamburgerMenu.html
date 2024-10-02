@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サブカル風 Hamburger Menu</title>
+    <style>
+        /* Google Fonts: サブカル風なフォントの追加 */
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        /* ハンバーガーメニューボタンのスタイル */
+        .hamburgerMenu {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+        .hamburgerMenu:hover {
+            transform: scale(1.1);
+        }
+        .hamburgerMenu .bar {
+            width: 100%;
+            height: 6px;
+            background-color: #ff6f61; /* 鮮やかなピンク系 */
+            transition: background-color 0.3s ease;
+        }
+        .hamburgerMenu:hover .bar {
+            background-color: #8f5fe8; /* 紫系 */
+        }
+
+        /* メニューが非表示の時のスタイル */
+        .hamburgerMenuNav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 250px;
+            height: 100%;
+            background-color: #2a2a2a; /* ダークグレー */
+            transition: right 0.5s ease;
+            z-index: 99;
+        }
+
+        /* メニューが表示されるときのスタイル */
+        .hamburgerMenuNav.active {
+            right: 0;
+        }
+
+        /* メニュー内のリンクリストのスタイル */
+        .hamburgerMenuNav ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 80px;
+            text-align: center;
+            font-family: 'Press Start 2P', cursive; /* レトロゲーム風フォント */
+        }
+        .hamburgerMenuNav ul li {
+            margin: 30px 0;
+        }
+        .hamburgerMenuNav ul li a {
+            color: #ff6f61; /* 鮮やかなピンク */
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+        .hamburgerMenuNav ul li a:hover {
+            color: #8f5fe8; /* 紫色 */
+        }
+
+        /* ページ全体のレイアウト */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* サンプルページ内容 */
+        #home, #about, #services, #contact,#calender {
+            height: 150vh;
+            padding: 50px;
+            background-color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+        /* セクションの色をサブカルっぽく */
+        #home {
+            background-color: #ffefd5; /* パステル系 */
+        }
+        #about {
+            background-color: #ffe4e1; /* ピンク系 */
+        }
+        #services {
+            background-color: #fafad2; /* クリーム系 */
+        }
+        #contact {
+            background-color: #d8bfd8; /* パステルパープル */
+        }
+        #calender {
+            background-color:  #fdd9fd; /* パステルパープル */
+        }
+        /* サンプルテキストのスタイル */
+        h1, p {
+            font-family: 'Press Start 2P', cursive; /* サブカル風フォント */
+            text-align: center;
+            color: #333;
+        }
+
+
+
+/* リンクのスタイル */
+.link-container {
+    display: inline-block;
+    text-align: left;
+}
+
+.styled-link {
+    display: block;
+
+    margin: 10px 0;
+    padding: 15px 25px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    font-size: 1.2em;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* ホバーしたときのエフェクト */
+.styled-link:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* リンクの間に少しスペースを */
+.link-container a + a {
+    margin-top: 20px;
+}
+
+/* モバイル対応 */
+@media (max-width: 600px) {
+    .styled-link {
+        padding: 10px 15px;
+        font-size: 1em;
+    }
+}
+
+    </style>
+
+<link id="stylesheet" rel="stylesheet" href="../assets/styles/module1.css">
+ 
+
+</head>
+<body>
+
+<!-- ハンバーガーメニューボタン -->
+<div class="hamburgerMenu" id="menuToggle">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+</div>
+
+<!-- ナビゲーションメニュー -->
+<nav class="hamburgerMenuNav" id="menuNav">
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+<li><a href="#calender">Calendar</a></li>
+    </ul>
+</nav>
+
+<!-- サンプルコンテンツセクション -->
+<div id="home">
+    <h1>Home</h1>
+    <p>Welcome to 新世界げえむ置き場</p>
+<p>〜くだらないつまらないmuda～</p><p>～it's a small worldってか〜</p>
+
+<h>KUSOゲーム(hogehoge)</h>
+    <ul>
+        <li><a href="ika.html"class="styled-link">イカのページ</a></li>
+        <li><a href="ikagame.html"class="styled-link">イカゲームのページ</a></li>
+        <li><a href="invader.html"class="styled-link">インベーダーゲームのページ</a></li>
+       <li><a href="anti.html"class="styled-link">アンチページ</a></li> 
+       <li><a href="../docs/shogi2.html"class="styled-link">将棋</a></li>
+       <li><a href="./docs/ippon.html"class="styled-link">Ipponグランプリ</a></li>
+       <li><a href="../docs/test.html"class="styled-link">本棚</a></li>
+    </ul>
+</div>
+
+
+<div id="about">
+    <h1>About Section</h1>
+    <p>このWEBクライアントアプリケーションは</p>
+<p>"Less is more"を描画する試みです。</p>
+
+<p>おもにchatGPTで生成したいわゆるKUSOげーむなど
+を保管しています。ここは作者のくだらない、つまらないを
+具現化した場所です。 </p>
+</div>
+<div id="services">
+    <h1>Services Section</h1>
+    
+
+<div id="shogi-content">
+    <h2>将棋のセクション</h2>
+    <p>ここに将棋に関する情報が表示されます。</p>
+</div>
+
+
+
+
+
+
+</div>
+<div id="contact">
+    <h1>Contact Section</h1>
+    <p>Get in touch with us.</p>
+</div>
+
+
+</div>
+<div id="calender">
+  
+<!-- 月と年の表示 -->
+<div id="month-year"></div>
+<div id="calendar"></div>
+<div id="notification"></div>
+
+<!-- Todoリスト表示 -->
+<div>
+    <ul id="todo-list"></ul>
+</div>
+
+</div>
+
+<script src="../src/module1.js"></script>
+<script src="../src/module2.js"></script>
+<script src="../src/module3.js"></script>
+<script src="../src/module4.js"></script>
+
+
+
+
+
+<!-- JavaScript -->
+<script>
+    // ハンバーガーメニューボタンとメニューの要素を取得
+    const menuToggle = document.getElementById('menuToggle');
+    const menuNav = document.getElementById('menuNav');
+
+    // ハンバーガーメニューをクリックしたときの動作
+    menuToggle.addEventListener('click', function() {
+        // メニューに 'active' クラスを付けて表示/非表示を切り替える
+        menuNav.classList.toggle('active');
+    });
+
+
+
+        // shogi2.html を読み込む
+        fetch('/docs/shogi2.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('services').innerHTML += html;
+
+                // shogi.js を読み込む
+                const script = document.createElement('script');
+                script.src = '../src/shogi.js';
+                document.body.appendChild(script);
+            })
+            .catch(error => console.error('Error loading shogi2.html:', error));
+   
+
+
+
+
+</script>
+
+</body>
+</html>

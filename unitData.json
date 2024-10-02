@@ -1,0 +1,7 @@
+{
+    "1": { "name": "兵士", "image": "soldier.png", "HP": 100, "MP": 50, "Attack": 30, "Magic": 10, "Arm": 20 },
+    "2": { "name": "騎士", "image": "knight.png", "HP": 150, "MP": 30, "Attack": 50, "Magic": 20, "Arm": 40 },
+    "3": { "name": "魔法使い", "image": "6h246esn.png", "HP": 80, "MP": 100, "Attack": 20, "Magic": 60, "Arm": 10 },
+    "4": { "name": "山", "image": "image.png", "HP": 80, "MP": 100, "Attack": 20, "Magic": 60, "Arm": 10 }
+
+}

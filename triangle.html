@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>平行四辺形のハイライト</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <h1>平行四辺形のタイルをハイライト</h1>
+    <canvas id="myCanvas" width="600" height="600"></canvas>
+    <input type="text" id="unitInput" placeholder="ユニットIDを入力">
+    <button id="placeUnitBtn">ユニットを配置</button>
+
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+        let unitData = {};  // フェッチされたユニットデータを保持する変数
+        let selectedUnit = null;
+
+        // 平行四辺形を描画する座標リスト
+        const points = [
+            { x: 100, y: 500, label: 'O' },   // 点O
+            { x: 150, y: 500, label: 'P' },   // 点P
+            { x: 150, y: 450, label: "O'" },  // 点O'
+            { x: 200, y: 450, label: "P'" }   // 点P'
+        ];
+
+        function drawParallelogram(point) {
+            const tileSize = 50;  // 平行四辺形の横幅と縦の高さの差
+
+            ctx.beginPath();
+            ctx.moveTo(point.x, point.y);                // 始点
+            ctx.lineTo(point.x + tileSize, point.y);     // 右に移動
+            ctx.lineTo(point.x + tileSize, point.y - tileSize);  // 右上に移動
+            ctx.lineTo(point.x, point.y - tileSize);     // 左上に移動
+            ctx.closePath();
+            ctx.stroke();
+        }
+
+        function drawAllParallelograms() {
+            for (let i = 0; i < 5; i++) {
+                for (let j = 0; j < 5; j++) {
+                    const baseX = 100 + i * 50;  // X軸のオフセット
+                    const baseY = 500 - j * 50;  // Y軸のオフセット
+                    drawParallelogram({ x: baseX, y: baseY });
+                }
+            }
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function highlightParallelogram(clickX, clickY) {
+            const tileSize = 50;
+            const originX = 100;
+            const originY = 500;
+            
+            // クリック位置に対応する平行四辺形の左下の座標を計算
+            const tileX = Math.floor((clickX - originX) / tileSize) * tileSize + originX;
+            const tileY = Math.floor((clickY - originY) / tileSize) * tileSize + originY;
+
+            clearCanvas();
+            drawAllParallelograms();  // 全ての平行四辺形を描画
+
+            // 平行四辺形をハイライト
+            ctx.fillStyle = 'rgba(0, 0, 255, 0.3)';
+            ctx.beginPath();
+            ctx.moveTo(tileX, tileY);
+            ctx.lineTo(tileX + tileSize, tileY);
+            ctx.lineTo(tileX + tileSize, tileY - tileSize);
+            ctx.lineTo(tileX, tileY - tileSize);
+            ctx.closePath();
+            ctx.fill();
+
+            // クリックされたタイルにユニットを描画
+            if (selectedUnit !== null) {
+                placeUnit(tileX, tileY - tileSize, selectedUnit);  // タイルの中心にユニットを配置
+            }
+        }
+
+        // 指定されたユニットをタイルに描画
+        function placeUnit(x, y, unitId) {
+            const unitImage = new Image();
+            const unitInfo = unitData[unitId];
+
+            if (!unitInfo) {
+                console.error('指定されたユニットIDが存在しません');
+                return;
+            }
+
+            unitImage.src = unitInfo.image;  // ユニットの画像パスを取得
+
+            // ユニット画像がロードされた後に描画
+            unitImage.onload = function() {
+                const unitSize = 40;  // ユニットのサイズ
+                ctx.drawImage(unitImage, x + 5, y + 5, unitSize, unitSize);
+            };
+        }
+
+        // キャンバスクリックイベント
+        canvas.addEventListener('click', function(event) {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const clickY = event.clientY - rect.top;
+
+            highlightParallelogram(clickX, clickY);
+        });
+
+        // ユーザーが入力したユニット番号を選択
+        document.getElementById('placeUnitBtn').addEventListener('click', function() {
+            const unitId = document.getElementById('unitInput').value;
+            selectedUnit = unitId;  // 選択されたユニットIDを保持
+        });
+
+        // 初期設定としてユニットデータをフェッチ
+        async function fetchUnitData() {
+            const response = await fetch('unitData.json');  // 外部のユニットデータファイルを取得
+            unitData = await response.json();
+        }
+
+        // 初期描画
+        fetchUnitData().then(() => {
+            drawAllParallelograms();  // ユニットデータがフェッチされた後に座標を描画
+        });
+    </script>
+</body>
+</html>
