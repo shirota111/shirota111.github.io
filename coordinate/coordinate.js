@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 //HTML CSS JS Result Skip Results Iframe
+=======
+HTML CSS JS Result Skip Results Iframe
+>>>>>>> 6a79bd1 (Commit message here)
 var canvas; // canvas要素(HTMLCanvasElement)
 var ctx; // 2Dコンテキスト(CanvasRenderingContext2D)
 var canvasW = 395; // canvas要素の横幅(px)
