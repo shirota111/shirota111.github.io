@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 :root { font-size: 16px; }
 main {
   width: 480px;
@@ -33,6 +32,7 @@ th {
 th#todoLabel { width: 200px; }
 th#dateLabel { width: 100px; }
 td { text-align: center; }
+<<<<<<< HEAD
 =======
 :root { font-size: 16px; }
 main {
@@ -70,3 +70,5 @@ th#dateLabel { width: 100px; }
 td { text-align: center; }
 td input[type='checkbox'] { margin: 0; }
 >>>>>>> 7fa95fc (Add files via upload)
+=======
+>>>>>>> 3640ca8 (ここにコミットメッセージを記入)

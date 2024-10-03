@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 'use strict';
 
 const storage = localStorage;
@@ -114,6 +113,7 @@ remove.addEventListener('click', () => {
     addItem(item);
   }
   storage.todoList = JSON.stringify(list);
+<<<<<<< HEAD
 });
 =======
 'use strict';
@@ -233,3 +233,6 @@ remove.addEventListener('click', () => {
   storage.todoList = JSON.stringify(list);
 });
 >>>>>>> 7fa95fc (Add files via upload)
+=======
+});
+>>>>>>> 3640ca8 (ここにコミットメッセージを記入)
