@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ウサギの耳ボタン</title>
+<style>
+ .button-rabbit {
+            position: relative; /* 擬似要素の位置を相対的に設定 */
+            background-color: #FFB6C1; /* ボタンの背景色 */
+            color: white; /* 文字色 */
+            padding: 15px 32px; /* 内側の余白 */
+            text-align: center; /* テキストを中央揃え */
+            text-decoration: none; /* 下線を消す */
+            display: inline-block; /* ボタンをインラインブロックに */
+            border-radius: 5px; /* 角を丸くする */
+            transition: background-color 0.3s; /* 背景色の遷移 */
+        }
+
+        .button-rabbit:hover {
+            background-color: #FF69B4; /* ホバー時の背景色 */
+        }
+
+        .button-rabbit::before,
+        .button-rabbit::after {
+            content: ''; /* 擬似要素の内容を空に */
+            position: absolute; /* 絶対位置に配置 */
+            width: 15px; /* 耳の幅 */
+            height: 35px; /* 耳の高さ */
+            background-color: #fff; /* 耳の背景色 */
+            border-radius: 5px; /* 耳を丸くする */
+            top: -10px; /* ボタンの上に配置 */
+        }
+
+        .button-rabbit::before {
+            left: 15px; /* 左耳の位置 */
+        }
+
+        .button-rabbit::after {
+            right: 15px; /* 右耳の位置 */
+        }
+
+        .button-tigar{
+            position: relative; /* 擬似要素の位置を相対的に設定 */
+            background-color: #ffe674; /* ボタンの背景色 */
+            color: white; /* 文字色 */
+            padding: 15px 32px; /* 内側の余白 */
+            text-align: center; /* テキストを中央揃え */
+            text-decoration: none; /* 下線を消す */
+            display: inline-block; /* ボタンをインラインブロックに */
+            border-radius: 5px; /* 角を丸くする */
+            transition: background-color 0.3s; /* 背景色の遷移 */
+        }
+
+        .button-tigar:hover {
+            background-color: #ffd500; /* ホバー時の背景色 */
+        }
+
+        .button-tigar::before,
+        .button-tigar::after {
+            content: ''; /* 擬似要素の内容を空に */
+            position: absolute; /* 絶対位置に配置 */
+            width: 15px; /* 耳の幅 */
+            height: 35px; /* 耳の高さ */
+            background-color: #fff; /* 耳の背景色 */
+            border-radius: 5px; /* 耳を丸くする */
+            top: -10px; /* ボタンの上に配置 */
+        }
+
+        .button-tigar::before {
+            left: 15px; /* 左耳の位置 */
+        }
+
+        .button-tigar::after {
+            right: 15px; /* 右耳の位置 */
+        }
+        .button-tigar {
+            position: relative; /* 擬似要素の位置を相対的に設定 */
+            background-color: #ffe674; /* ボタンの背景色 */
+            color: white; /* 文字色 */
+            padding: 15px 32px; /* 内側の余白 */
+            text-align: center; /* テキストを中央揃え */
+            text-decoration: none; /* 下線を消す */
+            display: inline-block; /* ボタンをインラインブロックに */
+            border-radius: 5px; /* 角を丸くする */
+            transition: background-color 0.3s; /* 背景色の遷移 */
+            font-size: 18px; /* フォントサイズ */
+        }
+
+        .button-tigar:hover {
+            background-color: #ffd500; /* ホバー時の背景色 */
+        }
+
+        .button-tigar::before,
+        .button-tigar::after {
+            content: ''; /* 擬似要素の内容を空に */
+            position: absolute; /* 絶対位置に配置 */
+            width: 15px; /* 耳の幅 */
+            height: 35px; /* 耳の高さ */
+            background-color: #fff; /* 耳の背景色 */
+            border-radius: 5px; /* 耳を丸くする */
+            top: -10px; /* ボタンの上に配置 */
+        }
+
+        .button-tigar::before {
+            left: 15px; /* 左耳の位置 */
+        }
+
+        .button-tigar::after {
+            right: 15px; /* 右耳の位置 */
+        }
+
+        /* 左側の縞しま */
+        .stripe-left {
+            position: absolute; /* 絶対位置に配置 */
+            left: 0%; /* 左の位置 */
+            top: 50%; /* ボタンの中央に配置 */
+            width: 30%; /* 横しまの幅 */
+            height: 5px; /* 横しまの高さ */
+            background-color: black; /* 横しまの色 */
+            border-radius: 5px; /* 角を丸くする */
+        }
+
+        
+
+        /* 左側の2つ目の縞しま */
+        .stripe-left2 {
+            position: absolute; /* 絶対位置に配置 */
+            left: 0%; /* 左の位置 */
+            top: 70%; /* ボタンの中央に配置 */
+            width: 30%; /* 横しまの幅 */
+            height: 5px; /* 横しまの高さ */
+            background-color: black; /* 横しまの色 */
+            border-radius: 5px; /* 角を丸くする */
+        }
+
+        /* 右側の縞しま */
+        .stripe-right {
+            position: absolute; /* 絶対位置に配置 */
+            right: 0%; /* 右の位置 */
+            top: 50%; /* ボタンの中央に配置 */
+            width: 30%; /* 横しまの幅 */
+            height: 5px; /* 横しまの高さ */
+            background-color: black; /* 横しまの色 */
+            border-radius: 5px; /* 角を丸くする */
+        }
+
+       
+
+        /* 右側の2つ目の縞しま */
+        .stripe-right2 {
+            position: absolute; /* 絶対位置に配置 */
+            right: 0%; /* 右の位置 */
+            top: 70%; /* ボタンの中央に配置 */
+            width: 30%; /* 横しまの幅 */
+            height: 5px; /* 横しまの高さ */
+            background-color: black; /* 横しまの色 */
+            border-radius: 5px; /* 角を丸くする */
+        }
+
+        .button-mouse { /* クラス名を変更 */
+            position: relative; /* 擬似要素の位置を相対的に設定 */
+            background-color: #7d7d7d; /* ねずみ色の背景色 */
+            color: white; /* 文字色 */
+            padding: 15px 32px; /* 内側の余白 */
+            text-align: center; /* テキストを中央揃え */
+            text-decoration: none; /* 下線を消す */
+            display: inline-block; /* ボタンをインラインブロックに */
+            border-radius: 5px; /* 角を丸くする */
+            transition: background-color 0.3s; /* 背景色の遷移 */
+            font-size: 18px; /* フォントサイズ */
+        }
+
+        .button-mouse:hover { /* クラス名を変更 */
+            background-color: #a1a1a1; /* ホバー時の背景色 */
+        }
+
+        .button-mouse::before,
+        .button-mouse::after { /* クラス名を変更 */
+            content: ''; /* 擬似要素の内容を空に */
+            position: absolute; /* 絶対位置に配置 */
+            width: 15px; /* 耳の幅 */
+            height: 35px; /* 耳の高さ */
+            background-color: #fff; /* 耳の背景色 */
+            border-radius: 5px; /* 耳を丸くする */
+            top: -10px; /* ボタンの上に配置 */
+        }
+
+        .button-mouse::before { /* クラス名を変更 */
+            left: 15px; /* 左耳の位置 */
+        }
+
+        .button-mouse::after { /* クラス名を変更 */
+            right: 15px; /* 右耳の位置 */
+        }
+
+        /* 左側の縞しま */
+        .stripe-left {
+            position: absolute; /* 絶対位置に配置 */
+            left: 0%; /* 左の位置 */
+            top: 50%; /* ボタンの中央に配置 */
+            width: 30%; /* 横しまの幅 */
+            height: 5px; /* 横しまの高さ */
+            background-color: black; /* 横しまの色 */
+            border-radius: 5px; /* 角を丸くする */
+        }
+
+        /* 左側の2つ目の縞しま */
+        .stripe-left2 {
+            position: absolute; /* 絶対位置に配置 */
+            left: 0%; /* 左の位置 */
+            top: 70%; /* ボタンの中央に配置 */
+            width: 30%; /* 横しまの幅 */
+            height: 5px; /* 横しまの高さ */
+            background-color: black; /* 横しまの色 */
+            border-radius: 5px; /* 角を丸くする */
+        }
+
+        /* 右側の縞しま */
+        .stripe-right {
+            position: absolute; /* 絶対位置に配置 */
+            right: 0%; /* 右の位置 */
+            top: 50%; /* ボタンの中央に配置 */
+            width: 30%; /* 横しまの幅 */
+            height: 5px; /* 横しまの高さ */
+            background-color: black; /* 横しまの色 */
+            border-radius: 5px; /* 角を丸くする */
+        }
+
+        /* 右側の2つ目の縞しま */
+        .stripe-right2 {
+            position: absolute; /* 絶対位置に配置 */
+            right: 0%; /* 右の位置 */
+            top: 70%; /* ボタンの中央に配置 */
+            width: 30%; /* 横しまの幅 */
+            height: 5px; /* 横しまの高さ */
+            background-color: black; /* 横しまの色 */
+            border-radius: 5px; /* 角を丸くする */
+        }
+
+        .button-raccoon { /* クラス名を変更 */
+            position: relative; /* 擬似要素の位置を相対的に設定 */
+            background-color: #7b4b3a; /* 茶色の背景色 */
+            color: white; /* 文字色 */
+            padding: 15px 32px; /* 内側の余白 */
+            text-align: center; /* テキストを中央揃え */
+            text-decoration: none; /* 下線を消す */
+            display: inline-block; /* ボタンをインラインブロックに */
+            border-radius: 5px; /* 角を丸くする */
+            transition: background-color 0.3s; /* 背景色の遷移 */
+            font-size: 18px; /* フォントサイズ */
+        }
+
+        .button-raccoon:hover { /* クラス名を変更 */
+            background-color: #9b6a60; /* ホバー時の背景色 */
+        }
+
+        .button-raccoon::before,
+        .button-raccoon::after { /* クラス名を変更 */
+            content: ''; /* 擬似要素の内容を空に */
+            position: absolute; /* 絶対位置に配置 */
+            width: 15px; /* 耳の幅 */
+            height: 35px; /* 耳の高さ */
+            background-color: #fff; /* 耳の背景色 */
+            border-radius: 5px; /* 耳を丸くする */
+            top: -10px; /* ボタンの上に配置 */
+        }
+
+        .button-raccoon::before { /* クラス名を変更 */
+            left: 15px; /* 左耳の位置 */
+        }
+
+        .button-raccoon::after { /* クラス名を変更 */
+            right: 15px; /* 右耳の位置 */
+        }
+
+        /* 左側の縞しま */
+        .stripe-left {
+            position: absolute; /* 絶対位置に配置 */
+            left: 0%; /* 左の位置 */
+            top: 50%; /* ボタンの中央に配置 */
+            width: 30%; /* 横しまの幅 */
+            height: 5px; /* 横しまの高さ */
+            background-color: black; /* 横しまの色 */
+            border-radius: 5px; /* 角を丸くする */
+        }
+
+        /* 左側の2つ目の縞しま */
+        .stripe-left2 {
+            position: absolute; /* 絶対位置に配置 */
+            left: 0%; /* 左の位置 */
+            top: 70%; /* ボタンの中央に配置 */
+            width: 30%; /* 横しまの幅 */
+            height: 5px; /* 横しまの高さ */
+            background-color: black; /* 横しまの色 */
+            border-radius: 5px; /* 角を丸くする */
+        }
+
+        /* 右側の縞しま */
+        .stripe-right {
+            position: absolute; /* 絶対位置に配置 */
+            right: 0%; /* 右の位置 */
+            top: 50%; /* ボタンの中央に配置 */
+            width: 30%; /* 横しまの幅 */
+            height: 5px; /* 横しまの高さ */
+            background-color: black; /* 横しまの色 */
+            border-radius: 5px; /* 角を丸くする */
+        }
+
+        /* 右側の2つ目の縞しま */
+        .stripe-right2 {
+            position: absolute; /* 絶対位置に配置 */
+            right: 0%; /* 右の位置 */
+            top: 70%; /* ボタンの中央に配置 */
+            width: 30%; /* 横しまの幅 */
+            height: 5px; /* 横しまの高さ */
+            background-color: black; /* 横しまの色 */
+            border-radius: 5px; /* 角を丸くする */
+        }
+
+
+</style> 
+</head>
+<body>
+
+    <a class="button-rabbit" >うさぎみみのぼたん</a>
+    <p></p>
+
+    <a class="button-tigar" href="#">
+        とらみみのぼたん
+        <span class="stripe-left"></span> <!-- 左の横しま -->
+        <span class="stripe-left2"></span> <!-- 左の2つ目の横しま -->
+        <span class="stripe-right"></span> <!-- 右の横しま -->
+        <span class="stripe-right2"></span> <!-- 右の2つ目の横しま -->
+    </a>
+
+     <p></p>
+
+     <a class="button-mouse" href="#"> <!-- クラス名を変更 -->
+        ねずみみのぼたん
+        <span class="stripe-left"></span> <!-- 左の横しま -->
+        <span class="stripe-left2"></span> <!-- 左の2つ目の横しま -->
+        <span class="stripe-right"></span> <!-- 右の横しま -->
+        <span class="stripe-right2"></span> <!-- 右の2つ目の横しま -->
+    </a>
+
+
+    <p></p>
+    
+    <a class="button-raccoon" href="#"> <!-- クラス名を変更 -->
+        たぬみみのぼたん
+        <span class="stripe-left"></span> <!-- 左の横しま -->
+        <span class="stripe-left2"></span> <!-- 左の2つ目の横しま -->
+        <span class="stripe-right"></span> <!-- 右の横しま -->
+        <span class="stripe-right2"></span> <!-- 右の2つ目の横しま -->
+    </a>
+
+
+</body>
+</html>
