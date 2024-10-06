@@ -398,6 +398,17 @@
     <p></p>
 
 
+    <button class="button-tigar" id="play-button">クリックして音を再生</button>
+    <audio id="audio" src="C:\Users\PC\Desktop\shirota111.github.io\ライオンの鳴き声3.mp3"></audio>
+
+    <script>
+        const playButton = document.getElementById('play-button');
+        const audio = document.getElementById('audio');
+
+        playButton.addEventListener('click', () => {
+            audio.play();
+        });
+    </script>
 
 </body>
 </html>
