@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>吹き出しと画像のレイアウト</title>
+  <style>
+    .chat-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .chat-container.reverse {
+      flex-direction: row-reverse;
+    }
+
+    .chat-bubble {
+      background-color: #f1f1f1;
+      border-radius: 10px;
+      padding: 10px;
+      max-width: 70%;
+      margin: 0 10px;
+    }
+
+    .chat-image {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .chat-container.reverse .chat-bubble {
+      background-color: #d1e7dd;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1つ目の吹き出しと画像 -->
+  <div class="chat-container">
+    <img src="image1.jpg" alt="左のキャラクター" class="chat-image">
+    <div class="chat-bubble">前のページへ戻る</div>
+  </div>
+
+  <!-- 2つ目の吹き出しと画像（反対側に配置）-->
+  <div class="chat-container reverse">
+      <img src="image2.jpg" alt="右のキャラクター" class="chat-image">
+
+<div class="chat-bubble">次のページへ進む</div>
+  
+  </div>
+
+
+
+  <!-- 1つ目の吹き出しと画像 -->
+  <div class="chat-container">
+   
+    <div class="chat-bubble">前のページへ戻る</div>
+ 
+ <img src="image1.jpg" alt="左のキャラクター" class="chat-image">
+ </div>
+
+  <!-- 2つ目の吹き出しと画像（反対側に配置）-->
+  <div class="chat-container reverse">
+   <img src="image2.jpg" alt="右のキャラクター" class="chat-image">
+
+ <div class="chat-bubble">次のページへ進む</div>
+    
+  </div>
+</body>
+</html>
