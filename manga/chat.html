@@ -3,15 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>左右に分けた画像と吹き出し</title>
+  <title>吹き出しと画像のレイアウト</title>
   <style>
-    body {
+           body {
       font-family: Arial, sans-serif;
       background-image: url('無8.png'); /* 背景画像を設定 */
             background-size: cover; /* 画像を画面いっぱいに表示 */
             background-position: center; /* 画像を中央に配置 */
 
     }
+
+   /* ボックスコンテナのスタイル */
+
+    .box-container {
+
+      width: 80%;
+
+      margin: 0 auto;
+
+      padding: 20px;
+
+      background-color: #f8f9fa;
+
+      border: 2px solid #ccc;
+
+      border-radius: 10px;
+
+    }
+
+
     .container {
       display: flex;
       justify-content: space-between;
@@ -63,7 +83,7 @@
       border-radius: 10px;
       box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     }
-  
+
     .amazon-ad {
             border: 1px solid #ccc;
             padding: 10px;
@@ -72,7 +92,7 @@
             text-decoration: none;
             color: #000;
         }
- 
+
 .info-box {
       background-color: #fff8c4; /* 薄い黄色 */
       border-left: 6px solid #ffeb3b; /* より濃い黄色のボーダー */
@@ -109,55 +129,86 @@
       visibility: visible;
       opacity: 1;
     }
+.chat-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 10px;
+    }
 
- </style>
+    .chat-container.reverse {
+      flex-direction: row-reverse;
+    }
+
+    .chat-bubble {
+      background-color: #f1f1f1;
+      border-radius: 10px;
+      padding: 10px;
+      max-width: 70%;
+      margin: 0 10px;
+    }
+
+    .chat-image {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .chat-container.reverse .chat-bubble {
+      background-color: #d1e7dd;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- 情報ボックス -->
   <div class="info-box">
     <p>このページはGitHubと呼ばれる<br>バージョン管理サイトを利用しています。<br><p></p>
     オープンソースで管理されており、<br>GitHubアカウントからソースコードを<br>確認できます。</p>
-    
+
     <p class="tooltip">※アソシエイトリンクを利用しています。<br>
       <span class="tooltiptext">このリンクには、アフィリエイトのトラッキングが含まれています。リンクをクリックすると報酬を得る場合があります。</span>
     </p>
 
     <p>不安な方は、公式の<a href="https://github.com" target="_blank">GitHub</a>ページを<br>ご確認ください。</p>
   </div>
+
+  <!-- 1つ目の吹き出しと画像 -->
+<!-- ボックスコンテナ -->
+  <div class="box-container">
+  <div class="chat-container">
+          <img src="https://github.com/shirota111/shirota111.github.io/blob/main/manga/%E3%81%AD%E3%81%93.png?raw=true" alt="左の画像" width="50px"
+      height="50px">
+    <div class="chat-bubble">歯がかゆい...</div>
+  </div>
+
+  <!-- 2つ目の吹き出しと画像（反対側に配置）-->
+  <div class="chat-container reverse">
+            <img src="https://github.com/shirota111/shirota111.github.io/blob/main/manga/kvao32.png?raw=true" alt="右の画像" width="50px"
+      height="50px">
+
+<div class="chat-bubble">歯磨きいいのあるよ</div>
   
-  <div class="container">
-    
-  <form action="C:\Users\PC\OneDrive\デスクトップ\Untitled-2.html">
-    <button type="submit">前のページへ戻る</button>
-</form>
+  </div>
+</box>
 
-    <div class="left">
-      <!-- 左側の画像 -->
-      <img src="https://github.com/shirota111/shirota111.github.io/blob/main/manga/%E3%81%AD%E3%81%93.png?raw=true" alt="左の画像">
-      <!-- 左側のコメント -->
-      <div class="comment">食っちまうぞ</div>
-    </div>
-    
-    <div class="center">
-      <!-- 中央の画像 -->
-      <img src="https://github.com/shirota111/shirota111.github.io/blob/main/manga/%E3%81%88%E3%81%B3.png?raw=true" alt="中央の画像">
-      <!-- 中央の吹き出し -->
-      <div class="bubble">中央の吹き出し</div>
-    </div>
 
-    <div class="right">
-      <!-- 右側の画像 -->
-      <img src="https://github.com/shirota111/shirota111.github.io/blob/main/manga/kvao32.png?raw=true" alt="右の画像">
-      <!-- 右側のコメント -->
-      <div class="comment">やめてください</div>
-    </div>
+  <!-- 1つ目の吹き出しと画像 -->
+  <div class="chat-container">
+   
+    <div class="chat-bubble">詳細↓</div>
  
+ <img src="image1.jpg" alt="左のキャラクター" class="chat-image" style="float: left">
+ </div>
 
-  <form action="https://github.com/shirota111/shirota111.github.io/manga/Untitled-2.html">
-    <button type="submit">次のページへ進む</button>
-</form>
-</div>
+  <!-- 2つ目の吹き出しと画像（反対側に配置）-->
+  <div class="chat-container reverse">
+   <img src="image2.jpg" alt="右のキャラクター" class="chat-image">
+
+ <div class="chat-bubble">次のページへ進む</div>
+    
+  </div>
+
 <div style="text-align: center;"><h1>おすすめ商品</h1>
 <a href="https://amzn.to/3Y8AQCz" class="amazon-ad" target="_blank">
     <img src="https://m.media-amazon.com/images/I/51Cpxb1uDSL._AC_SX679_.jpg" alt="商品画像"width="30" height="100"><br>
@@ -166,7 +217,51 @@
 </a>
 <p>このリンクをクリックすると、Amazonの商品ページに移動します。</p>
 </div>
+
+
+  <!-- ボックスコンテナ -->
+  <div class="box-container">
+    <!-- 2つ目の吹き出しと画像（反対側に配置）-->
+    <div class="chat-container reverse">
+      <div class="chat-bubble">けもみみ</div>
+      <img src="https://github.com/shirota111/shirota111.github.io/blob/main/manga/%E3%81%AD%E3%81%93.png?raw=true" alt="右のキャラクター" class="chat-image">
+    </div>
+  </div>
+
+
+  <!-- ボックスコンテナ -->
+  <div class="box-container">
+    <!-- 2つ目の吹き出しと画像（反対側に配置）-->
+    <div class="chat-container reverse">
+      <div class="chat-bubble">シーフード</div>
+      <img src="https://github.com/shirota111/shirota111.github.io/blob/main/manga/%E3%81%AD%E3%81%93.png?raw=true" alt="右のキャラクター" class="chat-image">
+    </div>
+  </div>
+
+
+
+  <!-- ボックスコンテナ -->
+  <div class="box-container">
+
+  <!-- 2つ目の吹き出しと画像（反対側に配置）-->
+  <div class="chat-container reverse">
+   <img src="image2.jpg" alt="右のキャラクター" class="chat-image"style="float: left">
+
+ <div class="chat-bubble">その他</div>
+    
+  </div>
+</div>
+
+
+  <!-- ボックスコンテナ -->
+  <div class="box-container">
+    <!-- 2つ目の吹き出しと画像（反対側に配置）-->
+    <div class="chat-container reverse">
+      <div class="chat-bubble">To be continue...</div>
+      <img src="https://github.com/shirota111/shirota111.github.io/blob/main/manga/%E3%81%AD%E3%81%93.png?raw=true" alt="右のキャラクター" class="chat-image">
+    </div>
+  </div>
+
+
 </body>
 </html>
-
-
