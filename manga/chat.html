@@ -5,8 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>吹き出しと画像のレイアウト</title>
   <style>
-        body {
+           body {
       font-family: Arial, sans-serif;
+      background-image: url('無8.png'); /* 背景画像を設定 */
+            background-size: cover; /* 画像を画面いっぱいに表示 */
+            background-position: center; /* 画像を中央に配置 */
+
     }
     .container {
       display: flex;
@@ -60,6 +64,51 @@
       box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     }
 
+    .amazon-ad {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 20px auto;
+            display: inline-block;
+            text-decoration: none;
+            color: #000;
+        }
+
+.info-box {
+      background-color: #fff8c4; /* 薄い黄色 */
+      border-left: 6px solid #ffeb3b; /* より濃い黄色のボーダー */
+      padding: 15px;
+      margin: 15px 0;
+      font-family: Arial, sans-serif;
+      border-radius: 5px;
+    }
+
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 200px;
+      background-color: #555;
+      color: #fff;
+      text-align: center;
+      border-radius: 5px;
+      padding: 5px 0;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%; /* Tooltip appears above the text */
+      left: 50%;
+      margin-left: -100px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
 .chat-container {
       display: flex;
       flex-direction: row;
