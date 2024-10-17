@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Military Inventory with Image Upload</title>
+    <style>
+        /* 迷彩柄の背景 */
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            background-image: url('https://www.transparenttextures.com/patterns/camo.png'); /* 迷彩柄背景 */
+            background-color: #4a5d23; /* ミリタリーグリーン */
+            color: #ffffff;
+        }
+
+        h1 {
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        form {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #333;
+            background-color: #667c3e;
+            color: #fff;
+        }
+
+        button {
+            cursor: pointer;
+            background-color: #4a5d23;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            background-color: #667c3e;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #333;
+            color: #fff;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 2px solid #667c3e;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4a5d23;
+        }
+
+        /* サムネイル画像のスタイル */
+        img.thumbnail {
+            width: 100px;
+            height: auto;
+        }
+
+        button.delete {
+            background-color: #a53d2b;
+            border: none;
+            color: #fff;
+            padding: 5px 10px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        button.delete:hover {
+            background-color: #bf4f3d;
+        }
+    </style>
+</head>
+<body>
+    <h1>Military Inventory with Image Upload</h1>
+
+    <!-- 商品追加フォーム -->
+    <form id="itemForm">
+        <input type="text" id="itemName" placeholder="Item Name" required>
+        <input type="number" id="itemQuantity" placeholder="Quantity" required>
+        <input type="file" id="itemImage" accept="image/*" required>
+        <button type="submit">Add Item</button>
+    </form>
+
+    <!-- インベントリリスト表示 -->
+    <table id="inventoryTable">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- JavaScriptでアイテムが追加されます -->
+        </tbody>
+    </table>
+
+    <script>
+        // インベントリデータを保存する配列
+        let inventory = [];
+
+        // アイテムを追加する関数
+        function addItem(name, quantity, imageSrc) {
+            inventory.push({ name: name, quantity: parseInt(quantity), imageSrc: imageSrc });
+            displayInventory();
+        }
+
+        // アイテムを削除する関数
+        function removeItem(index) {
+            inventory.splice(index, 1);
+            displayInventory();
+        }
+
+        // インベントリを表示する関数
+        function displayInventory() {
+            const inventoryTable = document.getElementById('inventoryTable').getElementsByTagName('tbody')[0];
+            inventoryTable.innerHTML = ''; // テーブルをリセット
+
+            inventory.forEach((item, index) => {
+                const row = inventoryTable.insertRow();
+
+                // 画像セル
+                const imgCell = row.insertCell(0);
+                const imgElement = document.createElement('img');
+                imgElement.src = item.imageSrc;
+                imgElement.classList.add('thumbnail');
+                imgCell.appendChild(imgElement);
+
+                // アイテム名と数量セル
+                row.insertCell(1).innerText = item.name;
+                row.insertCell(2).innerText = item.quantity;
+
+                // 削除ボタン
+                const actionCell = row.insertCell(3);
+                const deleteButton = document.createElement('button');
+                deleteButton.innerText = 'Delete';
+                deleteButton.classList.add('delete');
+                deleteButton.onclick = () => removeItem(index);
+                actionCell.appendChild(deleteButton);
+            });
+        }
+
+        // 画像を読み込んでBase64形式に変換する関数
+        function readImage(file, callback) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                callback(event.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // フォームが送信された時にアイテムを追加
+        document.getElementById('itemForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // フォームのデフォルト動作を防止
+            const name = document.getElementById('itemName').value;
+            const quantity = document.getElementById('itemQuantity').value;
+            const imageFile = document.getElementById('itemImage').files[0];
+
+            // 画像ファイルを読み込んでインベントリに追加
+            readImage(imageFile, function(imageSrc) {
+                addItem(name, quantity, imageSrc);
+
+                // フォームをリセット
+                document.getElementById('itemForm').reset();
+            });
+        });
+    </script>
+</body>
+</html>
