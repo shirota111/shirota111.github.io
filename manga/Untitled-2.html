@@ -3,11 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>左右に分けた画像と吹き出し</title>
+  <title>吹き出しと画像のレイアウト</title>
   <style>
-    body {
+           body {
       font-family: Arial, sans-serif;
+      background-image: url('無8.png'); /* 背景画像を設定 */
+            background-size: cover; /* 画像を画面いっぱいに表示 */
+            background-position: center; /* 画像を中央に配置 */
+
     }
+
+   /* ボックスコンテナのスタイル */
+
+    .box-container {
+
+      width: 80%;
+
+      margin: 0 auto;
+
+      padding: 20px;
+
+      background-color: #f8f9fa;
+
+      border: 2px solid #ccc;
+
+      border-radius: 10px;
+
+    }
+
+
     .container {
       display: flex;
       justify-content: space-between;
@@ -59,34 +83,207 @@
       border-radius: 10px;
       box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     }
+
+    .amazon-ad {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 20px auto;
+            display: inline-block;
+            text-decoration: none;
+            color: #000;
+        }
+
+.info-box {
+      background-color: #fff8c4; /* 薄い黄色 */
+      border-left: 6px solid #ffeb3b; /* より濃い黄色のボーダー */
+      padding: 15px;
+      margin: 15px 0;
+      font-family: Arial, sans-serif;
+      border-radius: 5px;
+    }
+
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 200px;
+      background-color: #555;
+      color: #fff;
+      text-align: center;
+      border-radius: 5px;
+      padding: 5px 0;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%; /* Tooltip appears above the text */
+      left: 50%;
+      margin-left: -100px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+.chat-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .chat-container.reverse {
+      flex-direction: row-reverse;
+    }
+
+    .chat-bubble {
+      background-color: #f1f1f1;
+      border-radius: 10px;
+      padding: 10px;
+      max-width: 70%;
+      margin: 0 10px;
+    }
+
+    .chat-image {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .chat-container.reverse .chat-bubble {
+      background-color: #d1e7dd;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="left">
-      <!-- 左側の画像 -->
-      <img src="C:\Users\PC\OneDrive\デスクトップ\ねこ.png" alt="左の画像">
-      <!-- 左側のコメント -->
-      <div class="comment">食っちまうぞ</div>
-    </div>
-    
-    <div class="center">
-      <!-- 中央の画像 -->
-      <img src="C:\Users\PC\OneDrive\デスクトップ\えび.png" alt="中央の画像">
-      <!-- 中央の吹き出し -->
-      <div class="bubble">中央の吹き出し</div>
-    </div>
 
-    <div class="right">
-      <!-- 右側の画像 -->
-      <img src="C:\Users\PC\OneDrive\デスクトップ\kvao32.png" alt="右の画像">
-      <!-- 右側のコメント -->
-      <div class="comment">やめてください</div>
-    </div>
+  <div class="info-box">
+    <p>このページはGitHubと呼ばれる<br>バージョン管理サイトを利用しています。<br><p></p>
+    オープンソースで管理されており、<br>GitHubアカウントからソースコードを<br>確認できます。</p>
 
-    <form action="C:\Users\PC\OneDrive\デスクトップ\Untitled-2.html">
-        <button type="submit">次のページへ進む</button>
-    </form>
+    <p class="tooltip">※アソシエイトリンクを利用しています。<br>
+      <span class="tooltiptext">このリンクには、アフィリエイトのトラッキングが含まれています。リンクをクリックすると報酬を得る場合があります。</span>
+    </p>
+
+    <p>不安な方は、公式の<a href="https://github.com" target="_blank">GitHub</a>ページを<br>ご確認ください。</p>
   </div>
+
+  <!-- 1つ目の吹き出しと画像 -->
+<!-- ボックスコンテナ -->
+  <div class="box-container">
+  <div class="chat-container">
+          <img src="https://github.com/shirota111/shirota111.github.io/blob/main/manga/%E3%81%AD%E3%81%93.png?raw=true" alt="左の画像" width="50px"
+      height="50px">
+    <div class="chat-bubble">歯がかゆい...</div>
+  </div>
+
+  <!-- 2つ目の吹き出しと画像（反対側に配置）-->
+  <div class="chat-container reverse">
+            <img src="https://github.com/shirota111/shirota111.github.io/blob/main/manga/kvao32.png?raw=true" alt="右の画像" width="50px"
+      height="50px">
+
+<div class="chat-bubble">歯磨きいいのあるよ</div>
+
+  </div>
+</box>
+
+
+  <!-- 1つ目の吹き出しと画像 -->
+  <div class="chat-container">
+
+    <div class="chat-bubble">詳細↓</div>
+
+ <img src="https://github.com/shirota111/shirota111.github.io/blob/main/manga/pic/4.png?raw=true" alt="左のキャラクター" class="chat-image" style="float: left">
+ </div>
+
+  <!-- 2つ目の吹き出しと画像（反対側に配置）-->
+  <div class="chat-container reverse">
+   <img src="image2.jpg" alt="右のキャラクター" class="chat-image">
+
+ <div class="chat-bubble">次のページへ進む</div>
+
+  </div>
+
+<div style="text-align: center;"><h1>おすすめ商品</h1>
+<a href="https://amzn.to/3Y8AQCz" class="amazon-ad" target="_blank">
+    <img src="https://m.media-amazon.com/images/I/51Cpxb1uDSL._AC_SX679_.jpg" alt="商品画像"width="30" height="100"><br>
+    Curaprox クラプロックス CS5460 歯ブラシ ウルトラソフト 植毛5460本 ブリスターパック【アソート】<br>
+    ￥1,210 税込 本あたり￥1,210(￥1,210 / 本)
+</a>
+
+<a href="https://amzn.to/4f97ryG" class="amazon-ad" target="_blank">
+  <img src="https://m.media-amazon.com/images/I/61c66Am7zGL._AC_SX679_.jpg" alt="商品画像"width="100" height="100"><br>
+  Echo Pop (エコーポップ) - コンパクトスマートスピーカー with Alexa｜グレーシャーホワイト<br>
+  プライム感謝祭先行セール
+50パーセントの割引で￥2,980-50% ￥2,980 税込
+参考価格 ￥5,980
+</a>
+
+
+<p>このリンクをクリックすると、Amazonの商品ページに移動します。</p>
+</div>
+
+
+  <!-- ボックスコンテナ -->
+  <div class="box-container">
+    <!-- 2つ目の吹き出しと画像（反対側に配置）-->
+    <div class="chat-container reverse">
+      <div class="chat-bubble">けもみみ</div>
+      <img src="https://github.com/shirota111/shirota111.github.io/blob/main/manga/%E3%81%AD%E3%81%93.png?raw=true" alt="右のキャラクター" class="chat-image">
+    </div>
+  </div>
+
+
+  <!-- ボックスコンテナ -->
+  <div class="box-container">
+    <!-- 2つ目の吹き出しと画像（反対側に配置）-->
+    <div class="chat-container reverse">
+      <div class="chat-bubble">シーフード</div>
+      <img src="https://github.com/shirota111/shirota111.github.io/blob/main/manga/%E3%81%AD%E3%81%93.png?raw=true" alt="右のキャラクター" class="chat-image">
+    </div>
+  </div>
+
+
+
+  <!-- ボックスコンテナ -->
+  <div class="box-container">
+
+  <!-- 2つ目の吹き出しと画像（反対側に配置）-->
+  <div class="chat-container reverse">
+   <img src="image2.jpg" alt="右のキャラクター" class="chat-image"style="float: left">
+
+ <div class="chat-bubble">フリー素材</div>
+
+  </div>
+</div>
+
+
+  <!-- ボックスコンテナ -->
+  <div class="box-container">
+    <!-- 2つ目の吹き出しと画像（反対側に配置）-->
+    <div class="chat-container reverse">
+      <div class="chat-bubble">To be continue...</div>
+      <img src="https://github.com/shirota111/shirota111.github.io/blob/main/manga/%E3%81%AD%E3%81%93.png?raw=true" alt="右のキャラクター" class="chat-image">
+    </div>
+  </div>
+
+
+
+
+<script src="https://rss.tc/app/rssreader?url=https%3A%2F%2Fnews.yahoo.co.jp%2Frss%2Ftopics%2Ftop-picks.xml&displayRow=5&dispTitle=1&dispTime=1&id=1268bab241b7&target=_top&skin=Pink"></script>
+
+  <script src="https://rss.tc/app/rssreader?url=https%3A%2F%2Fgigazine.net%2Fnews%2Frss_2.0%2F&displayRow=5&dispTitle=1&dispTime=1&id=1268bab24375&target=_top&skin=Green"></script>
+
+  <script src="https://rss.tc/app/rssreader?url=http%3A%2F%2Fwww.gizmodo.jp%2Fatom.xml&displayRow=5&dispTitle=1&dispTime=1&id=1268bab243d7&target=_top&skin=Gray"></script>
+
+  <script src="https://rss.tc/app/rssreader?url=https%3A%2F%2Frss.itmedia.co.jp%2Frss%2F2.0%2Fait.xml&displayRow=5&dispTitle=1&dispTime=1&id=1268bab243e7&target=_top&skin=Yellow"></script>
+
+
+
 </body>
 </html>
