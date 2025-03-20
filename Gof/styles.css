@@ -1,0 +1,51 @@
+/* 基本スタイル */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* ハンバーガーボタン */
+.hamburger {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+/* ナビゲーションメニュー（デフォルトで非表示） */
+.nav-menu {
+  position: fixed;
+  top: 0;
+  left: -250px; /* 初期状態は画面外 */
+  width: 250px;
+  height: 100%;
+  background-color: #333;
+  color: white;
+  transition: left 0.3s ease-in-out;
+  padding-top: 60px;
+}
+
+.nav-menu ul {
+  list-style: none;
+  padding: 0;
+}
+
+.nav-menu ul li {
+  padding: 15px;
+}
+
+.nav-menu ul li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+}
+
+/* メニュー表示時 */
+.nav-menu.open {
+  left: 0;
+}
