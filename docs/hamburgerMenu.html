@@ -85,9 +85,9 @@
         }
 
         /* サンプルページ内容 */
-        #home, #about, #services, #contact,#calender {
-            height: 150vh;
-            padding: 50px;
+        #home, #about, #portfolio,#services, #contact,#calender {
+            height: 390vh;
+            padding: 5px;
             background-color: #fff;
             transition: background-color 0.3s ease;
         }
@@ -98,6 +98,9 @@
         }
         #about {
             background-color: #ffe4e1; /* ピンク系 */
+        }
+        #portfolio {
+                background-color: #ffe4e1; /* ピンク系 */
         }
         #services {
             background-color: #fafad2; /* クリーム系 */
@@ -175,6 +178,7 @@
     <ul>
         <li><a href="#home">Home</a></li>
         <li><a href="#about">About</a></li>
+        <li><a href="#Portfolio">Portfolio</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#contact">Contact</a></li>
 <li><a href="#calender">Calendar</a></li>
@@ -184,10 +188,10 @@
 <!-- サンプルコンテンツセクション -->
 <div id="home">
     <h1>Home</h1>
-    <p>Welcome to 新世界げえむ置き場</p>
-<p>〜くだらないつまらないmuda～</p><p>～it's a small worldってか〜</p>
+    <p>Welcome 2</p>
+<p>Landing Page</p>
 
-<h>KUSOゲーム(hogehoge)</h>
+<h></h>
     <ul>
         <li><a href="ika.html"class="styled-link">イカのページ</a></li>
         <li><a href="ikagame.html"class="styled-link">イカゲームのページ</a></li>
@@ -200,15 +204,111 @@
 </div>
 
 
+
 <div id="about">
     <h1>About Section</h1>
     <p>このWEBクライアントアプリケーションは</p>
-<p>"Less is more"を描画する試みです。</p>
-
-<p>おもにchatGPTで生成したいわゆるKUSOげーむなど
-を保管しています。ここは作者のくだらない、つまらないを
-具現化した場所です。 </p>
+    <p>"Less is more"を描画する試みです。</p>
+    <p>おもにchatGPTで生成したげーむなどを保管しています。/p>
 </div>
+    
+    <!-- 新しいセクションの追加 -->
+<div id="portfolio">
+    <h1>開発環境 & ポートフォリオ</h1>
+    
+    <h2>目次</h2>
+    <ul>
+    <li><a href="#プロフィール">プロフィール</a></li>
+    <li><a href="#開発環境">開発環境</a></li>
+    <li><a href="#スキル一覧">スキル一覧</a></li>
+    <li><a href="#ポートフォリオ">ポートフォリオ</a></li>
+    </ul>
+    
+    <h2 id="プロフィール">🧑‍💻 プロフィール</h2>
+    <p>名前: Shirota Nocchi</p>
+    <p>興味: アルゴリズム解析 / 組み込み開発 / Webアプリ開発</p>
+    <p>GitHub: <a href="https://github.com/shirota111">GitHubリンク</a></p>
+    <p>X（旧Twitter）: <a href="https://twitter.com/nikothewall">@nikothewall</a></p>
+    
+    <h2 id="開発環境">🛠 開発環境</h2>
+    <p>OS:Windows 11 / Ubuntu 20.04 / 22.04</p>
+    <p>言語: C++ / Python / PHP / JavaScript / アセンブリ</p>
+    <p>エディタ: VS Code</p>
+    <p>データベース: MySQL</p>
+    <p>バージョン管理: GitHub</p>
+    
+    <h2 id="スキル一覧">🚀 スキル</h2>
+    <table>
+    <tr>
+    <th>言語</th>
+    <th>経験年数</th>
+    <th>使用目的</th>
+    </tr>
+    <tr>
+    <td>Python</td>
+    <td>1年</td>
+    <td>バックエンド / 機械学習</td>
+    </tr>
+    <tr>
+    <td>PHP</td>
+    <td>1年</td>
+    <td>Web開発 / ログイン認証</td>
+    </tr>
+    <tr>
+    <td>C++</td>
+    <td>1年</td>
+    <td>Unreal Engine 5 / エミュレータ</td>
+    </tr>
+    <tr>
+    <td>JS</td>
+    <td>1年</td>
+    <td>フロントエンド開発</td>
+    </tr>
+    <tr>
+    <td>アセンブリ</td>
+    <td>1年未満</td>
+    <td>低レイヤー理解</td>
+    </tr>
+    </table>
+    
+    <h2 id="ポートフォリオ">📂 ポートフォリオ</h2>
+    
+    <h3>1. PHPログイン認証システム (開発中)</h3>
+    <p>技術: PHP, MySQL, Python</p>
+    <p>概要: フロントエンドPHP、認証ロジックをPythonで実装</p>
+    <p>工夫: セキュリティ強化のため、ハッシュ化とSQLインジェクション対策</p>
+    <p>成果物: <a href="https://github.com/shirota111/knowledge">GitHubリポジトリ</a> / <a href="https://example.com">デモURL</a></p>
+    
+    <h3>2. ゲームボーイエミュレータ（開発中）</h3>
+    <p>技術: C++</p>
+    <p>概要: ゲームボーイの動作をエミュレートするソフトウェア</p>
+    <p>進捗: CPUエミュレーション実装済み</p>
+    
+    <h3>3. ナレッジベース(開発中)</h3>
+    <p>技術: PHP, MySQL, Python</p>
+    <p>概要: 知識構造/体系化ファイル検索ツール</p>
+    <p>進捗: ログイン認証ほか</p>
+    <p>このリポジトリは、pythonの仮想環境を用いて構造化された情報の保存、検索、管理を目的としたカスタムPythonベースのナレッジベースシステム</p>
+    <p>特徴: mdファイル & JSONを使用した知識の構造化保存, Markdownベースのドキュメント管理, Git連携によるバージョン管理</p>
+    
+    <h4>インストール</h4>
+    <p>git clone https://github.com/shirota111/knowledge.git</p>
+    <p>cd knowledge</p>
+    <p>pip install -r requirements.txt</p>
+    <p>python script.py</p>
+    
+    <h4>フォルダ構成</h4>
+    <p>docs/ - ドキュメントファイル</p>
+    <p>src/ - コアアプリケーションロジック</p>
+    
+    <h4>ショートカット</h4>
+    <p><a href="https://github.com/shirota111/knowledge/blob/70dd85831a731f16803493cab8739e3915dd0669/docs/index.md">mdファイル を開く</a></p>
+    <p><a href="https://github.com/shirota111/knowledge/blob/70dd85831a731f16803493cab8739e3915dd0669/docs/IPA.md">英語学 を開く</a></p>
+    <p><a href="https://github.com/shirota111/knowledge/blob/70dd85831a731f16803493cab8739e3915dd0669/docs/01_language.md">プログラミング を開く</a></p>
+</div>
+    
+    
+
 <div id="services">
     <h1>Services Section</h1>
     
