@@ -2,6 +2,7 @@
 class NavigationManager {
   static instance;
 
+
   constructor() {
     if (NavigationManager.instance) {
       return NavigationManager.instance;
