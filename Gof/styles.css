@@ -9,6 +9,50 @@ body {
   font-family: 'Press Start 2P', cursive; 
 }
 
+
+        /* サンプルページ内容 */
+        #home, #about, #services, #contact,#calender {
+          height: 150vh;
+          padding: 0px;
+          background-color: #fff;
+          transition: background-color 0.3s ease;
+      }
+
+      /* セクションの色をサブカルっぽく */
+      #home {
+          background-color: #ffefd5; /* パステル系 */
+      }
+      #about {
+          background-color: #ffe4e1; /* ピンク系 */
+      }
+      #portfolio {
+        height: 500vh;      
+        background-color: #bbbbbb; /* ピンク系 */
+      }
+      #services {
+          background-color: #fafad2; /* クリーム系 */
+      }
+      #contact {
+          background-color: #d8bfd8; /* パステルパープル */
+      }
+     
+
+      h1 {
+        font-size: 20px;
+        color: #333;
+        margin: 10;
+        padding: 20;
+        text-align: left;
+      }
+      
+      h2 {
+        font-size: 20px;
+        color: #333;
+        margin: 10;
+        padding: 20;
+        text-align: left;
+      }
+
 /* ハンバーガーボタン */
 .hamburger {
   position: fixed;
@@ -52,19 +96,4 @@ body {
 /* メニュー表示時 */
 .nav-menu.open {
   left: 0;
-}
-h1 {
-  font-size: 20px;
-  color: #333;
-  margin: 10;
-  padding: 20;
-  text-align: left;
-}
-
-h2 {
-  font-size: 20px;
-  color: #333;
-  margin: 10;
-  padding: 20;
-  text-align: left;
 }
