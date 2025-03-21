@@ -4,7 +4,7 @@
 /* 基本スタイル */
 body {
   display: grid;
-  padding-left : 150px;
+  padding-left : 50px;
   margin: 10px ,10px,20px,20px ;
   font-family: 'Press Start 2P', cursive; 
 }
