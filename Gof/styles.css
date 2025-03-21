@@ -12,7 +12,7 @@ body {
 
         /* サンプルページ内容 */
         #home, #about, #services, #contact,#calender {
-          height: 100vh;
+          height: 80vh;
           padding: 0px;
           background-color: #fff;
           transition: background-color 0.3s ease;
