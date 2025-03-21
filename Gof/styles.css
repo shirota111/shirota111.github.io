@@ -1,6 +1,8 @@
 /* 基本スタイル */
 body {
   font-family: Arial, sans-serif;
+  display: grid;
+  text-align: center;
   margin: 0;
   padding: 0;
 }
