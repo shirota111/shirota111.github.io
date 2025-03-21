@@ -1,3 +1,6 @@
+/* Google Fonts: サブカル風なフォントの追加 */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 /* 基本スタイル */
 body {
   font-family: Arial, sans-serif;
@@ -5,6 +8,7 @@ body {
   text-align: center;
   margin: 0;
   padding: 0;
+  font-family: 'Press Start 2P', cursive; 
 }
 
 /* ハンバーガーボタン */
