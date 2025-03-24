@@ -16,7 +16,7 @@ body {
         #home, #about, #portfolio,#services, #contact,#calender {
           height: auto;
           padding-left : 50px;
-          background-color: #fff;
+          background-color: #ffefd5;
           transition: background-color 0.3s ease;
       }
 
