@@ -4,6 +4,8 @@
 /* 基本スタイル */
 body {
   display: grid;
+  width: 100%;
+  max-width: 1200px;
   padding-left : 50px;
   margin: 0px;
   font-family: 'Press Start 2P', cursive; 
@@ -96,4 +98,26 @@ body {
 /* メニュー表示時 */
 .nav-menu.open {
   left: 0;
+}
+
+
+/* スマートフォン向けのスタイル */
+@media (max-width: 599px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+/* タブレット向けのスタイル */
+@media (min-width: 600px) and (max-width: 1024px) {
+  body {
+    font-size: 16px;
+  }
+}
+
+/* PC向けのスタイル */
+@media (min-width: 1025px) {
+  body {
+    font-size: 18px;
+  }
 }
