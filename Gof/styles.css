@@ -13,8 +13,8 @@ body {
 
 
         /* サンプルページ内容 */
-        #home, #about, #services, #contact,#calender {
-          height: 100vh;
+        #home, #about, #portfolio,#services, #contact,#calender {
+          height: auto;
           padding: 0px;
           background-color: #fff;
           transition: background-color 0.3s ease;
@@ -28,7 +28,6 @@ body {
           background-color: #ffe4e1; /* ピンク系 */
       }
       #portfolio {
-        height: 520vh;      
         background-color: #bbbbbb; /* Grey系 */
       }
       #services {
