@@ -6,7 +6,7 @@ body {
   display: grid;
   width: 100%;
   max-width: 1200px;
-  padding-left : 50px;
+  
   margin: 0px;
   font-family: 'Press Start 2P', cursive; 
 }
@@ -15,13 +15,14 @@ body {
         /* サンプルページ内容 */
         #home, #about, #portfolio,#services, #contact,#calender {
           height: auto;
-          padding: 0px;
+          padding-left : 50px;
           background-color: #fff;
           transition: background-color 0.3s ease;
       }
 
       /* セクションの色をサブカルっぽく */
       #home {
+　　　　　　
           background-color: #ffefd5; /* パステル系 */
       }
       #about {
