@@ -6,11 +6,12 @@ class Masutake {
   stop() {
    
     $(this.man).prop('disabled', true); 
+//manの無効化
     $(this.power).prop('disabled', true); 
-         }
+//powerの無効化   }
                 }
 
 
 let masutake = new Masutake
-('#manElement', '#powerElement');
+('#manElement', '#powerElement');//各要素の無効化
 masutake.stop(); 
