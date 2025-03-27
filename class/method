@@ -1,15 +1,16 @@
 class Masutake {
   constructor(man, power) {
-    http://this.man = man;
+    this.man = man;
     this.power = power;
-  }
+               }
   stop() {
-    // 'disabled' 
-    $(http://this.man).prop('disabled', true); // 'man' 
-    $(this.power).prop('disabled', true); // 'power' 
-  }
-}
+   
+    $(this.man).prop('disabled', true); 
+    $(this.power).prop('disabled', true); 
+         }
+                          }
 
 
-let masutake = new Masutake('#manElement', '#powerElement');
-masutake.stop(); // 
+let masutake = new Masutake
+('#manElement', '#powerElement');
+masutake.stop(); 
