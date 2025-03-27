@@ -2,13 +2,13 @@ class Masutake {
   constructor(man, power) {
     this.man = man;
     this.power = power;
-               }
+                          }
   stop() {
    
     $(this.man).prop('disabled', true); 
     $(this.power).prop('disabled', true); 
          }
-                          }
+                }
 
 
 let masutake = new Masutake
